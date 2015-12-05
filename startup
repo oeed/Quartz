@@ -1,0 +1,14 @@
+--[[
+
+    Pulse was created by Oliver 'oeed' Cooper and Ben 'awsumben13' Allen. Copyright 2015.
+    Powered by Silica.
+
+]]
+
+-- if fs.exists('src') and fs.isDir('src') then
+--     -- shell.run( "package src system/Silica" )
+-- end
+
+-- Begin the awesome stuff.
+
+dofile("system/startup")

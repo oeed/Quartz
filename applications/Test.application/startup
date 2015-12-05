@@ -1,0 +1,30 @@
+local tArgs = {...}
+local n = tArgs[1][1]
+term.setBackgroundColour(2^n)
+term.clear()
+term.setBackgroundColour(colours.red)
+term.write("ABCDEF")
+term.setBackgroundColour(colours.green)
+term.write("ABCDEF")
+sleep(0.05)
+-- sleep(2)
+term.setBackgroundColour(colours.yellow)
+term.write("ABCDEF")
+
+for i, v in ipairs(fs.list("/")) do
+    log(v)
+end
+log("---")
+
+local h = fs.open( "thing.txt", "r" )
+log(h.readAll())
+h.close()
+
+while true do
+    local event, m, x, y = os.pullEvent()
+    if event == "mouse_down" or  event == "mouse_drag" then
+        term.setCursorPos( x, y )
+        term.setBackgroundColour(2^math.random(0,15))
+        term.write(" ")
+    end
+end 

@@ -1,0 +1,33 @@
+<PulseApplicationContainer themeName="pulse">
+    <TopBarContainer identifier=topBar x=1 y=1 width="100%">
+    </TopBarContainer>
+
+    <HomeContainer identifier=homeContainer width="100%" height="100% - 14" y=15>
+        <HomeItemContainer width="100%">
+            <HomeSearchBox width=170/>
+            <HomeTile height=59 width=240></HomeTile>
+            <HomeTile height=59 width=240></HomeTile>
+        </HomeItemContainer>
+    </HomeContainer>
+    
+
+    <!-- <TextBox identifier=text width=130 x=100 y=50 text="I'm a text box!" /> -->
+
+    <!-- <TextBox x=2 y=80 placeholder="Search..." /> -->
+    <!-- <Button x=1 y=1 text="Folder" />
+    <Button x=1 y=20 text="15 Items" />
+    <Button x=1 y=40 text="Empty" />
+    <Button x=1 y=60 text="Text File" />
+    <Button x=1 y=80 text="5kB" />
+    <Button x=1 y=100 text="Bug Reports" />
+
+
+    <TextBox width=130 x=100 y=50 text="I'm a text box!" />
+
+ -->
+
+	<!-- <MenuBar width="100%" >
+		<MenuBarItem text=File menuName=file />
+		<MenuBarItem text=Edit menuName=edit />
+	</MenuBar> -->
+</PulseApplicationContainer>

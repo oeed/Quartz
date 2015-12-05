@@ -1,0 +1,54 @@
+<Theme extends="default">
+
+    <SplashApplicationContainer>
+        <fillColour type="Graphics.colours" default="BLACK"/>
+    </SplashApplicationContainer>
+
+    <PulseApplicationContainer>
+        <fillColour type="Graphics.colours" default="BLACK"/>
+    </PulseApplicationContainer>
+
+    <TopBarContainer>
+        <fillColour type="Graphics.colours" default="WHITE"/>
+        <separatorColour type="Graphics.colours" default="GREY"/>
+        <activeIndicatorColour type="Graphics.colours" default="BLUE"/>
+    </TopBarContainer>
+
+    <TopBarItem>
+        <fillColour type="Graphics.colours" default="TRANSPARENT" pressed="BLUE"/>
+        <contentColour type="Graphics.colours" default="GREY" pressed="WHITE"/>
+    </TopBarItem>
+
+    <ClockItem>
+        <analougeOutlineColour type="Graphics.colours" default="LIGHT_GREY" pressed="WHITE"/>
+        <analougeFillColour type="Graphics.colours" default="TRANSPARENT" pressed="TRANSPARENT"/>
+        <secondsColour type="Graphics.colours" default="RED" pressed="WHITE"/>
+        <minutesColour type="Graphics.colours" default="BLACK" pressed="WHITE"/>
+        <hoursColour type="Graphics.colours" default="BLACK" pressed="WHITE"/>
+    </ClockItem>
+
+    <ProgramItem>
+        <titleColour type="Graphics.colours" default="BLACK" pressed="WHITE" focused="BLUE"/>
+        <statusColour type="Graphics.colours" default="GREY" pressed="LIGHT_BLUE" focused="LIGHT_BLUE"/>
+    </ProgramItem>
+
+    <TopBarSeparatorView>
+        <fillColour type="Graphics.colours" default="GREY"/>
+        <isDashed type="boolean" default="false"/>
+        <activeSeparatorColour type="Graphics.colours" default="BLUE"/>
+        <activeSeparatorIsDashed type="boolean" default="false"/>
+    </TopBarSeparatorView>
+
+    <HomeContainer>
+        <fillColour type="Graphics.colours" default="LIGHT_BLUE"/>
+    </HomeContainer>
+
+    <HomeTile>
+        <cornerRadius type="number" default="8" />
+        <fillColour type="Graphics.colours" default="WHITE"/>
+        <textColour type="Graphics.colours" default="BLACK"/>
+        <outlineColour type="Graphics.colours" default="LIGHT_GREY"/>
+        <shadowColour type="Graphics.colours" default="GREY"/>
+    </HomeTile>
+
+</Theme>

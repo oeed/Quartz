@@ -1,0 +1,87 @@
+fs.open("log", "w").close()
+
+local _print = print
+function _G.print( ... )
+	_print( ... )
+	log(tostring(... or ""))
+end
+
+function _G.log( text )
+	local h = fs.open("log", "a")
+	h.write( tostring(text ) .. '\n')
+	h.close()	
+end
+
+function _G.log2( text )
+	local h = fs.open("log2", "a")
+	h.write( tostring(text ) .. '\n')
+	h.close()	
+end
+
+local _error = error
+function _G.logtraceback( level )
+	level = 2 + ( level or 1 )
+	local traceback, trace, source, line = {}
+	repeat
+		traceback[#traceback + 1] = trace
+		trace = select( 2, pcall( _error, "@", level ) ):match "^(.+) @"
+		if trace and trace:find "^.+%.lua:%d+:$" then
+			trace = trace:match "^(.+)%.lua:%d+:$" .. " on line " .. trace:match "^.+%.lua:(%d+):$"
+		end
+		level = level + 1
+		if trace == "startup:55:" then
+			break
+		end
+	until not trace
+	log( "Start of traceback:\n" .. ("-"):rep( 20 ) .. "\nin " .. table.concat( traceback, "\nin ") .. "\n" .. ("-"):rep( 20 ) .. "\nEnd of traceback" )
+end
+
+
+function _G.error(message, level)
+	term.setBackgroundColor(colors.red)
+	term.clear()
+	logtraceback( 3 )
+	_error(message, level)
+end
+
+
+term.redirect(term.native())
+-- Everything above here is development only
+-- dofile( "system/Silica" )
+-- dofile( "system/Silica.resourcepkg" )
+
+
+
+
+if fs.exists("/system/Silica.resourcepkg") then
+    local _, err = pcall(function() dofile( "/system/Silica.resourcepkg" ) end)
+    fs.delete("/system/Old-Silica.resourcepkg")
+    fs.move("/system/Silica.resourcepkg","/system/Old-Silica.resourcepkg")
+    if err then error(err,2) end
+else
+    -- shell.run( "package /src system/Silica" )
+    dofile( "system/Silica" )
+
+    local folder = Folder( "/src" )
+    log(folder)
+    local package = folder:package( "/system/Silica.resourcepkg", true, true )
+    log("packaged!")
+    os.reboot()
+end
+
+local f = Folder("/")
+f:serialise()
+-- log('')
+log('---')
+-- log('')
+
+-- -- class( "Test" )( extends( "View" )( { test = "blah" } ) )
+-- class "Test" extends "View" implements "Thing" implements "AnotherThing" { test ="blah" }
+-- log('###')
+-- log(Test)
+-- log(Test.test)
+-- error('')
+Application.load( "/system" )
+
+
+PulseApplication():run( ... )
