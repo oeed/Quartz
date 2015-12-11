@@ -8,7 +8,7 @@ class "QuartzApplicationContainer" extends "ApplicationContainer" {
 
 function QuartzApplicationContainer:initialise( ... )
     self.super:initialise( ... )
-    self:event( ReadyInterfaceEvent, self.onInterfaceReady, EventManager.phase.AFTER )
+    self:event( ReadyInterfaceEvent, self.onInterfaceReady, Event.phases.AFTER )
 end
 
 function QuartzApplicationContainer:onInterfaceReady( event )
