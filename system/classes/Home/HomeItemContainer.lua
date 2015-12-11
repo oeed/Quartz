@@ -31,7 +31,7 @@ function HomeItemContainer:updateLayout( dontAnimate )
     local children, width = self.children, self.width
     local y = TOP_MARGIN + 1
 
-    local time, easing = 0.5, Animation.easing.SINE_IN_OUT
+    local time, easing = 0.5, Animation.easings.SINE_IN_OUT
 
     for i, childView in ipairs( children ) do
         if childView:typeOf( IHomeItem ) then

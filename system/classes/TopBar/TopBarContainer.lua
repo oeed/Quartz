@@ -1,6 +1,6 @@
 
 local ANIMATION_TIME = 0.5
-local ANIMATION_EASING = Animation.easing.OUT_SINE
+local ANIMATION_EASING = Animation.easings.OUT_SINE
 
 class "TopBarContainer" extends "Container" {
     
@@ -74,7 +74,7 @@ function TopBarContainer:updateLayout( dontAnimate )
             childView.x = x
             childView.width = width
             if not isVisible then
-                childView:animateY( 1, ANIMATION_TIME, function() childView.separatorObject.isVisible = true end, Animation.easing.IN_SINE )
+                childView:animateY( 1, ANIMATION_TIME, function() childView.separatorObject.isVisible = true end, Animation.easings.IN_SINE )
                 childView.isVisible = true
             end
         else

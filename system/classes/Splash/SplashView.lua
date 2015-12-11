@@ -44,33 +44,33 @@ end
 
 function SplashView:firstJump()
     local circleObject = self.circleObject
-    local easing = Animation.easing.LINEAR
+    local easing = Animation.easings.LINEAR
     local diameter = firstJumpDiameter
     local time = 0.8
 
     -- self:animate( 'diameter', diameter, time, nil, easing)
-    -- self:animate( 'circleColour', { colours.blue, colours.lightBlue, colours.green }, time, nil, Animation.easing.LINEAR)
-    -- self:animate( 'circleColour', { Graphics.colours.BLACK, Graphics.colours.GREY, Graphics.colours.LIGHT_GREY, Graphics.colours.WHITE }, time, self.secondJump, Animation.easing.LINEAR)
+    -- self:animate( 'circleColour', { colours.blue, colours.lightBlue, colours.green }, time, nil, Animation.easings.LINEAR)
+    -- self:animate( 'circleColour', { Graphics.colours.BLACK, Graphics.colours.GREY, Graphics.colours.LIGHT_GREY, Graphics.colours.WHITE }, time, self.secondJump, Animation.easings.LINEAR)
 
 end
 
 function SplashView:secondJump()
     local circleObject = self.circleObject
-    local easing = Animation.easing.LINEAR
+    local easing = Animation.easings.LINEAR
     local diameter = secondJumpDiameter
     local time = 0.7
 
     -- self:animate( 'diameter', diameter, time, self.thirdJump, easing, 0.1)
     -- self:animate( 'diameter', diameter, time, nil, easing)
 
-    self:animate( 'circleColour', { Graphics.colours.LIGHT_GREY, Graphics.colours.GREY, Graphics.colours.BLACK }, time, self.firstJump, Animation.easing.LINEAR)
+    self:animate( 'circleColour', { Graphics.colours.LIGHT_GREY, Graphics.colours.GREY, Graphics.colours.BLACK }, time, self.firstJump, Animation.easings.LINEAR)
 
 end
 
 
 function SplashView:thirdJump()
     local circleObject = self.circleObject
-    local easing = Animation.easing.IN_EXPO
+    local easing = Animation.easings.IN_EXPO
     local diameter = 2 * ((self.width/2)^2 + (self.height/2)^2)^0.5
     local time = 1
     self:animate( 'diameter', diameter, time, nil, easing)
