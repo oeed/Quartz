@@ -1,14 +1,20 @@
 
+
+local pins = {
+        LEFT = 0;
+        RIGHT = 1;
+    }
+
 class "TopBarItem" extends "View" {
     
-    isPressed = false;
-    separatorObject = false;
-    backgroundObject = false;
-    isCanvasHitTested = false;
-    pin = false;
-    isRemoving = false;
-    size = false;
-    height = 14;
+    pins = Enum( Number, pins );
+    
+    isPressed = Boolean( false );
+    isCanvasHitTested = Boolean( false );
+    pin = Number; -- TODO: this doesn't work: TopBarItem.pins( TopBarItem.pins.LEFT );
+    isRemoving = Boolean( false );
+    size = Number.allowsNil;
+    height = Number( 14 );
 
 }
 
@@ -22,7 +28,7 @@ function TopBarItem:initialiseCanvas()
     log("top bar item initialiseCanvas")
     log(tostring(self))
     self.super:initialiseCanvas()
-    local width, height, theme, canvas, isPinnedRight = self.width, self.height, self.theme, self.canvas, self.pin == "right"
+    local width, height, theme, canvas, isPinnedRight = self.width, self.height, self.theme, self.canvas, self.pin == pins.RIGHT
     local separatorObject = canvas:insert( Separator( isPinnedRight and 1 or width, 3, 1, height - 4 ) )
     local backgroundObject = canvas:insert( Rectangle( isPinnedRight and 2 or 1, 1, width - 1, height - 1 ) )
 
@@ -33,7 +39,7 @@ function TopBarItem:initialiseCanvas()
 end
 
 function TopBarItem:updateWidth( width )
-    self.separatorObject.x = self.pin == "right" and 1 or width
+    self.separatorObject.x = self.pin == pins.RIGHT and 1 or width
     self.backgroundObject.width = width - 1
 end
 
