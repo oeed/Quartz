@@ -1,16 +1,16 @@
 
-class "PulseApplicationContainer" extends "ApplicationContainer" {
+class "QuartzApplicationContainer" extends "ApplicationContainer" {
 
     topBar = InterfaceOutlet();
     homeContainer = InterfaceOutlet();
 
 }
 
-function PulseApplicationContainer:initialise( ... )
+function QuartzApplicationContainer:initialise( ... )
     self.super:initialise( ... )
     self:event( ReadyInterfaceEvent, self.onInterfaceReady, EventManager.phase.AFTER )
 end
 
-function PulseApplicationContainer:onInterfaceReady( event )
+function QuartzApplicationContainer:onInterfaceReady( event )
     self.homeContainer:focus( )
 end

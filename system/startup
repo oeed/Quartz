@@ -53,7 +53,11 @@ term.redirect(term.native())
 
 
 
+if fs.exists("system/Silica.resourcepkg") then
     log("Using built package")
+    local _, err = pcall(function() dofile( "system/Silica.resourcepkg" ) end)
+    fs.delete("system/OldSilica.resourcepkg")
+    fs.move("system/Silica.resourcepkg","system/OldSilica.resourcepkg")
     if err then error(err,2) end
 else
     log("Using old style package")
@@ -69,19 +73,10 @@ else
     os.reboot()
 end
 
--- log('')
-
--- -- class( "Test" )( extends( "View" )( { test = "blah" } ) )
--- class "Test" extends "View" implements "Thing" implements "AnotherThing" { test ="blah" }
--- log('###')
--- log(Test)
--- log(Test.test)
--- error('')
-
 os.queueEvent("damn_emulator")
 os.pullEvent("damn_emulator")
 
 Application.static:load( "/system" )
 
 
-PulseApplication():run( ... )
+QuartzApplication():run( ... )

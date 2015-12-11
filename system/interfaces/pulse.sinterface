@@ -1,4 +1,4 @@
-<PulseApplicationContainer themeName="pulse">
+<QuartzApplicationContainer themeName="quartz">
     <TopBarContainer identifier=topBar x=1 y=1 width="100%">
     </TopBarContainer>
 
@@ -30,4 +30,4 @@
 		<MenuBarItem text=File menuName=file />
 		<MenuBarItem text=Edit menuName=edit />
 	</MenuBar> -->
-</PulseApplicationContainer>
+</QuartzApplicationContainer>

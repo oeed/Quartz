@@ -4,9 +4,9 @@
         <fillColour type="Graphics.colours" default="BLACK"/>
     </SplashApplicationContainer>
 
-    <PulseApplicationContainer>
+    <QuartzApplicationContainer>
         <fillColour type="Graphics.colours" default="BLACK"/>
-    </PulseApplicationContainer>
+    </QuartzApplicationContainer>
 
     <TopBarContainer>
         <fillColour type="Graphics.colours" default="WHITE"/>

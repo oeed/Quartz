@@ -1,8 +1,8 @@
 
-class "PulseApplication" extends "Application" {
+class "QuartzApplication" extends "Application" {
 	
-	name = "Pulse";
-	interfaceName = "pulse";
+	name = "Quartz";
+	interfaceName = "quartz";
 	programManager = false;
 
 }
@@ -13,7 +13,7 @@ class "PulseApplication" extends "Application" {
 	@constructor
 	@desc Initialise the custom application
 ]]
-function PulseApplication:initialise()
+function QuartzApplication:initialise()
 	self.super:initialise()
 	self.programManager = ProgramManager( self )
 
@@ -22,7 +22,7 @@ function PulseApplication:initialise()
 	self:schedule(function() self.programManager:run( Program( Folder( "applications/Test.application" ) ) ) end,0.05)
 end
 
-function PulseApplication:update()
+function QuartzApplication:update()
 	self.programManager:update()
 	self.super:update()
 end
@@ -33,7 +33,7 @@ end
 	@param [Event] event -- description
 	@return [boolean] stopPropagation
 ]]
-function PulseApplication:onChar( event )
+function QuartzApplication:onChar( event )
 	if event.character == 'r' then
 		-- self:schedule(function()self.programManager:run( Program( "applications/Test.application/startup" ) )end,0.05)
 		self.programManager:run( Program( Folder( "applications/Test.application" ) ) )
