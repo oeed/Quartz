@@ -32,6 +32,10 @@
         <statusColour type="Graphics.colours" default="GREY" pressed="LIGHT_BLUE" focused="LIGHT_BLUE"/>
     </ProgramItem>
 
+    <ProgramView>
+        <fillColour type="Graphics.colours" default="BLACK" />
+    </ProgramView>
+
     <TopBarSeparatorView>
         <fillColour type="Graphics.colours" default="GREY"/>
         <isDashed type="boolean" default="false"/>
