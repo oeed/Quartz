@@ -19,7 +19,7 @@ class "TopBarItem" extends "View" {
 }
 
 function TopBarItem:initialise( ... )
-    self.super:initialise( ... )
+    self:super( ... )
     self:event( MouseDownEvent, self.onMouseDown )
     self.event:connectGlobal( MouseUpEvent, self.onGlobalMouseUp, EventManager.phase.BEFORE )
 end
@@ -27,7 +27,7 @@ end
 function TopBarItem:initialiseCanvas()
     log("top bar item initialiseCanvas")
     log(tostring(self))
-    self.super:initialiseCanvas()
+    self:super()
     local width, height, theme, canvas, isPinnedRight = self.width, self.height, self.theme, self.canvas, self.pin == pins.RIGHT
     local separatorObject = canvas:insert( Separator( isPinnedRight and 1 or width, 3, 1, height - 4 ) )
     local backgroundObject = canvas:insert( Rectangle( isPinnedRight and 2 or 1, 1, width - 1, height - 1 ) )

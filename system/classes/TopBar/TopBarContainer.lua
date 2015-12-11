@@ -14,7 +14,7 @@ class "TopBarContainer" extends "Container" {
 }
 
 function TopBarContainer:initialise( ... )
-    self.super:initialise( ... )
+    self:super( ... )
 
     self:event( ReadyInterfaceEvent, self.onReady )
     self:event( ChildAddedInterfaceEvent, self.onChildAdded )
@@ -25,7 +25,7 @@ function TopBarContainer:initialise( ... )
 end
 
 function TopBarContainer:initialiseCanvas()
-    self.super:initialiseCanvas()
+    self:super()
     self.theme:connect( self.canvas, "fillColour" )
 end
 
@@ -129,7 +129,7 @@ function TopBarContainer:updateLayout( dontAnimate )
 end
 
 function TopBarContainer:update( deltaTime )
-    self.super:update( deltaTime )
+    self:super( deltaTime )
     if self.needsLayoutUpdate then
         self:updateLayout()
     end

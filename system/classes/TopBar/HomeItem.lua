@@ -8,7 +8,7 @@ class "HomeItem" extends "TopBarItem" {
 }
 
 function HomeItem:initialise( ... )
-    self.super:initialise( ... )
+    self:super( ... )
     self:event( ActionInterfaceEvent, self.onAction )
     self:event( ReadyInterfaceEvent, self.onReady )
 end
@@ -20,7 +20,7 @@ end
 function HomeItem:initialiseCanvas()
     log("home item initialiseCanvas")
     log(tostring(self))
-    self.super:initialiseCanvas()
+    self:super()
     local width, height, theme, canvas = self.width, self.height, self.theme
 
     -- TODO: !URGENT! path drawing bug

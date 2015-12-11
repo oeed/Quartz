@@ -22,7 +22,7 @@ class "ProgramView" extends "View" implements "ISwitchableView" {
 }
 
 function ProgramView:initialise( ... )
-    self.super:initialise( ... )
+    self:super( ... )
 
     local termSizes = self.termSizes
     termSizes.width = self.width
@@ -76,12 +76,12 @@ function ProgramView:onDraw()
 end
 
 function ProgramView.width:set( width )
-    self.super:setWidth( width )
+    self:super( width )
     self.termSizes.width = width
 end
 
 function ProgramView.height:set( height )
-    self.super:setHeight( height )
+    self:super( height )
     self.termSizes.height = height
 end
 
@@ -103,7 +103,7 @@ function ProgramView:onParentChanged( event )
 end
 
 function ProgramView.isFocused:set( isFocused )
-    self.super:setIsFocused( isFocused )
+    self:super( isFocused )
 end
 
 function ProgramView:onFocusesChanged( event )

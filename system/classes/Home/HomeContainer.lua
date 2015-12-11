@@ -17,7 +17,7 @@ class "HomeContainer" extends "Container" implements "ISwitchableView" {
 }
 
 function HomeContainer:initialise( ... )
-    self.super:initialise( ... )
+    self:super( ... )
    
     self:event( FocusesChangedInterfaceEvent, self.onFocusesChanged )
 end

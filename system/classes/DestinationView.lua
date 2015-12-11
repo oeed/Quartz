@@ -7,7 +7,7 @@ class "DestinationView" extends "View" implements "IDragDropDestination" {
 
 
 function DestinationView:initialiseCanvas()
-    self.super:initialiseCanvas()
+    self:super()
     self.canvas.fillColour = colours.white
     self.rectangle = self.canvas:insert( Rectangle(1,1,80,80) )
     self.rectangle.outlineColour = colours.blue

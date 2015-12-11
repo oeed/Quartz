@@ -18,14 +18,14 @@ class "ClockItem" extends "TopBarItem" {
 }
 
 function ClockItem:initialise( ... )
-    self.super:initialise( ... )
+    self:super( ... )
     self.isAnalouge = false
     self:event( ActionInterfaceEvent, self.onAction )
     self:event( ReadyInterfaceEvent, self.onReady )
 end
 
 function ClockItem:initialiseCanvas()
-    self.super:initialiseCanvas()
+    self:super()
     local width, height, theme, canvas = self.width, self.height, self.theme, self.canvas
     local textObject = canvas:insert( Text( 1 + MARGIN, 4, width, Font.systemFont.height, "hekdsfksdg" ) )
     local circleObject = canvas:insert( Circle( 1 + MARGIN, 2, ANALOUGE_DIAMETER ) )
@@ -53,7 +53,7 @@ function ClockItem:initialiseCanvas()
 end
 
 function ClockItem:updateWidth( width )
-    self.super:updateWidth( width )
+    self:super( width )
     self.textObject.width = width - 2 * MARGIN
 end
 

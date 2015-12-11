@@ -11,7 +11,7 @@ class "HomeTile" extends "Container" implements "IHomeItem" {
 
 
 function HomeTile:initialiseCanvas()
-    self.super:initialiseCanvas()
+    self:super()
     local width, height, theme, canvas = self.width, self.height, self.theme, self.canvas
     local shadowObject = canvas:insert( RoundedRectangle( 1 + SHADOW_SIZE_X, 1 + SHADOW_SIZE_Y, width - SHADOW_SIZE_X, height - SHADOW_SIZE_Y, theme.shadowColour ) )
     local backgroundObject = canvas:insert( RoundedRectangle( 1, 1, width - SHADOW_SIZE_X, height - SHADOW_SIZE_Y, theme.fillColour, theme.outlineColour, cornerRadius ) )

@@ -10,7 +10,7 @@ class "HomeItemContainer" extends "Container" {
 }
 
 function HomeItemContainer:initialise( ... )
-    self.super:initialise( ... )
+    self:super( ... )
 
     self:event( ReadyInterfaceEvent, self.onReady )
     self:event( ChildAddedInterfaceEvent, self.onChildAdded )
@@ -53,7 +53,7 @@ function HomeItemContainer:updateLayout( dontAnimate )
 end
 
 function HomeItemContainer:update( deltaTime )
-    self.super:update( deltaTime )
+    self:super( deltaTime )
     if self.needsLayoutUpdate then
         self:updateLayout()
     end

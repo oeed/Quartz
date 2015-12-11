@@ -4,7 +4,7 @@ class "SplashApplicationContainer" extends "ApplicationContainer" {
 }
 
 function SplashApplicationContainer:initialise( ... )
-    self.super:initialise( ... )
+    self:super( ... )
     self:event( ReadyInterfaceEvent, self.onReady)
 end
 

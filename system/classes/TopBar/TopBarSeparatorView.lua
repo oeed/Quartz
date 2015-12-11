@@ -7,7 +7,7 @@ class "TopBarSeparatorView" extends "SeparatorView" {
 }
 
 function TopBarSeparatorView:initialiseCanvas()
-    self.super:initialiseCanvas()
+    self:super()
     local theme, canvas = self.theme, self.canvas
     local activeSeparatorObject = canvas:insert( Separator( self.activeX, 1, self.activeWidth, self.height ) )
 

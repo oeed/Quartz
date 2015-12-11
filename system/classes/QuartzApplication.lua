@@ -14,7 +14,7 @@ class "QuartzApplication" extends "Application" {
 	@desc Initialise the custom application
 ]]
 function QuartzApplication:initialise()
-	self.super:initialise()
+	self:super()
 	self.programManager = ProgramManager( self )
 
 	self:event( CharacterEvent, self.onChar )
@@ -24,7 +24,7 @@ end
 
 function QuartzApplication:update()
 	self.programManager:update()
-	self.super:update()
+	self:super()
 end
 
 --[[

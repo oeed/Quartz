@@ -19,7 +19,7 @@ class "ProgramItem" extends "TopBarItem" {
 }
 
 function ProgramItem:initialiseCanvas()
-    self.super:initialiseCanvas()
+    self:super()
     local width, height, theme, canvas, program = self.width, self.height, self.theme, self.canvas, self.program
     local titleObject = canvas:insert( Text( 1, 4, width, 8, program and program.title or "", Font.systemFont ) )
     local statusObject = canvas:insert( Text( 1, 4, width, 8, program and program.status or "", Font.systemFont ) )
@@ -50,7 +50,7 @@ function ProgramItem.program:set( program )
 end
 
 function ProgramItem:updateWidth( width )
-    self.super:updateWidth( width )
+    self:super( width )
 
     local titleObject, iconObject, statusObject = self.titleObject, self.iconObject, self.statusObject
     local titleWidth = titleObject.width
@@ -108,7 +108,7 @@ end
 
 function ProgramItem:onGlobalMouseUp( event )
     local wasPressed = true--self.isPressed
-    self.super:onGlobalMouseUp( event )
+    self:super( event )
     if wasPressed and self:hitTestEvent( event ) then
         if event.mouseButton == MouseEvent.mouseButtons.LEFT then
             self.program:focus()
