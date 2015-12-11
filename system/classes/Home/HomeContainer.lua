@@ -10,9 +10,9 @@ local ANIMATION_OVERLAP_TIME = 0.20
 
 class "HomeContainer" extends "Container" implements "ISwitchableView" {
     
-    isFocusDismissable = false;
-    isOpening = true;
-    scale = 1;
+    isFocusDismissable = Boolean( false );
+    isOpening = Boolean( true );
+    scale = Number( 1 );
     
 }
 
@@ -48,13 +48,13 @@ function HomeContainer:onFocusesChanged( event )
 end
 
 function HomeContainer:flyInFocused( fromLeft )
-    self.scale = 0.8
+    self.scale = ANIMATION_SCALE
     self.x = -self.width
-    self:animateX( 1, ANIMATION_FLY_TIME, nil, ANIMATION_EASING, ANIMATION_FLY_TIME/2 - 0.1 )
+    self:animateX( 1, ANIMATION_FLY_TIME, nil, ANIMATION_EASING, ANIMATION_FLY_TIME / 2 - 0.1 )
     self:animate( "scale", 1, ANIMATION_SCALE_TIME, nil, ANIMATION_SCALE_EASING, ANIMATION_FLY_TIME - 0.1, false )
 end
 
 function HomeContainer:flyOutFocused( toRight )
     self:animateX( -self.width, ANIMATION_FLY_TIME, nil, ANIMATION_EASING, ANIMATION_FLY_TIME/2 - 0.1 )
-    self:animate( "scale", 0.8, ANIMATION_SCALE_TIME, nil, ANIMATION_SCALE_EASING, nil, false )
+    self:animate( "scale", ANIMATION_SCALE, ANIMATION_SCALE_TIME, nil, ANIMATION_SCALE_EASING, nil, false )
 end
