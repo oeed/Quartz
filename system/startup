@@ -40,7 +40,7 @@ end
 function _G.error(message, level)
 	term.setBackgroundColor(colors.red)
 	term.clear()
-	logtraceback( 3 )
+	logtraceback( 1 )
 	_error(message, level)
 end
 
@@ -53,15 +53,15 @@ term.redirect(term.native())
 
 
 
-if fs.exists("/system/Silica.resourcepkg") then
-    local _, err = pcall(function() dofile( "/system/Silica.resourcepkg" ) end)
-    fs.delete("/system/Old-Silica.resourcepkg")
-    fs.move("/system/Silica.resourcepkg","/system/Old-Silica.resourcepkg")
+    log("Using built package")
     if err then error(err,2) end
 else
-    -- shell.run( "package /src system/Silica" )
-    dofile( "system/Silica" )
+    log("Using old style package")
+    shell.run( "package /src Silica" )
+    log("Packaged")
+    dofile( "Silica" )
 
+    log("Building")
     local folder = Folder( "/src" )
     log(folder)
     local package = folder:package( "/system/Silica.resourcepkg", true, true )
@@ -69,10 +69,6 @@ else
     os.reboot()
 end
 
-local f = Folder("/")
-f:serialise()
--- log('')
-log('---')
 -- log('')
 
 -- -- class( "Test" )( extends( "View" )( { test = "blah" } ) )
@@ -81,7 +77,11 @@ log('---')
 -- log(Test)
 -- log(Test.test)
 -- error('')
-Application.load( "/system" )
+
+os.queueEvent("damn_emulator")
+os.pullEvent("damn_emulator")
+
+Application.static:load( "/system" )
 
 
 PulseApplication():run( ... )
