@@ -38,9 +38,9 @@
 
     <TopBarSeparatorView>
         <fillColour type="Graphics.colours" default="GREY"/>
-        <isDashed type="boolean" default="false"/>
+        <isDashed type="Boolean" default="false"/>
         <activeSeparatorColour type="Graphics.colours" default="BLUE"/>
-        <activeSeparatorIsDashed type="boolean" default="false"/>
+        <activeSeparatorIsDashed type="Boolean" default="false"/>
     </TopBarSeparatorView>
 
     <HomeContainer>
@@ -48,7 +48,7 @@
     </HomeContainer>
 
     <HomeTile>
-        <cornerRadius type="number" default="8" />
+        <cornerRadius type="Number" default="8" />
         <fillColour type="Graphics.colours" default="WHITE"/>
         <textColour type="Graphics.colours" default="BLACK"/>
         <outlineColour type="Graphics.colours" default="LIGHT_GREY"/>
