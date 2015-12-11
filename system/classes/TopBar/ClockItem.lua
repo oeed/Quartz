@@ -8,20 +8,12 @@ local HOURS_LENGTH = 4
 
 class "ClockItem" extends "TopBarItem" {
     
-    pin = "right";
-    isAnalouge = true;
+    pin = Number( TopBarItem.pins.RIGHT );
 
-    text = "0:00am";
+    text = String( "0:00am" );
 
-    textObject = false;
-
-    circleObject = false;
-    secondsObject = false;
-    minutesObject = false;
-    hoursObject = false;
-    isTwentyFourHour = false;
-
-    font = false;
+    isAnalouge = Boolean( true );
+    isTwentyFourHour = Boolean( false );
 
 }
 
