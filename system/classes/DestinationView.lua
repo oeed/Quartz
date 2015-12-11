@@ -20,7 +20,7 @@ function DestinationView:canAcceptDragDrop( data )
     return true
 end
 
-function DestinationView:dragDropEntered()
+function DestinationView:dragDropEntered( data, dragView )
     self:animate( "row", 3, 0.3 )
 end
 
@@ -29,11 +29,11 @@ function DestinationView.row:set(row)
     self.rectangle.outlineWidth = row
 end
 
-function DestinationView:dragDropExited()
+function DestinationView:dragDropExited( data, dragView )
     self:animate( "row", 0, 0.3 )
 end
 
-function DestinationView:dragDropMoved()
+function DestinationView:dragDropMoved( data, dragView )
 end
 
 function DestinationView:dragDropDropped( data )
