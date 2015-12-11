@@ -44,17 +44,18 @@ function TopBarContainer:updateHeight( height )
     self.needsLayoutUpdate = false
 end
 
-function TopBarContainer.activeView:set( view ) -- this is the view with the separator under it. not neccesarily the active program/area (during mouse down)
+ -- this is the view with the separator under it. not neccesarily the active program/area (during mouse down)
+function TopBarContainer.activeView:set( activeView )
     local oldView = self.activeView
-    if not view then
+    if not activeView then
         local focusedSwitchableView = self.application:focusesOfType( ISwitchableView )[1]
-        view = self.switchableItems[focusedSwitchableView]
+        activeView = self.switchableItems[focusedSwitchableView]
     end
-    view:updateThemeStyle()
-    self.activeView = view
+    activeView:updateThemeStyle()
+    self.activeView = activeView
     local separatorView = self.separatorView
-    local pin = view.pin
-    local x, width = view.x + (pin == "right" and 1 or 0), view.width - 1
+    local pin = activeView.pin
+    local x, width = activeView.x + (pin == "right" and 1 or 0), activeView.width - 1
     separatorView:animate( "activeX", x, ANIMATION_TIME, nil, ANIMATION_EASING )
     separatorView:animate( "activeWidth", width, ANIMATION_TIME, nil, ANIMATION_EASING )
 end
