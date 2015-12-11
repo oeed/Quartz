@@ -174,7 +174,7 @@ function ProgramView:onCharacterEvent( event )
     self.program:queueEvent( event.eventType, CharacterEvent  )
 end
 
-function TerminalObject:getRedirect()
+function ProgramView:getRedirect()
     local term = {}
     local termSizes = self.termSizes
 
