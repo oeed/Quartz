@@ -36,15 +36,6 @@ function _G.logtraceback( level )
 	log( "Start of traceback:\n" .. ("-"):rep( 20 ) .. "\nin " .. table.concat( traceback, "\nin ") .. "\n" .. ("-"):rep( 20 ) .. "\nEnd of traceback" )
 end
 
-
-function _G.error(message, level)
-	term.setBackgroundColor(colors.red)
-	term.clear()
-	logtraceback( 1 )
-	_error(message, level)
-end
-
-
 term.redirect(term.native())
 -- Everything above here is development only
 -- dofile( "system/Silica" )
