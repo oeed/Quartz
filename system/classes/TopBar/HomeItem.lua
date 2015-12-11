@@ -1,14 +1,9 @@
 
 class "HomeItem" extends "TopBarItem" {
     
-    pin = "left";
-    size = 29;
+    pin = Number( TopBarItem.pins.LEFT );
 
-    -- homeObject = false;
-    -- homeRoofObject = false;
-    -- homeBodyObject = false;
-    symbolObject = false;
-    homeContainer = false;
+    size = Number( 29 ).allowsNil;
 
 }
 
