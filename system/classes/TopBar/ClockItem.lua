@@ -1,11 +1,4 @@
 
-local ANALOUGE_DIAMETER = 11
-local MARGIN = 10
-
-local SECONDS_LENGTH = 5
-local MINUTES_LENGTH = 5
-local HOURS_LENGTH = 4
-
 class "ClockItem" extends "TopBarItem" {
     
     pin = Number( TopBarItem.pins.RIGHT );
@@ -24,37 +17,34 @@ function ClockItem:initialise( ... )
     self:event( ReadyInterfaceEvent, self.onReady )
 end
 
-function ClockItem:initialiseCanvas()
+function ClockItem:onDraw()
     self:super()
     local width, height, theme, canvas = self.width, self.height, self.theme, self.canvas
-    local textObject = canvas:insert( Text( 1 + MARGIN, 4, width, Font.systemFont.height, "hekdsfksdg" ) )
-    local circleObject = canvas:insert( Circle( 1 + MARGIN, 2, ANALOUGE_DIAMETER ) )
 
-    local analougeRadius = ANALOUGE_DIAMETER / 2
-    local analougeX = math.floor( 1 + MARGIN + ANALOUGE_DIAMETER / 2 )
-    local hoursObject = canvas:insert( Line( analougeX, 2 + math.ceil( analougeRadius - HOURS_LENGTH ), 1, HOURS_LENGTH ) )
-    local minutesObject = canvas:insert( Line( analougeX, 2 + math.ceil( analougeRadius - MINUTES_LENGTH ), 1, MINUTES_LENGTH ) )
-    local secondsObject = canvas:insert( Line( analougeX, 2 + math.ceil( analougeRadius - SECONDS_LENGTH ), 1, SECONDS_LENGTH ) )
+    local leftMargin, rightMargin, topMargin, bottomMargin = theme:value( "leftMargin" ), theme:value( "rightMargin" ), theme:value( "topMargin" ), theme:value( "bottomMargin" )
+    if self.isAnalouge then
+        local analougeDiameter = theme:value( "analougeDiameter" )
+        local circleMask = CircleMask( leftMargin + 1, topMargin + 1, analougeDiameter )
+        canvas:fill( theme:value( "analougeFillColour" ), circleMask )
+        canvas:outline( theme:value( "analougeOutlineColour" ), circleMask, theme:value( "analougeOutlineThickness" ) )
 
-    theme:connect( textObject, "textColour", "contentColour" )
+        local analougeRadius = analougeDiameter / 2
+        local analougeX = math.floor( 1 + MARGIN + analougeRadius )
+        local hoursLength, minutesLength, secondsLength = theme:value( "hoursLength" ), theme:value( "minutesLength" ), theme:value( "secondsLength" )
+        local hoursMask = Line( analougeX, 2 + math.ceil( analougeRadius - hoursLength ), 1, hoursLength )
+        local minutesMask = Line( analougeX, 2 + math.ceil( analougeRadius - minutesLength ), 1, minutesLength )
+        local secondsMask = Line( analougeX, 2 + math.ceil( analougeRadius - secondsLength ), 1, secondsLength )
 
-    theme:connect( circleObject, "outlineColour", "analougeOutlineColour" )
-    theme:connect( circleObject, "fillColour", "analougeFillColour" )
-    theme:connect( secondsObject, "fillColour", "secondsColour" )
-    theme:connect( minutesObject, "fillColour", "minutesColour" )
-    theme:connect( hoursObject, "fillColour", "hoursColour" )
-    
-    self.textObject = textObject
-
-    self.circleObject = circleObject
-    self.secondsObject = secondsObject
-    self.minutesObject = minutesObject
-    self.hoursObject = hoursObject
+        canvas:fill( theme:value( "hoursColour" ), hoursMask )
+        canvas:fill( theme:value( "minutesColour" ), minutesMask )
+        canvas:fill( theme:value( "secondsColour" ), secondsMask )
+    else
+        canvas:fill( theme:value( "textColour" ), TextMask( 1 + leftMargin, 1 + topMargin, width - leftMargin - rightMargin, height - topMargin - bottomMargin, self.text, theme:value( "font" ) ) )
+    end
 end
 
-function ClockItem:updateWidth( width )
-    self:super( width )
-    self.textObject.width = width - 2 * MARGIN
+function ClockItem:updateThemeStyle()
+    self.theme.style = self.isAnalouge and "analouge" or "disabled"
 end
 
 function ClockItem:onAction( ActionInterfaceEvent event, Event.phases phase )
@@ -67,13 +57,8 @@ end
 
 function ClockItem.isAnalouge:set( isAnalouge )
     self.isAnalouge = isAnalouge
-
-    self.circleObject.isVisible = isAnalouge
-    self.secondsObject.isVisible = isAnalouge
-    self.minutesObject.isVisible = isAnalouge
-    self.hoursObject.isVisible = isAnalouge
-    self.textObject.isVisible = not isAnalouge
     self:updateClock( true )
+    self.needsDraw = true
     local parent = self.parent
     if parent then
         parent.needsLayoutUpdate = true
@@ -99,7 +84,7 @@ function ClockItem:updateClock( dontSchedule )
     end
     if isAnalouge then
         local hoursObject, minutesObject, secondsObject = self.hoursObject, self.minutesObject, self.secondsObject
-        local centreX, centreY = math.floor( 1 + MARGIN + ANALOUGE_DIAMETER / 2 ), math.floor( 2 + ANALOUGE_DIAMETER / 2 )
+        local centreX, centreY = math.floor( 1 + MARGIN + theme:value( "analougeDiameter" ) / 2 ), math.floor( 2 + theme:value( "analougeDiameter" ) / 2 )
         local function position( timePercentage, length, object )
             local angle = 2 * math.pi * timePercentage
             local rawWidth = length * math.sin( angle )
@@ -113,9 +98,9 @@ function ClockItem:updateClock( dontSchedule )
             object.height = height
             object.isFromTopLeft = isFromTopLeft
         end
-        position( seconds / 60, SECONDS_LENGTH, secondsObject )
-        position( minutes / 60, MINUTES_LENGTH, minutesObject )
-        position( hours / 12 + (minutes > 40 and minutes / 60 / 12 or 0), HOURS_LENGTH, hoursObject )
+        position( seconds / 60, theme:value( "secondsLength" ), secondsObject )
+        position( minutes / 60, theme:value( "minutesLength" ), minutesObject )
+        position( hours / 12 + (minutes > 40 and minutes / 60 / 12 or 0), theme:value( "hoursLength" ), hoursObject )
     else
         if ampm then
             self.text = string.format( "%d:%02d%s", hours, minutes, ampm )
@@ -142,7 +127,7 @@ end
 -- TODO: this is being called twice each update
 function ClockItem.size:get()
     if self.isAnalouge then
-        return ANALOUGE_DIAMETER + 2 * MARGIN + 1
+        return theme:value( "analougeDiameter" ) + 2 * MARGIN + 1
     end
 
     local text, textObject = self.text, self.textObject
