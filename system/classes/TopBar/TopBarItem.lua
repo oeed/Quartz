@@ -20,7 +20,7 @@ class "TopBarItem" extends "View" {
 function TopBarItem:initialise( ... )
     self:super( ... )
     self:event( MouseDownEvent, self.onMouseDown )
-    self.event:connectGlobal( MouseUpEvent, self.onGlobalMouseUp, EventManager.phase.BEFORE )
+    self.event:connectGlobal( MouseUpEvent, self.onGlobalMouseUp, Event.phases.BEFORE )
 end
 
 function TopBarItem:onDraw()
