@@ -33,7 +33,7 @@ end
 	@param [Event] event -- description
 	@return [boolean] stopPropagation
 ]]
-function QuartzApplication:onChar( event )
+function QuartzApplication:onChar( CharacterEvent event, Event.phases phase )
 	if event.character == 'r' then
 		-- self:schedule(function()self.programManager:run( Program( "applications/Test.application/startup" ) )end,0.05)
 		self.programManager:run( Program( Folder( "applications/Test.application" ) ) )

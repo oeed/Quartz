@@ -92,7 +92,7 @@ function ProgramView.scale:set( scale )
     end
 end
 
-function ProgramView:onParentChanged( event )
+function ProgramView:onParentChanged( ParentChangedInterfaceEvent event, Event.phases phase )
     self.scale = ANIMATION_SCALE
     self.y = self.height + 1
     self:animate( "y", 15, ANIMATION_FLY_UP_TIME, function()
@@ -106,7 +106,7 @@ function ProgramView.isFocused:set( isFocused )
     self:super( isFocused )
 end
 
-function ProgramView:onFocusesChanged( event )
+function ProgramView:onFocusesChanged( FocusesChangedInterfaceEvent event, Event.phases phase )
     local oldContains = event:didContain( self )
     local contains = event:contains( self )
     if oldContains ~= contains then
@@ -161,16 +161,16 @@ function ProgramView:flyOutFocused( toRight )
 
 end
 
-function ProgramView:onMouseEvent( event )
+function ProgramView:onMouseEvent( MouseEvent event, Event.phases phase )
     self.program:queueEvent( event.eventType, event.mouseButton, event.x, event.y  )
     return true
 end
 
-function ProgramView:onKeyEvent( event )
+function ProgramView:onKeyEvent( KeyEvent event, Event.phases phase )
     self.program:queueEvent( event.eventType, event.keyCode  )
 end
 
-function ProgramView:onCharacterEvent( event )
+function ProgramView:onCharacterEvent( CharacterEvent event, Event.phases phase )
     self.program:queueEvent( event.eventType, CharacterEvent  )
 end
 

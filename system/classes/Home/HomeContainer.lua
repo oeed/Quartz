@@ -35,7 +35,7 @@ function HomeContainer.scale:set( scale )
     canvas.scaleY = scale
 end
 
-function HomeContainer:onFocusesChanged( event )
+function HomeContainer:onFocusesChanged( FocusesChangedInterfaceEvent event, Event.phases phase )
     local oldContains = event:didContain( self )
     local contains = event:contains( self )
     if oldContains ~= contains then

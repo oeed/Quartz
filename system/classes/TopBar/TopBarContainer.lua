@@ -29,7 +29,7 @@ function TopBarContainer:initialiseCanvas()
     self.theme:connect( self.canvas, "fillColour" )
 end
 
-function TopBarContainer:onReady( event )
+function TopBarContainer:onReady( ReadyInterfaceEvent event, Event.phases phase )
     self.switchableItems[self.application.container.homeContainer] = self.homeItem
     self:updateLayout( true )
 end
@@ -142,16 +142,16 @@ function TopBarContainer:animateRemove( childView )
     self.needsLayoutUpdate = true
 end
 
-function TopBarContainer:onProgramOpened( event )
+function TopBarContainer:onProgramOpened( ProgramOpenedInterfaceEvent event, Event.phases phase )
     local program = event.program
     self.switchableItems[program.programView] = self:insert( ProgramItem( { program = program } ) )
 end
 
-function TopBarContainer:onProgramClosed( event )
+function TopBarContainer:onProgramClosed( ProgramClosedInterfaceEvent event, Event.phases phase )
     self:animateRemove( self.switchableItems[event.program.programView] )
 end
 
-function TopBarContainer:onChildAdded( event )
+function TopBarContainer:onChildAdded( ChildAddedInterfaceEvent event, Event.phases phase )
     local childView = event.childView
     childView.y = self.height + 1
     childView.isVisible = false
@@ -162,11 +162,11 @@ function TopBarContainer:onChildAdded( event )
     self:sendToFront( self.separatorView )
 end
 
-function TopBarContainer:onChildRemoved( event )
+function TopBarContainer:onChildRemoved( ChildRemovedInterfaceEvent event, Event.phases phase )
     self.needsLayoutUpdate = true
 end
 
-function TopBarContainer:onFocusesChanged( event )
+function TopBarContainer:onFocusesChanged( FocusesChangedInterfaceEvent event, Event.phases phase )
     local oldFocusedSwitchableViews = self.application:focusesOfType( ISwitchableView, event.oldFocuses )
     local focusedSwitchableViews = self.application:focusesOfType( ISwitchableView, event.newFocuses )
 

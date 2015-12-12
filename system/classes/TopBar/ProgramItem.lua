@@ -106,7 +106,7 @@ function ProgramItem:updateWidth( width )
 
 end
 
-function ProgramItem:onGlobalMouseUp( event )
+function ProgramItem:onGlobalMouseUp( MouseUpEvent event, Event.phases phase )
     local wasPressed = true--self.isPressed
     self:super( event )
     if wasPressed and self:hitTestEvent( event ) then

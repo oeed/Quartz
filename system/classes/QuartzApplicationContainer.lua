@@ -8,9 +8,9 @@ class "QuartzApplicationContainer" extends "ApplicationContainer" {
 
 function QuartzApplicationContainer:initialise( ... )
     self:super( ... )
-    self:event( ReadyInterfaceEvent, self.onInterfaceReady, Event.phases.AFTER )
+    self:event( ReadyInterfaceEvent, self.onReady, Event.phases.AFTER )
 end
 
-function QuartzApplicationContainer:onInterfaceReady( event )
+function QuartzApplicationContainer:onReady( ReadyInterfaceEvent event, Event.phases phase )
     self.homeContainer:focus( )
 end

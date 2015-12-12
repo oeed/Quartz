@@ -13,7 +13,7 @@ function HomeItem:initialise( ... )
     self:event( ReadyInterfaceEvent, self.onReady )
 end
 
-function HomeItem:onReady( event )
+function HomeItem:onReady( ReadyInterfaceEvent event, Event.phases phase )
     self.homeContainer = self.application.container.homeContainer
 end
 
@@ -78,7 +78,7 @@ function HomeItem:initialiseCanvas()
 
 end
 
-function HomeItem:onAction( event )
+function HomeItem:onAction( ActionInterfaceEvent event, Event.phases phase )
    self.homeContainer:focus() 
 end
 

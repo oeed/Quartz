@@ -57,11 +57,11 @@ function ClockItem:updateWidth( width )
     self.textObject.width = width - 2 * MARGIN
 end
 
-function ClockItem:onAction( event )
+function ClockItem:onAction( ActionInterfaceEvent event, Event.phases phase )
     self.isAnalouge = not self.isAnalouge
 end
 
-function ClockItem:onReady( event )
+function ClockItem:onReady( ReadyInterfaceEvent event, Event.phases phase )
     self:updateClock()
 end
 

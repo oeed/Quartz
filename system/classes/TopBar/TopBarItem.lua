@@ -57,7 +57,7 @@ function TopBarItem.isPressed:set( isPressed )
     self:updateThemeStyle()
 end
 
-function TopBarItem:onMouseDown( event )
+function TopBarItem:onMouseDown( MouseDownEvent event, Event.phases phase )
     if event.mouseButton == MouseEvent.mouseButtons.LEFT then
         self.isPressed = true
         self.parent.activeView = self
@@ -65,7 +65,7 @@ function TopBarItem:onMouseDown( event )
     return true
 end
 
-function TopBarItem:onGlobalMouseUp( event )
+function TopBarItem:onGlobalMouseUp( MouseUpEvent event, Event.phases phase )
     if self.isPressed and event.mouseButton == MouseEvent.mouseButtons.LEFT then
         local parent = self.parent
         if parent.activeView == self then

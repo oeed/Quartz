@@ -17,7 +17,7 @@ function HomeItemContainer:initialise( ... )
     self:event( ChildRemovedInterfaceEvent, self.onChildRemoved )
 end
 
-function HomeItemContainer:onReady( event )
+function HomeItemContainer:onReady( ReadyInterfaceEvent event, Event.phases phase )
     self:updateLayout( true )
 end
 
@@ -59,10 +59,10 @@ function HomeItemContainer:update( deltaTime )
     end
 end
 
-function HomeItemContainer:onChildAdded( event )
+function HomeItemContainer:onChildAdded( ChildAddedInterfaceEvent event, Event.phases phase )
     self.needsLayoutUpdate = true
 end
 
-function HomeItemContainer:onChildRemoved( event )
+function HomeItemContainer:onChildRemoved( ChildRemovedInterfaceEvent event, Event.phases phase )
     self.needsLayoutUpdate = true
 end
