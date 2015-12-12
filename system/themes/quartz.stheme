@@ -17,7 +17,28 @@
     <TopBarItem>
         <fillColour type="Graphics.colours" default="TRANSPARENT" pressed="BLUE"/>
         <contentColour type="Graphics.colours" default="GREY" pressed="WHITE"/>
+        <leftMargin type="Number" default="10"/>
+        <rightMargin type="Number" default="10"/>
+        <separatorTopMargin type="Number" default="2" />
+        <separatorBottomMargin type="Number" default="2" />
+        <separatorColour type="Graphics.colours" default="LIGHT_GREY"/>
+        <separatorIsDashed type="Boolean" default="true"/>
     </TopBarItem>
+
+    <HomeItem>
+        <symbol type="Symbol" default="home"/>
+    </HomeItem>
+
+    <ProgramItem>
+        <titleColour type="Graphics.colours" default="BLACK" pressed="WHITE" focused="BLUE"/>
+        <statusColour type="Graphics.colours" default="GREY" pressed="LIGHT_BLUE" focused="LIGHT_BLUE"/>
+        <titleFont type="Font" default="systemFont"/>
+        <statusFont type="Font" default="systemFont"/>
+        <topMargin type="Number" default="2"/>
+        <bottomMargin type="Number" default="3"/>
+        <iconTitleMargin type="Number" default="3"/>
+        <titleStatusMargin type="Number" default="4"/>
+    </ProgramItem>
 
     <ClockItem>
         <analougeOutlineColour type="Graphics.colours" default="LIGHT_GREY" pressed="WHITE"/>
@@ -25,12 +46,14 @@
         <secondsColour type="Graphics.colours" default="RED" pressed="WHITE"/>
         <minutesColour type="Graphics.colours" default="BLACK" pressed="WHITE"/>
         <hoursColour type="Graphics.colours" default="BLACK" pressed="WHITE"/>
+        <secondsLength type="Number" default="5"/>
+        <minutesLength type="Number" default="5"/>
+        <hoursLength type="Number" default="4"/>
+        <topMargin type="Number" default="3"/>
+        <bottomMargin type="Number" default="3"/>
+        <analougeDiameter type="Number" default="11"/>
+        <font type="Font" default="systemFont"/>
     </ClockItem>
-
-    <ProgramItem>
-        <titleColour type="Graphics.colours" default="BLACK" pressed="WHITE" focused="BLUE"/>
-        <statusColour type="Graphics.colours" default="GREY" pressed="LIGHT_BLUE" focused="LIGHT_BLUE"/>
-    </ProgramItem>
 
     <ProgramView>
         <fillColour type="Graphics.colours" default="BLACK" />
