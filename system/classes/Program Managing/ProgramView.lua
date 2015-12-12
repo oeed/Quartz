@@ -29,11 +29,8 @@ function ProgramView:initialise( ... )
     termSizes.height = self.height
     self.redirect = self:getRedirect()
 
-    self:event( MouseDownEvent, self.onMouseEvent )
-    self:event( MouseDragEvent, self.onMouseEvent )
-    self:event( MouseUpEvent, self.onMouseEvent )
-    self:event( KeyUpEvent, self.onKeyEvent )
-    self:event( KeyDownEvent, self.onKeyEvent )
+    self:event( MouseEvent, self.onMouseEvent )
+    self:event( KeyEvent, self.onKeyEvent )
     self:event( CharacterEvent, self.onCharacterEvent )
     self:event( FocusesChangedInterfaceEvent, self.onFocusesChanged )
     self:event( ParentChangedInterfaceEvent, self.onParentChanged )
