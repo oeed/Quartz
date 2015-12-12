@@ -1,9 +1,8 @@
 
-
 local pins = {
-        LEFT = 0;
-        RIGHT = 1;
-    }
+    LEFT = 0;
+    RIGHT = 1;
+}
 
 class "TopBarItem" extends "View" {
     
@@ -24,28 +23,15 @@ function TopBarItem:initialise( ... )
     self.event:connectGlobal( MouseUpEvent, self.onGlobalMouseUp, EventManager.phase.BEFORE )
 end
 
-function TopBarItem:initialiseCanvas()
-    log("top bar item initialiseCanvas")
-    log(tostring(self))
+function TopBarItem:onDraw()
     self:super()
     local width, height, theme, canvas, isPinnedRight = self.width, self.height, self.theme, self.canvas, self.pin == pins.RIGHT
-    local separatorObject = canvas:insert( Separator( isPinnedRight and 1 or width, 3, 1, height - 4 ) )
-    local backgroundObject = canvas:insert( Rectangle( isPinnedRight and 2 or 1, 1, width - 1, height - 1 ) )
 
-    theme:connect( backgroundObject, "fillColour" )
-    
-    self.separatorObject = separatorObject
-    self.backgroundObject = backgroundObject
-end
+    canvas:fill( theme:value( "fillColour" ) )
 
-function TopBarItem:updateWidth( width )
-    self.separatorObject.x = self.pin == pins.RIGHT and 1 or width
-    self.backgroundObject.width = width - 1
-end
-
-function TopBarItem:updateHeight( height )
-    self.separatorObject.height = height - 4
-    self.backgroundObject.height = height - 1
+    local separatorTopMargin, separatorBottomMargin = theme:value( "separatorTopMargin" ), theme:value( "separatorBottomMargin" )
+    local separatorHeight = height - shadowPressedOffset - separatorBottomMargin - separatorTopMargin
+    canvas:fill( theme:value( "separatorColour" ), theme:value( "separatorIsDashed" ) and SeparatorMask( isPinnedRight and 1 or width, 1 + separatorTopMargin, 1, separatorHeight ) or RectangleMask( isPinnedRight and 1 or width, 1 + separatorTopMargin, 1, separatorHeight ) )
 end
 
 function TopBarItem:updateThemeStyle()
