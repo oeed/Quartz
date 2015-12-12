@@ -21,11 +21,6 @@ function HomeItemContainer:onReady( ReadyInterfaceEvent event, Event.phases phas
     self:updateLayout( true )
 end
 
-function HomeItemContainer:updateWidth( width )
-    -- self:updateLayout( true )
-    self.needsLayoutUpdate = true
-end
-
 function HomeItemContainer:updateLayout( dontAnimate )
     log("update layout")
     local children, width = self.children, self.width
