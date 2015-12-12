@@ -13,19 +13,24 @@ class "HomeContainer" extends "Container" implements "ISwitchableView" {
     isFocusDismissable = Boolean( false );
     isOpening = Boolean( true );
     scale = Number( 1 );
+    backgroundImage = Image;
     
 }
 
 function HomeContainer:initialise( ... )
     self:super( ... )
-   
+
+    self.image = Image.static:fromName( "Arc de Triomphe" )
+
     self:event( FocusesChangedInterfaceEvent, self.onFocusesChanged )
 end
 
 function HomeContainer:initialiseCanvas()
-    local canvas = ScaleableCanvas( self.x, self.y, self.width, self.height, self )
-    local imageObject = canvas:insert( ImageObject( 1, 1, 320, 213, "Arc de Triomphe" ) )
-    self.canvas = canvas
+    self.canvas = ScaleableCanvas( self.width, self.height, self )
+end
+
+function HomeContainer:onDraw()
+    self.canvas:image( self.image, 1, 1, self.width, self.height ) -- TODO: image fitting options (e.g. centre, squish etc.)
 end
 
 function HomeContainer.scale:set( scale )
