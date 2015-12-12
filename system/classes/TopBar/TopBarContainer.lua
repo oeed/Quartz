@@ -24,11 +24,6 @@ function TopBarContainer:initialise( ... )
     self:event( ProgramClosedInterfaceEvent, self.onProgramClosed )
 end
 
-function TopBarContainer:initialiseCanvas()
-    self:super()
-    self.theme:connect( self.canvas, "fillColour" )
-end
-
 function TopBarContainer:onReady( ReadyInterfaceEvent event, Event.phases phase )
     self.switchableItems[self.application.container.homeContainer] = self.homeItem
     self:updateLayout( true )
