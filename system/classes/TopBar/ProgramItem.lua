@@ -44,7 +44,7 @@ function ProgramItem:onDraw()
     local x = math.floor( ( width - selectedConfig[1] ) / 2 ) + 1
     -- Icon
     if selectedConfig[2] then
-        local iconMask = RectangleMask( x, 1 + topMargin, ICON_WIDTH, ICON_HEIGHT )
+        local iconMask = RectangleMask( x, topMargin, ICON_WIDTH, ICON_HEIGHT )
         canvas:fill( Graphics.colours.GREEN, iconMask )
         x = x + ICON_WIDTH + (selectedConfig[3] and iconTitleMargin or 0)
     end
