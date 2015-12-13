@@ -20,7 +20,7 @@ class "HomeContainer" extends "Container" implements "ISwitchableView" {
 function HomeContainer:initialise( ... )
     self:super( ... )
 
-    self.image = Image.static:fromName( "Arc de Triomphe" )
+    self.backgroundImage = Image.static:fromName( "Arc de Triomphe" )
 
     self:event( FocusesChangedInterfaceEvent, self.onFocusesChanged )
 end
@@ -30,7 +30,7 @@ function HomeContainer:initialiseCanvas()
 end
 
 function HomeContainer:onDraw()
-    self.canvas:image( self.image, 1, 1, self.width, self.height ) -- TODO: image fitting options (e.g. centre, squish etc.)
+    self.canvas:image( self.backgroundImage, 1, 1, self.width, self.height ) -- TODO: image fitting options (e.g. centre, squish etc.)
 end
 
 function HomeContainer.scale:set( scale )
