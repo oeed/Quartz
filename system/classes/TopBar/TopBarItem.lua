@@ -32,8 +32,7 @@ function TopBarItem:onDraw()
 
     if self.isSeparatorVisible then
         local separatorTopMargin, separatorBottomMargin = theme:value( "separatorTopMargin" ), theme:value( "separatorBottomMargin" )
-        local separatorHeight = height - shadowPressedOffset - separatorBottomMargin - separatorTopMargin
-        canvas:fill( theme:value( "separatorColour" ), theme:value( "separatorIsDashed" ) and SeparatorMask( isPinnedRight and 1 or width, 1 + separatorTopMargin, 1, separatorHeight ) or RectangleMask( isPinnedRight and 1 or width, 1 + separatorTopMargin, 1, separatorHeight ) )
+        canvas:fill( theme:value( "separatorColour" ), theme:value( "separatorIsDashed" ) and SeparatorMask( isPinnedRight and 1 or width, 1 + separatorTopMargin, 1, height - separatorTopMargin - separatorBottomMargin ) or RectangleMask( isPinnedRight and 1 or width, 1 + separatorTopMargin, 1, separatorHeight ) )
     end
 end
 
