@@ -8,13 +8,8 @@ local MIN_MARGIN = 4
 
 class "ProgramItem" extends "TopBarItem" {
     
-    isActive = false;
-    
-    program = false;
-
-    titleObject = false;
-    statusObject = false;
-    iconObject = false;
+    isActive = Boolean( false );
+    program = Program;
 
 }
 
