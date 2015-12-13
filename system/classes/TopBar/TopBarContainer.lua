@@ -70,7 +70,7 @@ function TopBarContainer:updateLayout( dontAnimate )
             childView.x = x
             childView.width = width
             if not isVisible then
-                childView:animate( "y", 1, ANIMATION_TIME, function() childView.separatorObject.isVisible = true end, Animation.easings.IN_SINE )
+                childView:animate( "y", 1, ANIMATION_TIME, function() childView.isSeparatorVisible = true end, Animation.easings.IN_SINE )
                 childView.isVisible = true
             end
         else
@@ -133,7 +133,7 @@ end
 function TopBarContainer:animateRemove( childView )
     childView:animate( "y", 1 - childView.height, ANIMATION_TIME, function() self:remove( childView )  end, ANIMATION_EASING )
     childView.isRemoving = true
-    childView.separatorObject.isVisible = false
+    childView.isSeparatorVisible = false
     self.needsLayoutUpdate = true
 end
 
@@ -148,10 +148,12 @@ end
 
 function TopBarContainer:onChildAdded( ChildAddedInterfaceEvent event, Event.phases phase )
     local childView = event.childView
-    childView.y = self.height + 1
-    childView.isVisible = false
-    childView.separatorObject.isVisible = false
-    childView.isRemoving = false
+    if childView:typeOf( TopBarItem ) then
+        childView.y = self.height + 1
+        childView.isVisible = false
+        childView.isSeparatorVisible = false
+        childView.isRemoving = false
+    end
 
     self.needsLayoutUpdate = true
     self:sendToFront( self.separatorView )
@@ -175,6 +177,6 @@ function TopBarContainer:onFocusesChanged( FocusesChangedInterfaceEvent event, E
             self.activeView = self.switchableItems[switchableView]
         end
     else
-        self.activeView = false
+        self.activeView = nil
     end
 end
