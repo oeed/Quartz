@@ -137,7 +137,7 @@ function ProgramView:closeFlyUp( ready )
     self:animate( "scale", ANIMATION_SCALE, ANIMATION_SCALE_TIME, function()
         ready()
     end, ANIMATION_SCALE_EASING, nil, false )
-    self:animateY( -self.height, ANIMATION_FLY_UP_TIME, function()
+    self:animate( "y", -self.height, ANIMATION_FLY_UP_TIME, function()
         self:dispose()
     end, ANIMATION_EASING, ANIMATION_SCALE_TIME - ANIMATION_OVERLAP_TIME )--ANIMATION_FLY_DELAY )
 end
@@ -146,14 +146,14 @@ function ProgramView:flyInFocused( fromLeft )
     self.scale = 0.8
     local width = self.width
     self.x = fromLeft and -width or 1 + width
-    self:animateX( 1, ANIMATION_FLY_TIME, nil, ANIMATION_EASING, ANIMATION_FLY_TIME/2 - 0.1 )
+    self:animate( "x", 1, ANIMATION_FLY_TIME, nil, ANIMATION_EASING, ANIMATION_FLY_TIME/2 - 0.1 )
     self:animate( "scale", 1, ANIMATION_SCALE_TIME, nil, ANIMATION_SCALE_EASING, ANIMATION_FLY_TIME - 0.1, false )
 end
 
 function ProgramView:flyOutFocused( toRight )
     local width = self.width
     local x = toRight and 1 + width or -width
-    self:animateX( x, ANIMATION_FLY_TIME, nil, ANIMATION_EASING, ANIMATION_FLY_TIME/2 - 0.1 )
+    self:animate( "x", x, ANIMATION_FLY_TIME, nil, ANIMATION_EASING, ANIMATION_FLY_TIME/2 - 0.1 )
     self:animate( "scale", 0.8, ANIMATION_SCALE_TIME, nil, ANIMATION_SCALE_EASING, nil, false )
 
 end

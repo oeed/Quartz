@@ -70,12 +70,12 @@ function TopBarContainer:updateLayout( dontAnimate )
             childView.x = x
             childView.width = width
             if not isVisible then
-                childView:animateY( 1, ANIMATION_TIME, function() childView.separatorObject.isVisible = true end, Animation.easings.IN_SINE )
+                childView:animate( "y", 1, ANIMATION_TIME, function() childView.separatorObject.isVisible = true end, Animation.easings.IN_SINE )
                 childView.isVisible = true
             end
         else
-            childView:animateX( x, ANIMATION_TIME, nil, ANIMATION_EASING )
-            childView:animateWidth( width, ANIMATION_TIME, nil, ANIMATION_EASING )
+            childView:animate( "x", x, ANIMATION_TIME, nil, ANIMATION_EASING )
+            childView:animate( "width", width, ANIMATION_TIME, nil, ANIMATION_EASING )
         end
         if childView == activeView then
             separatorView:animate( "activeX", separatorX, ANIMATION_TIME, nil, ANIMATION_EASING )
@@ -131,7 +131,7 @@ function TopBarContainer:update( deltaTime )
 end
 
 function TopBarContainer:animateRemove( childView )
-    childView:animateY( 1 - childView.height, ANIMATION_TIME, function() self:remove( childView )  end, ANIMATION_EASING )
+    childView:animate( "y", 1 - childView.height, ANIMATION_TIME, function() self:remove( childView )  end, ANIMATION_EASING )
     childView.isRemoving = true
     childView.separatorObject.isVisible = false
     self.needsLayoutUpdate = true

@@ -33,7 +33,7 @@ function HomeItemContainer:updateLayout( dontAnimate )
             if dontAnimate then
                 childView.y = y
             else
-                childView:animateY( y, time, nil, easing )
+                childView:animate( "y", y, time, nil, easing )
             end
             log(width)
             childView.x = math.ceil( ( width - childView.width ) / 2 ) + 2
