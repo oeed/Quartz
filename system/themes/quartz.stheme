@@ -75,6 +75,7 @@
         <fillColour type="Graphics.colours" default="WHITE"/>
         <textColour type="Graphics.colours" default="BLACK"/>
         <outlineColour type="Graphics.colours" default="LIGHT_GREY"/>
+        <outlineThickness type="Number" default="1"/>
         <shadowSize type="Number" default="4"/>
     </HomeTile>
 
