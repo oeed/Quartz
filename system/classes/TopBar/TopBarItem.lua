@@ -10,7 +10,7 @@ class "TopBarItem" extends "View" {
     
     isPressed = Boolean( false );
     isCanvasHitTested = Boolean( false );
-    pin = Number; -- TODO: this doesn't work: TopBarItem.pins( TopBarItem.pins.LEFT );
+    pin = Number( pins.LEFT ); -- TODO: this doesn't work: TopBarItem.pins( TopBarItem.pins.LEFT );
     isRemoving = Boolean( false );
     size = Number.allowsNil;
     height = Number( 14 );
