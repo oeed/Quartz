@@ -5,8 +5,8 @@ local ANIMATION_EASING = Animation.easings.OUT_SINE
 class "TopBarContainer" extends "Container" {
     
     interfaceName = "topbarcontainer";
-    separatorView = InterfaceOutlet();
-    homeItem = InterfaceOutlet();
+    separatorView = TopBarSeparatorView.link;
+    homeItem = HomeItem.link;
     needsLayoutUpdate = false;
     activeView = false;
     switchableItems = {};

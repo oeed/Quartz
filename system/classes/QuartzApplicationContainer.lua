@@ -1,8 +1,8 @@
 
 class "QuartzApplicationContainer" extends "ApplicationContainer" {
 
-    topBar = InterfaceOutlet();
-    homeContainer = InterfaceOutlet();
+    topBar = TopBarContainer.link;
+    homeContainer = HomeContainer.link;
 
 }
 
