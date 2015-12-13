@@ -57,7 +57,7 @@ function TopBarItem:onGlobalMouseUp( MouseUpEvent event, Event.phases phase )
     if self.isPressed and event.mouseButton == MouseEvent.mouseButtons.LEFT then
         local parent = self.parent
         if parent.activeView == self then
-            parent.activeView = false
+            parent.activeView = nil
         end
         self.isPressed = false
         if self:hitTestEvent( event ) then
