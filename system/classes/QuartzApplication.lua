@@ -1,9 +1,9 @@
 
 class "QuartzApplication" extends "Application" {
 	
-	name = "Quartz";
-	interfaceName = "quartz";
-	programManager = false;
+	name = String( "Quartz" );
+	interfaceName = String( "quartz" ).allowsNil;
+	programManager = ProgramManager;
 
 }
 
