@@ -18,11 +18,12 @@ function HomeItem:onReady( ReadyInterfaceEvent event, Event.phases phase )
 end
 
 function HomeItem:onDraw()
+    self:super()
     local canvas, theme = self.canvas, self.theme
     local symbol = theme:value( "symbol" )
-    local leftMargin, topMargin = theme:value( "leftMargin" ), theme:value( "topMargin" )
+    local leftMargin = theme:value( "leftMargin" )
     canvas:fill( theme:value( "fillColour" ) )
-    canvas:fill( theme:value( "contentColour" ), SymbolMask( 1 + leftMargin, 1 + topMargin, symbol ) )
+    canvas:fill( theme:value( "contentColour" ), SymbolMask( 1 + leftMargin, 1 + math.floor( ( self.height - symbol.height ) / 2 ), symbol ) )
 end
 
 function HomeItem:onAction( ActionInterfaceEvent event, Event.phases phase )
