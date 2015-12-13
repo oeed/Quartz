@@ -1,9 +1,9 @@
 <QuartzApplicationContainer themeName="quartz">
-    <TopBarContainer identifier=topBar x=1 y=1 width="100%">
+    <TopBarContainer identifier=topBar x=1 y=1 width="320">
     </TopBarContainer>
 
-    <HomeContainer identifier=homeContainer width="100%" height="100% - 14" y=15>
-        <HomeItemContainer width="100%">
+    <HomeContainer identifier=homeContainer width="320" height="306" y=15>
+        <HomeItemContainer width="320">
             <HomeSearchBox width=170/>
             <HomeTile height=59 width=240></HomeTile>
             <HomeTile height=59 width=240></HomeTile>
@@ -26,7 +26,7 @@
 
  -->
 
-	<!-- <MenuBar width="100%" >
+	<!-- <MenuBar width="320" >
 		<MenuBarItem text=File menuName=file />
 		<MenuBarItem text=Edit menuName=edit />
 	</MenuBar> -->
