@@ -60,8 +60,8 @@
     </ProgramView>
 
     <TopBarSeparatorView>
-        <fillColour type="Graphics.colours" default="GREY"/>
-        <isDashed type="Boolean" default="false"/>
+        <separatorColour type="Graphics.colours" default="GREY"/>
+        <separatorIsDashed type="Boolean" default="false"/>
         <activeSeparatorColour type="Graphics.colours" default="BLUE"/>
         <activeSeparatorIsDashed type="Boolean" default="false"/>
     </TopBarSeparatorView>
