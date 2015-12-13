@@ -6,15 +6,10 @@ class "TopBarSeparatorView" extends "SeparatorView" {
 
 }
 
-function TopBarSeparatorView:initialiseCanvas()
+function TopBarSeparatorView:onDraw()
     self:super()
-    local theme, canvas = self.theme, self.canvas
-    local activeSeparatorObject = canvas:insert( Separator( self.activeX, 1, self.activeWidth, self.height ) )
-
-    theme:connect( activeSeparatorObject, "fillColour", "activeSeparatorColour" )
-    theme:connect( activeSeparatorObject, "isDashed", "activeSeparatorIsDashed" )
-
-    self.activeSeparatorObject = activeSeparatorObject
+    local theme = self.theme
+    self.canvas:fill( theme:value( "activeSeparatorColour" ), theme:value( "activeSeparatorIsDashed" ) and SeparatorMask( self.activeX, 1, self.activeWidth, self.height ) or RectangleMask( self.activeX, 1, self.activeWidth, self.height ) )
 end
 
 function TopBarSeparatorView.activeX:set( activeX )
