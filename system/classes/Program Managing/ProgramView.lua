@@ -51,7 +51,7 @@ function ProgramView:onDraw()
 
     if scale == 1 then
         for i = 1, #buffer do
-            local colour = buffer[y * width + x] or fillColour
+            local colour = buffer[i] or fillColour
             pixels[i] = colour == TRANSPARENT and fillColour or colour
         end
     else
@@ -64,7 +64,7 @@ function ProgramView:onDraw()
         for x = 1, scaledWidth do
             for y = 0, scaledHeight - 1 do -- just so there's no need for y-1 below
                 local colour = buffer[ceil( y * heightRatio ) * width + ceil( x * widthRatio )] or TRANSPARENT
-                local nx, ny = x + xMin + _x, y + yMin + _y
+                local nx, ny = x + xMin, y + yMin
                 if colour ~= TRANSPARENT and nx >= 1 and ny >= 1 and nx <= width and ny <= height then
                     pixels[( ny - 1 ) * width + nx] = colour
                 end
