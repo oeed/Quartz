@@ -16,13 +16,3 @@ function HomeTile:onDraw()
 
     self.shadowSize = theme:value( "shadowSize" )
 end
-
-function HomeTile:updateWidth( width )
-    self.backgroundObject.width = width - SHADOW_SIZE_X
-    self.shadowObject.width = width - SHADOW_SIZE_X
-end
-
-function HomeTile:updateHeight( height )
-    self.backgroundObject.height = height - SHADOW_SIZE_Y
-    self.shadowObject.height = height - SHADOW_SIZE_Y
-end
