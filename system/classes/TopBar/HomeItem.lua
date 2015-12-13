@@ -28,8 +28,3 @@ end
 function HomeItem:onAction( ActionInterfaceEvent event, Event.phases phase )
    self.homeContainer:focus() 
 end
-
-function HomeItem:updateWidth( width )
-    self.separatorObject.x = width
-    self.backgroundObject.width = width - 1
-end
