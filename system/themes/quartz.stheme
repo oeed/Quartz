@@ -34,8 +34,8 @@
         <statusColour type="Graphics.colours" default="GREY" pressed="LIGHT_BLUE" focused="LIGHT_BLUE"/>
         <titleFont type="Font" default="systemFont"/>
         <statusFont type="Font" default="systemFont"/>
-        <topMargin type="Number" default="2"/>
-        <bottomMargin type="Number" default="3"/>
+        <topMargin type="Number" default="3"/>
+        <bottomMargin type="Number" default="2"/>
         <iconTitleMargin type="Number" default="3"/>
         <titleStatusMargin type="Number" default="4"/>
     </ProgramItem>
