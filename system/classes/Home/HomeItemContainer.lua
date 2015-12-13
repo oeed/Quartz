@@ -22,7 +22,6 @@ function HomeItemContainer:onReady( ReadyInterfaceEvent event, Event.phases phas
 end
 
 function HomeItemContainer:updateLayout( dontAnimate )
-    log("update layout")
     local children, width = self.children, self.width
     local y = TOP_MARGIN + 1
 
@@ -35,9 +34,7 @@ function HomeItemContainer:updateLayout( dontAnimate )
             else
                 childView:animate( "y", y, time, nil, easing )
             end
-            log(width)
             childView.x = math.ceil( ( width - childView.width ) / 2 ) + 2
-            log(math.ceil( ( width - childView.width ) / 2 ) + 2)
             y = y + childView.height + BETWEEN_MARGIN
         end
     end
