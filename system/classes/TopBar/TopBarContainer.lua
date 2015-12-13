@@ -1,6 +1,7 @@
 
 local ANIMATION_TIME = 0.5
 local ANIMATION_EASING = Animation.easings.OUT_SINE
+local pins = TopBarItem.pins
 
 class "TopBarContainer" extends "Container" {
     
@@ -87,11 +88,11 @@ function TopBarContainer:updateLayout( dontAnimate )
         if not childView:typeOf( SeparatorView ) and not childView.isRemoving then
             local pin, size = childView.pin, childView.size
             if size then
-                if pin == "left" then
+                if pin == pins.LEFT then
                     updateFrame( childView, leftX, size )
                     remainingWidth = remainingWidth - size
                     leftX = leftX + size
-                elseif pin == "right" then
+                elseif pin == pins.RIGHT then
                     rightX = rightX + size
                     updateFrame( childView, width - rightX, size )
                     remainingWidth = remainingWidth - size
