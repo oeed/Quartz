@@ -1,7 +1,14 @@
 
+local states = {
+    UNINTIALISED = 0;
+    RUNNING = 1;
+    PAUSED = 2;
+    FINISHED = 3;
+}
+
 class "Program" {
     
-    state = false;
+    state = states.UNINTIALISED;
     isRunning = false; -- whether the COROUTINE is running (not just the program)
 
     programManager = false;
@@ -11,12 +18,7 @@ class "Program" {
     title = "Blah";
     status = "boo";
 
-    states = {
-        UNINTIALISED = false;
-        RUNNING = 1;
-        PAUSED = 2;
-        FINISHED = 3;
-    };
+    states = Enum( Number, states );
 
     eventQueue = {};
     environment = {};
@@ -52,7 +54,7 @@ function Program:initialise( bundle, ... )
 end
 
 function Program:close( isForced )
-    local state, states = self.state, self.states
+    local state = self.state
     local willClose = isForced or state == states.FINISHED
     if not isForced then
         willClose = true
@@ -81,7 +83,6 @@ function Program.environment:get()
 end
 
 function Program:update()
-    local states = Program.states
     local eventQueue, redirect, programCoroutine = self.eventQueue, self.programView.redirect, self.coroutine
     local firstEvent = eventQueue[1]
     while self.state == states.RUNNING and firstEvent do
