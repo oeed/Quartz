@@ -55,11 +55,11 @@ end
 function HomeContainer:flyInFocused( fromLeft )
     self.scale = ANIMATION_SCALE
     self.x = -self.width
-    self:animateX( 1, ANIMATION_FLY_TIME, nil, ANIMATION_EASING, ANIMATION_FLY_TIME / 2 - 0.1 )
+    self:animate( "x", 1, ANIMATION_FLY_TIME, nil, ANIMATION_FLY_EASING, ANIMATION_FLY_TIME / 2 - 0.1 )
     self:animate( "scale", 1, ANIMATION_SCALE_TIME, nil, ANIMATION_SCALE_EASING, ANIMATION_FLY_TIME - 0.1, false )
 end
 
 function HomeContainer:flyOutFocused( toRight )
-    self:animateX( -self.width, ANIMATION_FLY_TIME, nil, ANIMATION_EASING, ANIMATION_FLY_TIME/2 - 0.1 )
+    self:animate( "x", -self.width, ANIMATION_FLY_TIME, nil, ANIMATION_FLY_EASING, ANIMATION_FLY_TIME/2 - 0.1 )
     self:animate( "scale", ANIMATION_SCALE, ANIMATION_SCALE_TIME, nil, ANIMATION_SCALE_EASING, nil, false )
 end
