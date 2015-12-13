@@ -73,7 +73,7 @@ end
 
 function ProgramItem:onGlobalMouseUp( MouseUpEvent event, Event.phases phase )
     local wasPressed = true--self.isPressed
-    self:super( event )
+    self:super( event, phase )
     if wasPressed and self:hitTestEvent( event ) then
         if event.mouseButton == MouseEvent.mouseButtons.LEFT then
             self.program:focus()
