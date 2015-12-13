@@ -18,6 +18,7 @@ class "ProgramView" extends "View" implements "ISwitchableView" {
     isOpening = Boolean( true );
     isFocusDismissable = Boolean( false );
     termSizes = Table( { width = 1; height = 1 } );
+    buffer = Table( {} )
 
 }
 
