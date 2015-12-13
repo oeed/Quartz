@@ -14,6 +14,7 @@ class "TopBarItem" extends "View" {
     isRemoving = Boolean( false );
     size = Number.allowsNil;
     height = Number( 14 );
+    isSeparatorVisible = Boolean( true );
 
 }
 
@@ -29,9 +30,11 @@ function TopBarItem:onDraw()
 
     canvas:fill( theme:value( "fillColour" ) )
 
-    local separatorTopMargin, separatorBottomMargin = theme:value( "separatorTopMargin" ), theme:value( "separatorBottomMargin" )
-    local separatorHeight = height - shadowPressedOffset - separatorBottomMargin - separatorTopMargin
-    canvas:fill( theme:value( "separatorColour" ), theme:value( "separatorIsDashed" ) and SeparatorMask( isPinnedRight and 1 or width, 1 + separatorTopMargin, 1, separatorHeight ) or RectangleMask( isPinnedRight and 1 or width, 1 + separatorTopMargin, 1, separatorHeight ) )
+    if self.isSeparatorVisible then
+        local separatorTopMargin, separatorBottomMargin = theme:value( "separatorTopMargin" ), theme:value( "separatorBottomMargin" )
+        local separatorHeight = height - shadowPressedOffset - separatorBottomMargin - separatorTopMargin
+        canvas:fill( theme:value( "separatorColour" ), theme:value( "separatorIsDashed" ) and SeparatorMask( isPinnedRight and 1 or width, 1 + separatorTopMargin, 1, separatorHeight ) or RectangleMask( isPinnedRight and 1 or width, 1 + separatorTopMargin, 1, separatorHeight ) )
+    end
 end
 
 function TopBarItem:updateThemeStyle()
