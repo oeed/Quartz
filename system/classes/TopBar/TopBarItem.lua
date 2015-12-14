@@ -28,7 +28,8 @@ function TopBarItem:onDraw()
     self:super()
     local width, height, theme, canvas, isPinnedRight = self.width, self.height, self.theme, self.canvas, self.pin == pins.RIGHT
 
-    canvas:fill( theme:value( "fillColour" ) )
+    local rectangleMask = RectangleMask( isPinnedRight and 2 or 1, 1, width - 1, height )
+    canvas:fill( theme:value( "fillColour" ), rectangleMask )
 
     if self.isSeparatorVisible then
         local separatorTopMargin, separatorBottomMargin = theme:value( "separatorTopMargin" ), theme:value( "separatorBottomMargin" )
