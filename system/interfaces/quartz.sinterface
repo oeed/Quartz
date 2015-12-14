@@ -1,33 +1,14 @@
 <QuartzApplicationContainer themeName="quartz">
-    <TopBarContainer identifier=topBar x=1 y=-18 width="320">
-    </TopBarContainer>
 
-    <HomeContainer identifier=homeContainer width="320" height="306" y=15>
+    <HomeContainer identifier=homeContainer width="320" height="220">
         <HomeItemContainer width="320">
             <HomeSearchBox width=170/>
             <HomeTile height=59 width=240></HomeTile>
             <HomeTile height=59 width=240></HomeTile>
         </HomeItemContainer>
     </HomeContainer>
-    
 
-    <!-- <TextBox identifier=text width=130 x=100 y=50 text="I'm a text box!" /> -->
+    <TopBarContainer identifier=topBar x=10 y=-18 width="320">
+    </TopBarContainer>    
 
-    <!-- <TextBox x=2 y=80 placeholder="Search..." /> -->
-    <!-- <Button x=1 y=1 text="Folder" />
-    <Button x=1 y=20 text="15 Items" />
-    <Button x=1 y=40 text="Empty" />
-    <Button x=1 y=60 text="Text File" />
-    <Button x=1 y=80 text="5kB" />
-    <Button x=1 y=100 text="Bug Reports" />
-
-
-    <TextBox width=130 x=100 y=50 text="I'm a text box!" />
-
- -->
-
-	<!-- <MenuBar width="320" >
-		<MenuBarItem text=File menuName=file />
-		<MenuBarItem text=Edit menuName=edit />
-	</MenuBar> -->
 </QuartzApplicationContainer>
