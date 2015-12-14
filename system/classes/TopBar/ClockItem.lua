@@ -128,12 +128,12 @@ end
 -- TODO: this is being called twice each update
 function ClockItem.size:get()
     local theme = self.theme
-    local margin = theme:value( "leftMargin" ) + theme:value( "rightMargin" )
+    local margin = theme:value( "leftMargin" ) + theme:value( "rightMargin" ) + 1
     if self.isAnalouge then
-        return theme:value( "analougeDiameter" ) + 2 * MARGIN + 1
+        return theme:value( "analougeDiameter" ) + margin
     end
 
     local text = self.text
     local fontWidth = self.theme:value( "font" ):getWidth( text )
-    return fontWidth + margin + 1
+    return fontWidth + margin
 end
