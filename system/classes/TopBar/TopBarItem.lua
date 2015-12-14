@@ -36,6 +36,11 @@ function TopBarItem:onDraw()
     end
 end
 
+function TopBarItem.isSeparatorVisible:set( isSeparatorVisible )
+    self.isSeparatorVisible = isSeparatorVisible    
+    self.needsDraw = true
+end
+
 function TopBarItem:updateThemeStyle()
     self.theme.style = self.isPressed and "pressed" or "default"
 end
