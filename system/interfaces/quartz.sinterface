@@ -1,5 +1,5 @@
 <QuartzApplicationContainer themeName="quartz">
-    <TopBarContainer identifier=topBar x=1 y=1 width="320">
+    <TopBarContainer identifier=topBar x=1 y=-18 width="320">
     </TopBarContainer>
 
     <HomeContainer identifier=homeContainer width="320" height="306" y=15>
