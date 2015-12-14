@@ -45,14 +45,6 @@ function ClockItem:onDraw()
             local width = math.floor(math.max(math.abs(rawWidth), 1) + 0.5)
             local height = math.floor(math.max(math.abs(rawHeight), 1) + 0.5)
             local isFromTopLeft = rawWidth * rawHeight <= 0
-            -- log(rawWidth)
-            -- log(rawHeight)
-            log(isFromTopLeft)
-            log(textutils.serialise {rawWidth > 0 and centreX or (1 + math.floor( centreX - width + 0.5 )),
-                   rawHeight < 0 and centreY or (1 + math.floor( centreY - height + 0.5 )),
-                   width,
-                   height,
-                   isFromTopLeft})
             return rawWidth > 0 and centreX or (1 + math.floor( centreX - width + 0.5 )),
                    rawHeight < 0 and centreY or (1 + math.floor( centreY - height + 0.5 )),
                    width,
@@ -94,7 +86,6 @@ function ClockItem.isAnalouge:set( isAnalouge )
 end
 
 function ClockItem:updateClock( dontSchedule )
-    self.needsDraw = true
     local isAnalouge = self.isAnalouge
     if not isAnalouge then
         local time = os.time()
@@ -126,6 +117,7 @@ end
 function ClockItem.text:set( text )
     if self.text ~= text then
         self.text = text
+        self.needsDraw = true
         local parent = self.parent
         if parent then
             parent.needsLayoutUpdate = true
