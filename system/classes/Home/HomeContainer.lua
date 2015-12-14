@@ -14,15 +14,13 @@ class "HomeContainer" extends "Container" implements "ISwitchableView" {
     isOpening = Boolean( true );
     scale = Number( 1 );
     backgroundImage = Image;
+    hadFirstFocus = Boolean( false );
     
 }
 
 function HomeContainer:initialise( ... )
     self:super( ... )
-
     self.backgroundImage = Image.static:fromName( "Arc de Triomphe" )
-
-    self:event( FocusesChangedInterfaceEvent, self.onFocusesChanged )
 end
 
 function HomeContainer:initialiseCanvas()
@@ -40,15 +38,16 @@ function HomeContainer.scale:set( scale )
     canvas.scaleY = scale
 end
 
-function HomeContainer:onFocusesChanged( FocusesChangedInterfaceEvent event, Event.phases phase )
-    local oldContains = event:didContain( self )
-    local contains = event:contains( self )
-    if oldContains ~= contains then
-        if contains then
-            self:flyInFocused()
-        elseif oldContains then
-            self:flyOutFocused()
+function HomeContainer.isFocused:set( isFocused )
+    self.isFocused = isFocused
+    if not self.hadFirstFocus then
+        if isFocused then
+            self.hadFirstFocus = true
         end
+    elseif isFocused then
+        self:flyInFocused()
+    else
+        self:flyOutFocused()
     end
 end
 
