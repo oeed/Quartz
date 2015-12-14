@@ -100,10 +100,6 @@ function ProgramView:onParentChanged( ParentChangedInterfaceEvent event, Event.p
     -- self:animate( "scale", 1, ANIMATION_SCALE_TIME, nil, ANIMATION_SCALE_EASING, ANIMATION_SCALE_TIME + ANIMATION_FLY_UP_TIME - ANIMATION_OVERLAP_TIME, false)
 end
 
-function ProgramView.isFocused:set( isFocused )
-    self:super( isFocused )
-end
-
 function ProgramView:onFocusesChanged( FocusesChangedInterfaceEvent event, Event.phases phase )
     local oldContains = event:didContain( self )
     local contains = event:contains( self )
