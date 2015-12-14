@@ -27,7 +27,7 @@ end
 function TopBarContainer:onReady( ReadyInterfaceEvent event, Event.phases phase )
     self.switchableItems[self.application.container.homeContainer] = self.homeItem
     self:updateLayout( true )
-    self:animate( "y", 1, ANIMATION_TIME, nil, ANIMATION_EASING )
+    self:animate( "y", 1, 0.6, nil, Animation.easings.OUT_QUART, 0.5 )
 end
 
  -- this is the view with the separator under it. not neccesarily the active program/area (during mouse down)
@@ -56,6 +56,7 @@ function TopBarContainer:updateLayout( dontAnimate )
 
     local function updateFrame( childView, x, width )
         local isVisible = dontAnimate and true or childView.isVisible
+
         local separatorX, separatorWidth = x + (pin == "right" and 1 or 0), width - 1
         if dontAnimate or not isVisible then
             childView.x = x
