@@ -1,8 +1,8 @@
 
 class "ProgramManager" {
     
-    programs = {};
-    owner = false;
+    programs = Table( {} );
+    owner = QuartzApplication;
 
 }
 
