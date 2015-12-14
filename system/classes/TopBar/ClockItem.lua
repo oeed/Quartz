@@ -52,9 +52,9 @@ function ClockItem:onDraw()
                    isFromTopLeft
         end
         
-        local secondsMask = Line( position( seconds / 60, theme:value( "secondsLength" ) ) )
-        local minutesMask = Line( position( minutes / 60, theme:value( "minutesLength" ) ) )
-        local hoursMask = Line( position( hours / 12 + (minutes > 40 and minutes / 60 / 12 or 0), theme:value( "hoursLength" ) ) )
+        local secondsMask = LineMask( position( seconds / 60, theme:value( "secondsLength" ) ) )
+        local minutesMask = LineMask( position( minutes / 60, theme:value( "minutesLength" ) ) )
+        local hoursMask = LineMask( position( hours / 12 + (minutes > 40 and minutes / 60 / 12 or 0), theme:value( "hoursLength" ) ) )
 
         canvas:fill( theme:value( "hoursColour" ), hoursMask )
         canvas:fill( theme:value( "minutesColour" ), minutesMask )
