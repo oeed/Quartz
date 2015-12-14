@@ -39,7 +39,7 @@ function HomeContainer.scale:set( scale )
 end
 
 function HomeContainer.isFocused:set( isFocused )
-    self.isFocused = isFocused
+    self:super( isFocused )
     if not self.hadFirstFocus then
         if isFocused then
             self.hadFirstFocus = true
