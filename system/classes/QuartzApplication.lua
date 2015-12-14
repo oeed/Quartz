@@ -19,7 +19,7 @@ function QuartzApplication:initialise()
 
 	self:event( CharacterEvent, self.onChar )
 		
-	self:schedule(function() self.programManager:run( Program( Folder( "applications/Test.application" ) ) ) end,0.05)
+	-- self:schedule(function() self.programManager:run( Program( Folder( "applications/Test.application" ) ) ) end,0.05)
 end
 
 function QuartzApplication:update()
