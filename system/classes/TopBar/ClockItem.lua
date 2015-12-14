@@ -24,7 +24,7 @@ function ClockItem:onDraw()
     local leftMargin, rightMargin, topMargin, bottomMargin = theme:value( "leftMargin" ), theme:value( "rightMargin" ), theme:value( "topMargin" ), theme:value( "bottomMargin" )
     if self.isAnalouge then
         local analougeDiameter = theme:value( "analougeDiameter" )
-        local circleMask = CircleMask( leftMargin + 1, topMargin + 1, analougeDiameter )
+        local circleMask = CircleMask( leftMargin + 1, math.floor( ( height - analougeDiameter ) / 2 + 0.5 ), analougeDiameter )
         canvas:fill( theme:value( "analougeFillColour" ), circleMask )
         canvas:outline( theme:value( "analougeOutlineColour" ), circleMask, theme:value( "analougeOutlineThickness" ) )
 
@@ -37,7 +37,7 @@ function ClockItem:onDraw()
         end
 
         local analougeRadius = analougeDiameter / 2
-        local centreX, centreY = math.floor( 1 + leftMargin + analougeRadius ), math.floor( 1 + topMargin + analougeRadius )
+        local centreX, centreY = math.floor( 1 + leftMargin + analougeRadius ), math.floor( ( height - analougeDiameter ) / 2 + 0.5 + analougeRadius)
         local function position( timePercentage, length, object )
             local angle = 2 * math.pi * timePercentage
             local rawWidth = length * math.sin( angle )
@@ -45,6 +45,14 @@ function ClockItem:onDraw()
             local width = math.floor(math.max(math.abs(rawWidth), 1) + 0.5)
             local height = math.floor(math.max(math.abs(rawHeight), 1) + 0.5)
             local isFromTopLeft = rawWidth * rawHeight <= 0
+            -- log(rawWidth)
+            -- log(rawHeight)
+            log(isFromTopLeft)
+            log(textutils.serialise {rawWidth > 0 and centreX or (1 + math.floor( centreX - width + 0.5 )),
+                   rawHeight < 0 and centreY or (1 + math.floor( centreY - height + 0.5 )),
+                   width,
+                   height,
+                   isFromTopLeft})
             return rawWidth > 0 and centreX or (1 + math.floor( centreX - width + 0.5 )),
                    rawHeight < 0 and centreY or (1 + math.floor( centreY - height + 0.5 )),
                    width,
