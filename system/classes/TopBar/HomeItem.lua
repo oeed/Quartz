@@ -22,7 +22,6 @@ function HomeItem:onDraw()
     local canvas, theme = self.canvas, self.theme
     local symbol = theme:value( "symbol" )
     local leftMargin = theme:value( "leftMargin" )
-    canvas:fill( theme:value( "fillColour" ) )
     canvas:fill( theme:value( "contentColour" ), SymbolMask( 1 + leftMargin, 1 + math.floor( ( self.height - symbol.height ) / 2 ), symbol ) )
 end
 
