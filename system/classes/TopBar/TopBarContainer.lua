@@ -1,5 +1,5 @@
 
-local ANIMATION_TIME = 0.5
+local ANIMATION_TIME = 0.4
 local ANIMATION_EASING = Animation.easings.OUT_SINE
 local pins = TopBarItem.pins
 
@@ -16,7 +16,6 @@ class "TopBarContainer" extends "Container" {
 
 function TopBarContainer:initialise( ... )
     self:super( ... )
-
     self:event( ReadyInterfaceEvent, self.onReady )
     self:event( ChildAddedInterfaceEvent, self.onChildAdded )
     self:event( ChildRemovedInterfaceEvent, self.onChildRemoved )
@@ -28,16 +27,7 @@ end
 function TopBarContainer:onReady( ReadyInterfaceEvent event, Event.phases phase )
     self.switchableItems[self.application.container.homeContainer] = self.homeItem
     self:updateLayout( true )
-end
-
-function TopBarContainer:updateWidth( width )
-    self:updateLayout( true )
-    self.separatorView.width = width
-end
-
-function TopBarContainer:updateHeight( height )
-    self.separatorView.y = height
-    self.needsLayoutUpdate = false
+    self:animate( "y", 1, ANIMATION_TIME, nil, ANIMATION_EASING )
 end
 
  -- this is the view with the separator under it. not neccesarily the active program/area (during mouse down)
@@ -149,7 +139,7 @@ end
 
 function TopBarContainer:onChildAdded( ChildAddedInterfaceEvent event, Event.phases phase )
     local childView = event.childView
-    if childView:typeOf( TopBarItem ) then
+    if childView:typeOf( ProgramItem ) then
         childView.y = self.height + 1
         childView.isVisible = false
         childView.isSeparatorVisible = false
