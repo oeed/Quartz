@@ -37,6 +37,10 @@ function ProgramView:initialise( ... )
     self:event( ParentChangedInterfaceEvent, self.onParentChanged )
 end
 
+function ProgramView:initialiseCanvas()
+    self.canvas = ScaleableCanvas( self.width, self.height, self )
+end
+
 function ProgramView:onDraw()
     local width, height, theme, canvas, buffer, scale = self.width, self.height, self.theme, self.canvas, self.buffer, self.scale
 
@@ -49,28 +53,17 @@ function ProgramView:onDraw()
         termSizes.needsDraw = false
     end
 
-    if scale == 1 then
-        for i = 1, #buffer do
-            local colour = buffer[i] or fillColour
-            pixels[i] = colour == TRANSPARENT and fillColour or colour
-        end
-    else
-        local scaledWidth, scaledHeight = math.floor( width * scale + 0.5 ), math.floor( height * scale + 0.5 )
-        local ceil = math.ceil
-        local widthRatio = width / scaledWidth
-        local heightRatio = height / scaledHeight
-        local xMin, yMin = math.floor( ( width - scaledWidth ) / 2 ) + 1, math.floor( ( height - scaledHeight ) / 2 )
-
-        for x = 1, scaledWidth do
-            for y = 0, scaledHeight - 1 do -- just so there's no need for y-1 below
-                local colour = buffer[ceil( y * heightRatio ) * width + ceil( x * widthRatio )] or TRANSPARENT
-                local nx, ny = x + xMin, y + yMin
-                if colour ~= TRANSPARENT and nx >= 1 and ny >= 1 and nx <= width and ny <= height then
-                    pixels[( ny - 1 ) * width + nx] = colour
-                end
-            end
-        end
+    for i = 1, #buffer do
+        local colour = buffer[i] or fillColour
+        pixels[i] = colour == TRANSPARENT and fillColour or colour
     end
+end
+
+function ProgramView.scale:set( scale )
+    self.scale = scale
+    local canvas = self.canvas
+    canvas.scaleX = scale
+    canvas.scaleY = scale
 end
 
 function ProgramView.width:set( width )
@@ -81,13 +74,6 @@ end
 function ProgramView.height:set( height )
     self:super( height )
     self.termSizes.height = height
-end
-
-function ProgramView.scale:set( scale )
-    if self.scale ~= scale then
-        self.scale = scale
-        self.needsDraw = true
-    end
 end
 
 function ProgramView:onParentChanged( ParentChangedInterfaceEvent event, Event.phases phase )
