@@ -1,8 +1,4 @@
 
-local TOP_MARGIN = 15
-local BETWEEN_MARGIN = 10
-local BOTTOM_MARGIN = TOP_MARGIN
-
 class "HomeItemContainer" extends "Container" {
     
     needsLayoutUpdate = false;
@@ -13,17 +9,32 @@ function HomeItemContainer:initialise( ... )
     self:super( ... )
 
     self:event( ReadyInterfaceEvent, self.onReady )
+    self:event( ThemeChangedInterfaceEvent, self.onThemeChanged )
     self:event( ChildAddedInterfaceEvent, self.onChildAdded )
     self:event( ChildRemovedInterfaceEvent, self.onChildRemoved )
 end
 
 function HomeItemContainer:onReady( ReadyInterfaceEvent event, Event.phases phase )
+    self.y = 1 + self.theme:value( "parentTopMargin" )
     self:updateLayout( true )
+    local delay = 0.5
+    for i, childView in ipairs( self.children ) do
+        local y = childView.y
+        childView.y = self.height + 1
+        childView:animate( "y", y, 0.8, nil, Animation.easings.OUT_QUART, delay )
+        delay = delay + 0.3
+    end
+end
+
+function HomeItemContainer:onThemeChanged( ThemeChangedInterfaceEvent event, Event.phases phase )
+    self.y = 1 + self.theme:value( "parentTopMargin" )
+    self.needsLayoutUpdate = true
 end
 
 function HomeItemContainer:updateLayout( dontAnimate )
-    local children, width = self.children, self.width
-    local y = TOP_MARGIN + 1
+    local children, width, theme = self.children, self.width, self.theme
+    local tileMargin = theme:value( "tileMargin" )
+    local y = theme:value( "tileMargin" )
 
     local time, easing = 0.5, Animation.easings.SINE_IN_OUT
 
@@ -35,11 +46,11 @@ function HomeItemContainer:updateLayout( dontAnimate )
                 childView:animate( "y", y, time, nil, easing )
             end
             childView.x = math.ceil( ( width - childView.width ) / 2 ) + 2
-            y = y + childView.height + BETWEEN_MARGIN
+            y = y + childView.height + tileMargin
         end
     end
 
-    self.height = y + BOTTOM_MARGIN - BETWEEN_MARGIN
+    self.height = y + theme:value( "bottomMargin" ) - tileMargin
 
     self.needsLayoutUpdate = false
 end

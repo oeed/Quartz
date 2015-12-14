@@ -71,6 +71,13 @@
         <fillColour type="Graphics.colours" default="LIGHT_BLUE"/>
     </HomeContainer>
 
+    <HomeItemContainer>
+        <parentTopMargin type="Number" default="14"/>
+        <topMargin type="Number" default="10"/>
+        <bottomMargin type="Number" default="10"/>
+        <tileMargin type="Number" default="10"/>
+    </HomeItemContainer>
+
     <HomeTile>
         <cornerRadius type="Number" default="8" />
         <fillColour type="Graphics.colours" default="WHITE"/>
