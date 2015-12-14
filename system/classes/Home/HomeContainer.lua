@@ -36,6 +36,7 @@ function HomeContainer.scale:set( scale )
     local canvas = self.canvas
     canvas.scaleX = scale
     canvas.scaleY = scale
+    self.needsDraw = true
 end
 
 function HomeContainer.isFocused:set( isFocused )
