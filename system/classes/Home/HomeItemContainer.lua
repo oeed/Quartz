@@ -50,7 +50,7 @@ function HomeItemContainer:updateLayout( dontAnimate )
         end
     end
 
-    self.height = y + theme:value( "bottomMargin" ) - tileMargin
+    self.height = math.max( y + theme:value( "bottomMargin" ) - tileMargin, self.parent.height - self.theme:value( "parentTopMargin" ) )
 
     self.needsLayoutUpdate = false
 end
