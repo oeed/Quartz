@@ -44,7 +44,7 @@
         <analougeOutlineThickness type="Number" default="1"/>
         <analougeOutlineColour type="Graphics.colours" default="LIGHT_GREY" pressed="WHITE"/>
         <analougeFillColour type="Graphics.colours" default="TRANSPARENT" pressed="TRANSPARENT"/>
-        <secondsColour type="Graphics.colours" default="RED" pressed="WHITE"/>
+        <secondsColour type="Graphics.colours" default="RED" pressed="LIGHT_BLUE"/>
         <minutesColour type="Graphics.colours" default="BLACK" pressed="WHITE"/>
         <hoursColour type="Graphics.colours" default="BLACK" pressed="WHITE"/>
         <secondsLength type="Number" default="5"/>
