@@ -9,22 +9,22 @@ local states = {
 class "Program" {
     
     state = states.UNINTIALISED;
-    isRunning = false; -- whether the COROUTINE is running (not just the program)
+    isRunning = Boolean( false ); -- whether the COROUTINE is running (not just the program)
 
-    programManager = false;
-    index = false;
-    bundle = false;
+    programManager = ProgramManager.allowsNil;
+    bundle = Bundle;
 
-    title = "Blah";
-    status = "boo";
+    title = String;
+    status = String.allowsNil;
 
     states = Enum( Number, states );
 
-    eventQueue = {};
-    environment = {};
-    coroutine = false;
-    arguments = false;
-    programView = false;
+    eventQueue = Table;
+    environment = ProgramEnvironment;
+    coroutine = Thread;
+    arguments = Table;
+    programView = ProgramView.allowsNil;
+    index = Number.allowsNil;
 
 }
 

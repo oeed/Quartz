@@ -8,7 +8,7 @@ class "TopBarContainer" extends "Container" {
     interfaceName = "topbarcontainer";
     separatorView = TopBarSeparatorView.link;
     homeItem = HomeItem.link;
-    needsLayoutUpdate = false;
+    needsLayoutUpdate = Boolean( false );
     activeView = TopBarItem.allowsNil;
     switchableItems = {};
 
