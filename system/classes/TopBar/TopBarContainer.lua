@@ -41,7 +41,7 @@ function TopBarContainer.activeView:set( activeView )
     self.activeView = activeView
     local separatorView = self.separatorView
     local pin = activeView.pin
-    local x, width = activeView.x + (pin == "right" and 1 or 0), activeView.width - 1
+    local x, width = activeView.x + (pin == pins.RIGHT and 1 or 0), activeView.width - 1
     separatorView:animate( "activeX", x, ANIMATION_TIME, nil, ANIMATION_EASING )
     separatorView:animate( "activeWidth", width, ANIMATION_TIME, nil, ANIMATION_EASING )
 end
@@ -57,7 +57,7 @@ function TopBarContainer:updateLayout( dontAnimate )
     local function updateFrame( childView, x, width )
         local isVisible = dontAnimate and true or childView.isVisible
 
-        local separatorX, separatorWidth = x + (pin == "right" and 1 or 0), width - 1
+        local separatorX, separatorWidth = x + (pin == pins.RIGHT and 1 or 0), width - 1
         if dontAnimate or not isVisible then
             childView.x = x
             childView.width = width
