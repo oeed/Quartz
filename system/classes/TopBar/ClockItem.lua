@@ -64,10 +64,6 @@ function ClockItem:onDraw()
     end
 end
 
-function ClockItem:updateThemeStyle()
-    self.theme.style = self.isAnalouge and "analouge" or "disabled"
-end
-
 function ClockItem:onAction( ActionInterfaceEvent event, Event.phases phase )
     self.isAnalouge = not self.isAnalouge
 end
