@@ -1,12 +1,12 @@
 
-local ANIMATION_FLY_TIME = 0.6
-local ANIMATION_FLY_UP_TIME = 0.5
-local ANIMATION_SCALE_TIME = 0.5
+local ANIMATION_FLY_TIME = 0.4
+local ANIMATION_FLY_UP_TIME = 0.3
+local ANIMATION_SCALE_TIME = 0.3
 local ANIMATION_FLY_DELAY = 0.05
 local ANIMATION_FLY_EASING = Animation.easings.IN_SINE
 local ANIMATION_SCALE_EASING = Animation.easings.OUT_SINE
 local ANIMATION_SCALE = 0.8
-local ANIMATION_OVERLAP_TIME = 0.20
+local ANIMATION_OVERLAP_TIME = 0.1
 
 class "ProgramView" extends "View" implements "ISwitchableView" {
     

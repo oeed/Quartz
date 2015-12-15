@@ -1,5 +1,5 @@
 
-local ANIMATION_TIME = 0.4
+local ANIMATION_TIME = 0.3
 local ANIMATION_EASING = Animation.easings.OUT_SINE
 local pins = TopBarItem.pins
 
