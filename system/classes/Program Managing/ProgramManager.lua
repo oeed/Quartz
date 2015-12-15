@@ -13,7 +13,7 @@ end
 function ProgramManager:run( program )
     program.programManager = self
     program.state = Program.states.RUNNING
-    local programView = ProgramView( { x = 1, y = 15, width = "320", height = 210-15, program = program } )
+    local programView = ProgramView( { x = 1, y = 15, width = "320", height = 200-14, program = program } )
     self.owner.container:insert( programView )
     program.programView = programView
     local programs = self.programs
