@@ -64,6 +64,7 @@ function ProgramView.scale:set( scale )
     local canvas = self.canvas
     canvas.scaleX = scale
     canvas.scaleY = scale
+    self.needsDraw = true
 end
 
 function ProgramView.width:set( width )
@@ -78,7 +79,7 @@ end
 
 function ProgramView:onParentChanged( ParentChangedInterfaceEvent event, Event.phases phase )
     self.scale = ANIMATION_SCALE
-    self.y = self.height + 1
+    self.y = self.parent.height + 1
     self:animate( "y", 15, ANIMATION_FLY_UP_TIME, function()
         self.isOpening = false
     end, ANIMATION_SCALE_EASING, ANIMATION_SCALE_TIME )
