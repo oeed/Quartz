@@ -22,7 +22,7 @@ h.close()
 
 while true do
     local event, m, x, y = os.pullEvent()
-    if event == "mouse_down" or  event == "mouse_drag" then
+    if event == "mouse_click" or  event == "mouse_drag" then
         term.setCursorPos( x, y )
         term.setBackgroundColour(2^math.random(0,15))
         term.write(" ")
