@@ -1,6 +1,6 @@
 <QuartzApplicationContainer themeName="quartz">
 
-    <HomeContainer identifier=homeContainer width="320" height="220">
+    <HomeContainer identifier=homeContainer width="320" height="200">
         <HomeItemContainer width="320">
             <HomeSearchBox width=170/>
             <HomeTile height=59 width=240></HomeTile>
@@ -8,7 +8,7 @@
         </HomeItemContainer>
     </HomeContainer>
 
-    <TopBarContainer identifier=topBar x=10 y=-18 width="320">
+    <TopBarContainer identifier=topBar y=-15 width="320">
     </TopBarContainer>    
 
 </QuartzApplicationContainer>
