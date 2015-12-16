@@ -17,11 +17,14 @@ class "QuartzApplication" extends "Application" {
 function QuartzApplication:initialise()
 	self:super()
 	self.programManager = ProgramManager( self )
-	self.settings = QuartzSettings()
 
 	self:event( CharacterEvent, self.onChar )
 		
 	-- self:schedule(function() self.programManager:run( Program( Folder( "applications/Test.application" ) ) ) end,0.05)
+end
+
+function QuartzApplication:initialiseSettings()
+	self.settings = QuartzSettings()
 end
 
 function QuartzApplication:update()
