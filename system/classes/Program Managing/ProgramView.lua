@@ -27,7 +27,7 @@ function ProgramView:initialise( ... )
     local termSizes = self.termSizes
     termSizes.width = self.width
     termSizes.height = self.height
-    self.program.quartzProxy.screenBuffer = self.canvas.pixels
+    self.program.quartzProxy.screenBuffer = self.buffer
     if not self.program:typeOf( SilicaProgram ) then
         self.redirect = self:getRedirect()
     end
@@ -44,6 +44,7 @@ function ProgramView:initialiseCanvas()
 end
 
 function ProgramView:onDraw()
+    log("draw")
     local width, height, theme, canvas, buffer, scale = self.width, self.height, self.theme, self.canvas, self.buffer, self.scale
 
     local pixels = canvas.pixels

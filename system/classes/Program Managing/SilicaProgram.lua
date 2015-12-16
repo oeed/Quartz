@@ -1,4 +1,6 @@
 
+local states = Program.states
+
 class "SilicaProgram" extends "Program" {
     
 }
@@ -8,7 +10,7 @@ function SilicaProgram:initialiseEnvironment()
 end
 
 function SilicaProgram:update()
-    local eventQueue, redirect, programCoroutine = self.eventQueue, self.coroutine
+    local eventQueue, programCoroutine = self.eventQueue, self.coroutine
     local firstEvent = eventQueue[1]
     while self.state == states.RUNNING and firstEvent do
         -- TODO: maybe redirect outside this loop
@@ -33,4 +35,13 @@ function SilicaProgram:update()
         table.remove( eventQueue, 1 )
         firstEvent = eventQueue[1]
     end
+end
+
+function SilicaProgram:run()
+    self:super()
+    local environment = self.environment.environment
+    log("env "..tostring(environment))
+    local silicaFunction = loadfile( "system/OldSilica.resourcepkg", "Silica Injection" )
+    setfenv( silicaFunction, environment )
+    silicaFunction()
 end

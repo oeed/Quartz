@@ -12,13 +12,14 @@ end
 
 function ProgramManager:run( program )
     program.programManager = self
-    program.state = Program.states.RUNNING
     local programView = ProgramView( { x = 1, y = 15, width = "320", height = 200-14, program = program } )
     self.owner.container:insert( programView )
     program.programView = programView
     local programs = self.programs
     table.insert( programs, program )
     program.index = #programs
+    log("run")
+    program:run()
     self.application.event:handleEvent( ProgramOpenedInterfaceEvent( program ) )
     program:focus()
 end
