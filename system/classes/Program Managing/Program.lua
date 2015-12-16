@@ -58,6 +58,10 @@ function Program:initialise( bundle, ... )
     end )
 end
 
+function Program:initialiseEnvironment()
+    self.environment = ProgramEnvironment( self )
+end
+
 function Program:close( isForced )
     local state = self.state
     local willClose = isForced or state == states.FINISHED
