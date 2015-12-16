@@ -73,7 +73,7 @@ end
 
 function ClockItem.isAnalogue:set( isAnalogue )
     self.isAnalogue = isAnalogue
-    self:updateClock( true )
+    self:updateClock()
     local parent = self.parent
     if parent then
         parent.needsLayoutUpdate = true
@@ -85,6 +85,7 @@ end
 
 function ClockItem:updateClock( dontSchedule )
     local isAnalogue = self.isAnalogue
+    local refreshTime
     if not isAnalogue then
         local time = os.time()
         local seconds = time % 60
@@ -106,9 +107,13 @@ function ClockItem:updateClock( dontSchedule )
         else
             self.text = string.format( "%d:%02d", hours, minutes )
         end
+        refreshTime = 60 - seconds
+    else
+        self.needsDraw = true
+        refreshTime = 2
     end
     if not dontSchedule then
-        self.application:schedule(self.updateClock, isAnalogue and 2 or 1, self)
+        self.application:schedule(self.updateClock, refreshTime, self)
     end
 end
 
