@@ -4,6 +4,7 @@ class "QuartzApplication" extends "Application" {
 	name = String( "Quartz" );
 	interfaceName = String( "quartz" ).allowsNil;
 	programManager = ProgramManager;
+	userDataPath = String( "/system/" );
 
 }
 
