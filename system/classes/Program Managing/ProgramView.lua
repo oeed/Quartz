@@ -10,14 +10,13 @@ local ANIMATION_OVERLAP_TIME = 0.1
 
 class "ProgramView" extends "View" implements "ISwitchableView" {
     
-    redirect = Table;
+    redirect = Table.allowsNil;
     program = Program;
-    terminalObject = TerminalObject;
     scale = Number( 1 );
     isClosing = Boolean( false );
     isOpening = Boolean( true );
     isFocusDismissable = Boolean( false );
-    termSizes = Table( { width = 1; height = 1 } );
+    termSizes = Table( { width = 1; height = 1; needsDraw = false; } );
     buffer = Table( {} )
 
 }
@@ -28,7 +27,10 @@ function ProgramView:initialise( ... )
     local termSizes = self.termSizes
     termSizes.width = self.width
     termSizes.height = self.height
-    self.redirect = self:getRedirect()
+    self.program.quartzProxy.screenBuffer = self.canvas.pixels
+    if not self.program:typeOf( SilicaProgram ) then
+        self.redirect = self:getRedirect()
+    end
 
     self:event( MouseEvent, self.onMouseEvent )
     self:event( KeyEvent, self.onKeyEvent )
