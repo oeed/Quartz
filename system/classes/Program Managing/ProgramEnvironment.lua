@@ -1,8 +1,8 @@
 
 class "ProgramEnvironment" {
 
-    program = false;
-    environment = {};
+    program = Program;
+    environment = Table( {} );
 
 }
 
