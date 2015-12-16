@@ -5,14 +5,13 @@ class "ClockItem" extends "TopBarItem" {
 
     text = String( "0:00am" );
 
-    isAnalouge = Boolean( true );
+    isAnalogue = Boolean( self.application.settings.isClockAnalogue );
     isTwentyFourHour = Boolean( false );
 
 }
 
 function ClockItem:initialise( ... )
     self:super( ... )
-    self.isAnalouge = false
     self:event( ActionInterfaceEvent, self.onAction )
     self:event( ReadyInterfaceEvent, self.onReady )
 end
@@ -79,6 +78,9 @@ function ClockItem.isAnalouge:set( isAnalouge )
     if parent then
         parent.needsLayoutUpdate = true
     end
+    local settings = self.application.settings
+    settings.isClockAnalogue = isAnalogue
+    settings:save()
 end
 
 function ClockItem:updateClock( dontSchedule )
