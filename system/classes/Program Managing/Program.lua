@@ -25,6 +25,7 @@ class "Program" {
     arguments = Table;
     programView = ProgramView.allowsNil;
     index = Number.allowsNil;
+    quartzProxy = QuartzProxy.allowsNil;
 
 }
 
@@ -44,7 +45,11 @@ function Program:initialise( bundle, ... )
     self.bundle = bundle
     self.arguments = arguments
     self.eventQueue = { arguments }
-    local environment = ProgramEnvironment( self )
+    self:initialiseEnvironment()
+    local environment = self.environment
+    local quartzProxy = QuartzProxy( self )
+    self.quartzProxy = quartzProxy
+    environment.environment.Quartz = quartzProxy
     self.environment = environment
     self.coroutine = coroutine.create( function()
         local func = loadfile( bundle.path .. "/startup" )
