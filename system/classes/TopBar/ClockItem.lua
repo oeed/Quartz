@@ -21,11 +21,11 @@ function ClockItem:onDraw()
     local width, height, theme, canvas = self.width, self.height, self.theme, self.canvas
 
     local leftMargin, rightMargin, topMargin, bottomMargin = theme:value( "leftMargin" ), theme:value( "rightMargin" ), theme:value( "topMargin" ), theme:value( "bottomMargin" )
-    if self.isAnalouge then
-        local analougeDiameter = theme:value( "analougeDiameter" )
-        local circleMask = CircleMask( leftMargin + 1, math.floor( ( height - analougeDiameter ) / 2 + 0.5 ), analougeDiameter )
-        canvas:fill( theme:value( "analougeFillColour" ), circleMask )
-        canvas:outline( theme:value( "analougeOutlineColour" ), circleMask, theme:value( "analougeOutlineThickness" ) )
+    if self.isAnalogue then
+        local AnalogueDiameter = theme:value( "AnalogueDiameter" )
+        local circleMask = CircleMask( leftMargin + 1, math.floor( ( height - AnalogueDiameter ) / 2 + 0.5 ), AnalogueDiameter )
+        canvas:fill( theme:value( "AnalogueFillColour" ), circleMask )
+        canvas:outline( theme:value( "AnalogueOutlineColour" ), circleMask, theme:value( "AnalogueOutlineThickness" ) )
 
         local time = os.time()
         local seconds = time % 60
@@ -35,8 +35,8 @@ function ClockItem:onDraw()
             hours = hours - 12
         end
 
-        local analougeRadius = analougeDiameter / 2
-        local centreX, centreY = math.floor( 1 + leftMargin + analougeRadius ), math.floor( ( height - analougeDiameter ) / 2 + 0.5 + analougeRadius)
+        local AnalogueRadius = AnalogueDiameter / 2
+        local centreX, centreY = math.floor( 1 + leftMargin + AnalogueRadius ), math.floor( ( height - AnalogueDiameter ) / 2 + 0.5 + AnalogueRadius)
         local function position( timePercentage, length, object )
             local angle = 2 * math.pi * timePercentage
             local rawWidth = length * math.sin( angle )
@@ -64,15 +64,15 @@ function ClockItem:onDraw()
 end
 
 function ClockItem:onAction( ActionInterfaceEvent event, Event.phases phase )
-    self.isAnalouge = not self.isAnalouge
+    self.isAnalogue = not self.isAnalogue
 end
 
 function ClockItem:onReady( ReadyInterfaceEvent event, Event.phases phase )
     self:updateClock()
 end
 
-function ClockItem.isAnalouge:set( isAnalouge )
-    self.isAnalouge = isAnalouge
+function ClockItem.isAnalogue:set( isAnalogue )
+    self.isAnalogue = isAnalogue
     self:updateClock( true )
     local parent = self.parent
     if parent then
@@ -84,8 +84,8 @@ function ClockItem.isAnalouge:set( isAnalouge )
 end
 
 function ClockItem:updateClock( dontSchedule )
-    local isAnalouge = self.isAnalouge
-    if not isAnalouge then
+    local isAnalogue = self.isAnalogue
+    if not isAnalogue then
         local time = os.time()
         local seconds = time % 60
         local minutes = math.floor( ( time / 60 ) % 60 )
@@ -108,7 +108,7 @@ function ClockItem:updateClock( dontSchedule )
         end
     end
     if not dontSchedule then
-        self.application:schedule(self.updateClock, isAnalouge and 2 or 1, self)
+        self.application:schedule(self.updateClock, isAnalogue and 2 or 1, self)
     end
 end
 
@@ -127,8 +127,8 @@ end
 function ClockItem.size:get()
     local theme = self.theme
     local margin = theme:value( "leftMargin" ) + theme:value( "rightMargin" ) + 1
-    if self.isAnalouge then
-        return theme:value( "analougeDiameter" ) + margin
+    if self.isAnalogue then
+        return theme:value( "AnalogueDiameter" ) + margin
     end
 
     local text = self.text

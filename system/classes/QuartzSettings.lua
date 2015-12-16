@@ -1,6 +1,6 @@
 
 class "QuartzSettings" extends "Settings" {
     
-    isClockAnalouge = Boolean( false );
+    isClockAnalogue = Boolean( false );
 
 }

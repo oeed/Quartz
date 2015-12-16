@@ -41,9 +41,9 @@
     </ProgramItem>
 
     <ClockItem>
-        <analougeOutlineThickness type="Number" default="1"/>
-        <analougeOutlineColour type="Graphics.colours" default="LIGHT_GREY" pressed="WHITE"/>
-        <analougeFillColour type="Graphics.colours" default="TRANSPARENT" pressed="TRANSPARENT"/>
+        <AnalogueOutlineThickness type="Number" default="1"/>
+        <AnalogueOutlineColour type="Graphics.colours" default="LIGHT_GREY" pressed="WHITE"/>
+        <AnalogueFillColour type="Graphics.colours" default="TRANSPARENT" pressed="TRANSPARENT"/>
         <secondsColour type="Graphics.colours" default="RED" pressed="LIGHT_BLUE"/>
         <minutesColour type="Graphics.colours" default="BLACK" pressed="WHITE"/>
         <hoursColour type="Graphics.colours" default="BLACK" pressed="WHITE"/>
@@ -52,7 +52,7 @@
         <hoursLength type="Number" default="4"/>
         <topMargin type="Number" default="3"/>
         <bottomMargin type="Number" default="3"/>
-        <analougeDiameter type="Number" default="11"/>
+        <AnalogueDiameter type="Number" default="11"/>
         <font type="Font" default="systemFont"/>
     </ClockItem>
 
