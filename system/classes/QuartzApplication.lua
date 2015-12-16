@@ -16,6 +16,7 @@ class "QuartzApplication" extends "Application" {
 function QuartzApplication:initialise()
 	self:super()
 	self.programManager = ProgramManager( self )
+	self.settings = QuartzSettings()
 
 	self:event( CharacterEvent, self.onChar )
 		
