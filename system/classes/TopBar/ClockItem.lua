@@ -126,7 +126,7 @@ function ClockItem:updateClock( dontSchedule )
         if ampm then
             self.text = string.format( "%d:%02d%s", hours, minutes, ampm )
         else
-            self.text = string.format( "%d:%02d", hours, minutes )
+            self.text = string.format( "%02d:%02d", hours, minutes )
         end
         refreshTime = 60 - seconds
     else

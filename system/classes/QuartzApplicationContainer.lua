@@ -12,5 +12,5 @@ function QuartzApplicationContainer:initialise( ... )
 end
 
 function QuartzApplicationContainer:onReady( ReadyInterfaceEvent event, Event.phases phase )
-    self.homeContainer:focus( )
+    self.homeContainer:focus()
 end
