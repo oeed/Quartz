@@ -35,6 +35,10 @@ function SilicaProgram:update()
         table.remove( eventQueue, 1 )
         firstEvent = eventQueue[1]
     end
+    local silicaApplication = self.quartzProxy.silicaApplication
+    if silicaApplication then
+        silicaApplication:update()
+    end
 end
 
 function SilicaProgram:run()
