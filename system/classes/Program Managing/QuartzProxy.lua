@@ -5,7 +5,6 @@ class "QuartzProxy" {
     silicaApplication = Table.allowsNil; -- we have to use table because the Application class will be different, we just have to presume it's an Application
     _program = Program;
 
-    title = String.allowsNil;
     status = String.allowsNil;
     
 }
@@ -20,14 +19,6 @@ function QuartzProxy:redraw( Table.allowsNil pixels )
         programView.buffer = pixels
     end
     programView.needsDraw = true
-end
-
-function QuartzProxy.title:get()
-    return self._program.title
-end
-
-function QuartzProxy.title:set( title )
-    self._program.title = title
 end
 
 function QuartzProxy.status:get()
