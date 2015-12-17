@@ -141,3 +141,13 @@ end
 function Program:focus()
     self.programView:focus( ISwitchableView )
 end
+
+function Program.status:set( status )
+    self.status = status
+    self.application.container.topBar.event:handleEvent( ProgramInformationChangedInterfaceEvent( self ) )    
+end
+
+function Program.title:set( title )
+    self.title = title
+    self.application.container.topBar.event:handleEvent( ProgramInformationChangedInterfaceEvent( self ) )    
+end
