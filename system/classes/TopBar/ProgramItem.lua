@@ -27,6 +27,7 @@ function ProgramItem:onDraw()
     local configs = {
         { ICON_WIDTH + iconTitleMargin + titleWidth + titleStatusMargin + statusWidth, true, true, true };
         { titleWidth + titleStatusMargin + statusWidth, false, true, true };
+        statusWidth > 0 and { ICON_WIDTH + iconTitleMargin + statusWidth, true, false, true };
         { ICON_WIDTH + iconTitleMargin + titleWidth, true, true, false };
         { titleWidth, false, true, false };
         { ICON_WIDTH, true, false, false };
@@ -46,7 +47,7 @@ function ProgramItem:onDraw()
     if selectedConfig[2] then
         local iconMask = RectangleMask( x, topMargin, ICON_WIDTH, ICON_HEIGHT )
         canvas:fill( Graphics.colours.GREEN, iconMask )
-        x = x + ICON_WIDTH + (selectedConfig[3] and iconTitleMargin or 0)
+        x = x + ICON_WIDTH + ((selectedConfig[3] or selectedConfig[4]) and iconTitleMargin or 0)
     end
 
     -- Title
@@ -69,6 +70,16 @@ function ProgramItem.program:set( program )
     self.program = program
     self.needsDraw = true
     self:updateThemeStyle()
+    self:event( ProgramInformationChangedInterfaceEvent, self.onProgramInformationChanged )
+end
+
+--[[
+    @desc Fired when a program changes it's title or status
+]]
+function ProgramItem:onProgramInformationChanged( ProgramInformationChangedInterfaceEvent event, Event.phases phase  )
+    if self.program == event.program then
+        self.needsDraw = true
+    end
 end
 
 function ProgramItem:onGlobalMouseUp( MouseUpEvent event, Event.phases phase )
