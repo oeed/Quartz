@@ -18,7 +18,6 @@ function ProgramManager:run( program )
     local programs = self.programs
     table.insert( programs, program )
     program.index = #programs
-    log("run")
     program:run()
     self.application.event:handleEvent( ProgramOpenedInterfaceEvent( program ) )
     program:focus()

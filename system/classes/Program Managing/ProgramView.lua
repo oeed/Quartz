@@ -45,7 +45,6 @@ function ProgramView:initialiseCanvas()
 end
 
 function ProgramView:onDraw()
-    log("draw")
     local width, height, theme, canvas, buffer, scale = self.width, self.height, self.theme, self.canvas, self.buffer, self.scale
 
     local pixels = canvas.pixels
