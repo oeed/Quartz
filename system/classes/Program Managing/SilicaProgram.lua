@@ -20,7 +20,6 @@ end
 function SilicaProgram:run()
     self:super()
     local environment = self.environment.environment
-    log("env "..tostring(environment))
     local silicaFunction = loadfile( "system/OldSilica.resourcepkg", "Silica Injection" )
     setfenv( silicaFunction, environment )
     silicaFunction()
