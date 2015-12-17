@@ -45,7 +45,6 @@ function Program:initialise( bundle, ... )
     self.bundle = bundle
     self.arguments = arguments
     self.eventQueue = { arguments }
-    log("one")
     self:initialiseEnvironment()
 end
 
