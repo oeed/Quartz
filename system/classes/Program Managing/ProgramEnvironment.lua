@@ -22,7 +22,7 @@ function ProgramEnvironment:loadDefaultVariables()
 
     -- TODO: maybe we should work out what these are at boot, rather than being hard coded
     local names = { "tostring", "tonumber", "assert", "error", "pcall", "xpcall", "setmetatable", "getmetatable", "rawget", "rawset", "rawequal", "type", "next", "pairs", "ipairs", "unpack", "select", "setfenv", "getfenv", "coroutine", "string", "math", "table", "__inext", "_MC_VERSION", "_VERSION", "_LUAJ_VERSION", "_CC_VERSION", "print", "read", "write", "printError", "keys", "colours", "help", "parallel", "rednet", "textutils", "bit", "bit32", "vector", "colors", "term", "window", "paintutils", "peripheral", "disk", "http", "gps", "rs", "redstone"
-        ,"log" -- TODO: just temporarily
+        ,"log", "logtraceback" -- TODO: just temporarily
     }
     environment.error = log -- TODO: temporary
 
