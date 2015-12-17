@@ -26,6 +26,7 @@ class "Program" {
     programView = ProgramView.allowsNil;
     index = Number.allowsNil;
     quartzProxy = QuartzProxy.allowsNil;
+    hadFirstUpdate = Boolean( false );
 
 }
 
@@ -90,19 +91,25 @@ function Program.environment:get()
     return self.environment
 end
 
-function Program:update()
-    local eventQueue, redirect, programCoroutine = self.eventQueue, self.programView.redirect, self.coroutine
+function Program:update( Boolean( true ) redirectTerm )
+    local eventQueue, programCoroutine, redirect = self.eventQueue, self.coroutine
+    local previousTarget
+    if redirectTerm then
+        previousTarget = term.redirect( self.programView.redirect )
+    end
     local firstEvent = eventQueue[1]
     while self.state == states.RUNNING and firstEvent do
-        -- TODO: maybe redirect outside this loop
-        local previousTarget = term.redirect( redirect )
         local ok, data = coroutine.resume( programCoroutine, unpack( firstEvent ) )
-        term.redirect( previousTarget )
 
         if coroutine.status( programCoroutine )== "dead" then
-            log("dead")
+            if previousTarget then
+                term.redirect( previousTarget )
+            end
             self.state = states.FINISHED
             self:close()
+            log("Program died")
+            log(data)
+            return
         end
 
         if ok then
@@ -112,11 +119,22 @@ function Program:update()
             -- TODO: error handling
             log("Program crashed")
             log(data)
+            if previousTarget then
+                term.redirect( previousTarget )
+            end
             -- self:throw( data )
+            return
         end
 
         table.remove( eventQueue, 1 )
         firstEvent = eventQueue[1]
+    end
+    if previousTarget then
+        term.redirect( previousTarget )
+    end
+    if not self.hadFirstUpdate then
+        self.hadFirstUpdate = true
+        self:focus()
     end
 end
 
