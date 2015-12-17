@@ -33,7 +33,8 @@ function ProgramView:initialise( ... )
     end
 
     self:event( MouseEvent, self.onMouseEvent )
-    self:event( KeyEvent, self.onKeyEvent )
+    self:event( KeyUpEvent, self.onKeyUpEvent )
+    self:event( KeyDownEvent, self.onKeyDownEvent )
     self:event( CharacterEvent, self.onCharacterEvent )
     self:event( FocusesChangedInterfaceEvent, self.onFocusesChanged )
     self:event( ParentChangedInterfaceEvent, self.onParentChanged )
@@ -153,12 +154,16 @@ function ProgramView:onMouseEvent( MouseEvent event, Event.phases phase )
     return true
 end
 
-function ProgramView:onKeyEvent( KeyEvent event, Event.phases phase )
+function ProgramView:onKeyUpEvent( KeyUpEvent event, Event.phases phase )
     self.program:queueEvent( event.eventType, event.keyCode  )
 end
 
+function ProgramView:onKeyDownEvent( KeyEvent event, Event.phases phase )
+    self.program:queueEvent( event.eventType, event.keyCode, event.isRepeat  )
+end
+
 function ProgramView:onCharacterEvent( CharacterEvent event, Event.phases phase )
-    self.program:queueEvent( event.eventType, CharacterEvent  )
+    self.program:queueEvent( event.eventType, event.character  )
 end
 
 function ProgramView:getRedirect()
