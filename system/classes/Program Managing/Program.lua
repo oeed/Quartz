@@ -6,6 +6,11 @@ local states = {
     FINISHED = 3;
 }
 
+local configKeys = {
+    PROGRAM_TITLE = "title",
+    BOOT_PATH = "bootPath",
+}
+
 class "Program" {
     
     state = states.UNINTIALISED;
@@ -13,6 +18,7 @@ class "Program" {
 
     programManager = ProgramManager.allowsNil;
     bundle = Bundle;
+    config = Table;
 
     title = String;
     status = String.allowsNil;
@@ -28,21 +34,19 @@ class "Program" {
     quartzProxy = QuartzProxy.allowsNil;
     hadFirstUpdate = Boolean( false );
 
+    configKeys = Enum( String, configKeys );
+
 }
 
-local n = 1
 function Program:initialise( bundle, ... )
     local arguments = { ... }
-
-    self.title = "Favourites "..n
-    for k, v in pairs(colours) do
-        if v == 2^n then
-            self.status = k
-        end
+    local config = bundle.config
+    if not config[configKeys.BOOT_PATH] then
+        error( "program bundle config invalid" )
     end
-    arguments = {n}
-    n = n + 1
 
+    self.title = config.title or bundle.name
+    self.config = config
     self.bundle = bundle
     self.arguments = arguments
     self.eventQueue = { arguments }
@@ -52,7 +56,7 @@ end
 function Program:run()
     self.state = states.RUNNING
     self.coroutine = coroutine.create( function()
-        local func = loadfile( self.bundle.path .. "/startup" )
+        local func = loadfile( FileSystemItem.static:tidy( self.bundle.path .. "/" .. self.config[configKeys.BOOT_PATH] ) )
         setfenv( func, self.environment.environment )
         func( arguments )
     end )
