@@ -124,10 +124,18 @@ end
 function ProgramView:closeFlyUp( ready )
     self.isClosing = true
     self.parent:sendToBack( self )
+    local hasCalledReady = false
     self:animate( "scale", ANIMATION_SCALE, ANIMATION_SCALE_TIME, function()
-        ready()
+        if not hasCalledReady then
+            ready()
+            hasCalledReady = true
+        end
     end, ANIMATION_SCALE_EASING, nil, false )
     self:animate( "y", -self.height, ANIMATION_FLY_UP_TIME, function()
+        if not hasCalledReady then
+            ready()
+            hasCalledReady = true
+        end
         self:dispose()
     end, ANIMATION_SCALE_EASING, ANIMATION_SCALE_TIME - ANIMATION_OVERLAP_TIME )--ANIMATION_FLY_DELAY )
 end
