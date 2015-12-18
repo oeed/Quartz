@@ -41,9 +41,6 @@ term.redirect(term.native())
 -- dofile( "system/Silica" )
 -- dofile( "system/Silica.resourcepkg" )
 function _G.error(message, level)      
-   term.setBackgroundColor(colors.red)     
-   term.clear()        
-   logtraceback( 1 )       
    _error(message, level)      
 end        
 
