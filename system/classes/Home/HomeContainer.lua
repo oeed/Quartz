@@ -20,11 +20,16 @@ class "HomeContainer" extends "Container" implements "ISwitchableView" {
 
 function HomeContainer:initialise( ... )
     self:super( ... )
-    self.backgroundImage = Image.static:fromName( "Arc de Triomphe" )
+    self.backgroundImage = Image.static:fromPath( self.application.settings.backgroundImagePath )
 end
 
 function HomeContainer:initialiseCanvas()
     self.canvas = ScaleableCanvas( self.width, self.height, self )
+end
+
+function HomeContainer.backgroundImage:set( backgroundImage )
+    self.backgroundImage = backgroundImage
+    self.needsDraw = true
 end
 
 function HomeContainer:onDraw()
