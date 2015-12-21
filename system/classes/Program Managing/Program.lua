@@ -9,6 +9,7 @@ local states = {
 local configKeys = {
     PROGRAM_TITLE = "title",
     BOOT_PATH = "bootPath",
+    ICON_PATH = "iconPath",
 }
 
 class "Program" {
@@ -19,6 +20,7 @@ class "Program" {
     programManager = ProgramManager.allowsNil;
     bundle = Bundle;
     config = Table;
+    icon = Icon;
 
     title = String;
     status = String.allowsNil;
@@ -38,19 +40,28 @@ class "Program" {
 
 }
 
-function Program:initialise( bundle, ... )
+function Program:initialise( Bundle bundle, ... )
     local arguments = { ... }
-    local config = bundle.config
-    if not config[configKeys.BOOT_PATH] then
-        error( "program bundle config invalid" )
-    end
-
-    self.title = config.title or bundle.name
-    self.config = config
     self.bundle = bundle
     self.arguments = arguments
     self.eventQueue = { arguments }
     self:initialiseEnvironment()
+end
+
+--[[
+    @desc Description
+]]
+function Program.bundle:set( bundle )
+    self.bundle = bundle
+    local config = bundle.config
+    local bootPath = config[configKeys.BOOT_PATH]
+    local iconPath = config[configKeys.ICON_PATH]
+    if not bootPath then
+        ConfigurationFatalProgramException( "Program bundle configuration did not specify required key '" .. configKeys.BOOT_PATH .. "'." )
+    end
+    self.icon = Icon.static:fromPathInBundle( iconPath, bundle )
+    self.title = config.title or bundle.name
+    self.config = config
 end
 
 function Program:run()
