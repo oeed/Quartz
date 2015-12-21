@@ -1,6 +1,7 @@
 {
     title = "Test",
     bootPath = "startup",
+    iconPath = "icon.sicon",
     supportedMimes = {
         "text/plain",
     }
