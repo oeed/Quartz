@@ -1,0 +1,4 @@
+
+class "ConfigurationFatalProgramException" extends "Exception" {
+    
+}
