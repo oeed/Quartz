@@ -2,10 +2,6 @@
 local ICON_WIDTH = 9
 local ICON_HEIGHT = 9
 
-local ICON_TITLE_GAP = 3
-local TITLE_STATUS_GAP = 4
-local MIN_MARGIN = 4
-
 class "ProgramItem" extends "TopBarItem" {
     
     isActive = Boolean( false );
@@ -45,8 +41,7 @@ function ProgramItem:onDraw()
     local x = math.floor( ( width - selectedConfig[1] ) / 2 ) + 1
     -- Icon
     if selectedConfig[2] then
-        local iconMask = RectangleMask( x, topMargin, ICON_WIDTH, ICON_HEIGHT )
-        canvas:fill( Graphics.colours.GREEN, iconMask )
+        canvas:image( program.icon, x, topMargin, ICON_WIDTH, ICON_HEIGHT )
         x = x + ICON_WIDTH + ((selectedConfig[3] or selectedConfig[4]) and iconTitleMargin or 0)
     end
 
