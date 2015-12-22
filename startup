@@ -6,4 +6,4 @@
 ]]
 
 -- Begin the awesome stuff.
-dofile("system/startup")
+shell.run("system/startup")
