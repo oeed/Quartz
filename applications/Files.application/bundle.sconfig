@@ -1,0 +1,9 @@
+{
+    title = "Files",
+    identifier = "oeed.Quartz.Files",
+    bootPath = "startup",
+    iconPath = "icon.sicon",
+    supportedMimes = {
+        "text/plain",
+    }
+}
