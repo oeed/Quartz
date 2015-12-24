@@ -35,6 +35,7 @@ class "Program" {
     index = Number.allowsNil;
     quartzProxy = QuartzProxy.allowsNil;
     hadFirstUpdate = Boolean( false );
+    bootPath = String;
 
     configKeys = Enum( String, configKeys );
 
@@ -59,6 +60,7 @@ function Program.bundle:set( bundle )
     if not bootPath then
         ConfigurationFatalProgramException( "Program bundle configuration did not specify required key '" .. configKeys.BOOT_PATH .. "'." )
     end
+    self.bootPath = FileSystemItem.static:tidy( bundle.path .. "/" .. config[configKeys.BOOT_PATH] )
     self.icon = Icon.static:fromPathInBundle( iconPath, bundle )
     self.title = config.title or bundle.name
     self.config = config
@@ -67,7 +69,7 @@ end
 function Program:run()
     self.state = states.RUNNING
     self.coroutine = coroutine.create( function()
-        local func = loadfile( FileSystemItem.static:tidy( self.bundle.path .. "/" .. self.config[configKeys.BOOT_PATH] ) )
+        local func = loadfile( self.bootPath )
         setfenv( func, self.environment.environment )
         func( arguments )
     end )
