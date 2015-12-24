@@ -44,8 +44,6 @@ function _G.error(message, level)
    _error(message, level)      
 end        
 
-
-
 if fs.exists("system/Silica.resourcepkg") then
     log("Using built package")
     local _, err = pcall(function() dofile( "system/Silica.resourcepkg" ) end)
@@ -69,7 +67,7 @@ end
 os.queueEvent("damn_emulator")
 os.pullEvent("damn_emulator")
 
-Application.static:load( "/system" )
+Application.static:load( "" )
 
 
 QuartzApplication():run( ... )
