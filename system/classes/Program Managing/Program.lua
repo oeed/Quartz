@@ -10,6 +10,7 @@ local configKeys = {
     PROGRAM_TITLE = "title",
     BOOT_PATH = "bootPath",
     ICON_PATH = "iconPath",
+    IDENTIFIER = "identifier",
 }
 
 class "Program" {
@@ -36,6 +37,7 @@ class "Program" {
     quartzProxy = QuartzProxy.allowsNil;
     hadFirstUpdate = Boolean( false );
     bootPath = String;
+    identifier = String;
 
     configKeys = Enum( String, configKeys );
 
@@ -57,10 +59,15 @@ function Program.bundle:set( bundle )
     local config = bundle.config
     local bootPath = config[configKeys.BOOT_PATH]
     local iconPath = config[configKeys.ICON_PATH]
+    local identifier = config[configKeys.IDENTIFIER]
     if not bootPath then
         ConfigurationFatalProgramException( "Program bundle configuration did not specify required key '" .. configKeys.BOOT_PATH .. "'." )
     end
+    if not identifier then
+        ConfigurationFatalProgramException( "Program bundle configuration did not specify required key '" .. configKeys.IDENTIFIER .. "'." )
+    end
     self.bootPath = FileSystemItem.static:tidy( bundle.path .. "/" .. config[configKeys.BOOT_PATH] )
+    self.identifier = identifier
     self.icon = Icon.static:fromPathInBundle( iconPath, bundle )
     self.title = config.title or bundle.name
     self.config = config
