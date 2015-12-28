@@ -1,19 +1,27 @@
-<FilesApplicationContainer>
+<FilesApplicationContainer theme="files">
 
     <ToolbarContainer width=320 y=1>
         <ToolbarSegmentContainer>
-            <ToolbarSymbolSegmentButton symbol="left" />
-            <ToolbarSymbolSegmentButton symbol="right" />
+            <ToolbarSymbolSegmentButton symbolName="back" />
+            <ToolbarSymbolSegmentButton symbolName="forward" />
         </ToolbarSegmentContainer>
-        <!-- <ToolbarStaticSpace/> -->
-        <ToolbarDynamicSpace/>
+        <ToolbarSymbolButton symbolName="up"/>
+        <ToolbarStaticSpace/>
+        <ToolbarPathTextBox x=40 y=30 />
+        <ToolbarStaticSpace/>
+        <ToolbarSymbolButton symbolName="settings"/>
+
+        <!-- <ToolbarDynamicSpace/>
         <ToolbarButton text="Hi"/>
         <ToolbarDynamicSpace/>
         <ToolbarButton text="Hi"/>
-        <ToolbarButton text="Hi"/>
-        <!-- <ToolbarSymbolButton symbol="settings"/> -->
+        <ToolbarButton text="Hi"/> -->
     </ToolbarContainer>
     
+
+    <SymbolButton x=10 y=30 symbolName="settings"/>
+
+
     <Button x=10 y=50 text="Silica :D" />
 
     <Label x=70 y=54 text="Another" />
