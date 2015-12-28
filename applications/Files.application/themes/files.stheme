@@ -2,6 +2,9 @@
 
     <ToolbarPathTextBox>
         <outlineColour type="Graphics.colours" default="LIGHT_BLUE" />
+        <componentLeftMargin type="Number" default="5" />
+        <componentRightMargin type="Number" default="5" />
+        <componentFont type="Font" default="systemFont"/>
     </ToolbarPathTextBox>
 
 </Theme>
