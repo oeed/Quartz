@@ -1,4 +1,4 @@
-<FilesApplicationContainer theme="files">
+<FilesApplicationContainer themeName="files">
 
     <ToolbarContainer width=320 y=1>
         <ToolbarSegmentContainer>
