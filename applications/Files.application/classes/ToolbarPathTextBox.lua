@@ -16,6 +16,10 @@ function ToolbarPathTextBox.isFocused:set( isFocused )
         self.text = path
         self.cursorPosition = #path + 1
     else
+        local text = self.text
+        if text ~= self.path then
+            self.path = text
+        end
         self.text = ""
     end
 end
