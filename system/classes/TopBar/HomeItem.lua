@@ -1,5 +1,5 @@
 
-class "HomeItem" extends "TopBarItem" {
+class HomeItem extends TopBarItem {
     
     pin = Number( TopBarItem.pins.LEFT );
     homeContainer = HomeContainer.allowsNil;

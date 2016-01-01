@@ -1,5 +1,5 @@
 
-class "PathComponentSymbol" extends "Symbol" {
+class PathComponentSymbol extends Symbol {
 
     static = {
         symbolName = String( "pathComponent" );

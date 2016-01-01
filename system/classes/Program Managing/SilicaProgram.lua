@@ -1,7 +1,7 @@
 
 local states = Program.states
 
-class "SilicaProgram" extends "Program" {
+class SilicaProgram extends Program {
     
 }
 

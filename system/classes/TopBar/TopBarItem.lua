@@ -4,7 +4,7 @@ local pins = {
     RIGHT = 1;
 }
 
-class "TopBarItem" extends "View" {
+class TopBarItem extends View {
     
     pins = Enum( Number, pins );
     

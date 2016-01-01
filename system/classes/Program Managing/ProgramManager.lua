@@ -1,5 +1,5 @@
 
-class "ProgramManager" {
+class ProgramManager {
     
     programs = Table( {} );
     owner = QuartzApplication;

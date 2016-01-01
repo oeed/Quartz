@@ -13,7 +13,7 @@ local configKeys = {
     IDENTIFIER = "identifier",
 }
 
-class "Program" {
+class Program {
     
     state = states.UNINTIALISED;
     isRunning = Boolean( false ); -- whether the COROUTINE is running (not just the program)

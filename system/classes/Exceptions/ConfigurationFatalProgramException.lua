@@ -1,4 +1,4 @@
 
-class "ConfigurationFatalProgramException" extends "Exception" {
+class ConfigurationFatalProgramException extends Exception {
     
 }

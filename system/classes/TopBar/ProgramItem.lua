@@ -2,7 +2,7 @@
 local ICON_WIDTH = 9
 local ICON_HEIGHT = 9
 
-class "ProgramItem" extends "TopBarItem" {
+class ProgramItem extends TopBarItem {
     
     isActive = Boolean( false );
     program = Program;

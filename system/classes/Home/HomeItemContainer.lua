@@ -1,5 +1,5 @@
 
-class "HomeItemContainer" extends "Container" {
+class HomeItemContainer extends Container {
     
     needsLayoutUpdate = false;
 

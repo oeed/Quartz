@@ -8,7 +8,7 @@ local ANIMATION_SCALE_EASING = Animation.easings.OUT_SINE
 local ANIMATION_SCALE = 0.8
 local ANIMATION_OVERLAP_TIME = 0.20
 
-class "HomeContainer" extends "Container" implements "ISwitchableView" {
+class HomeContainer extends Container implements "ISwitchableView" {
     
     isFocusDismissable = Boolean( false );
     isOpening = Boolean( true );

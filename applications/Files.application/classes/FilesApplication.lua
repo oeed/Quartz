@@ -1,5 +1,5 @@
 
-class "FilesApplication" extends "Application" {
+class FilesApplication extends Application {
 
 	name = String( "Files" );
 	interfaceName = String( "files" ).allowsNil;

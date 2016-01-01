@@ -1,5 +1,5 @@
 
-class "ProgramInformationChangedInterfaceEvent" extends "InterfaceEvent" {
+class ProgramInformationChangedInterfaceEvent extends InterfaceEvent {
     
     static = {
         eventType = "interface_program_info_changed";

@@ -1,5 +1,5 @@
 
-class "ProgramEnvironment" {
+class ProgramEnvironment {
 
     program = Program;
     environment = Table( {} );

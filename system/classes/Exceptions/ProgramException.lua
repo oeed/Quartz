@@ -1,5 +1,5 @@
 
-class "ProgramException" extends "Exception" {
+class ProgramException extends Exception {
 
     program = Program;
     

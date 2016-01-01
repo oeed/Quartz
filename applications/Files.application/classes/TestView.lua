@@ -1,5 +1,5 @@
 
-class "TestView" extends "View" {
+class TestView extends View {
 
     isPressed = Boolean( false );
 

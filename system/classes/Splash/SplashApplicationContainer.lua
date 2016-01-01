@@ -1,5 +1,5 @@
 
-class "SplashApplicationContainer" extends "ApplicationContainer" {
+class SplashApplicationContainer extends ApplicationContainer {
     -- splashView = InterfaceOutlet( "splashView" )
 }
 

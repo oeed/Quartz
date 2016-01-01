@@ -1,5 +1,5 @@
 
-class "QuartzProxy" {
+class QuartzProxy {
 
     screenBuffer = Table.allowsNil;
     silicaApplication = Table.allowsNil; -- we have to use table because the Application class will be different, we just have to presume it's an Application

@@ -1,5 +1,5 @@
 
-class "ProgramClosedInterfaceEvent" extends "InterfaceEvent" {
+class ProgramClosedInterfaceEvent extends InterfaceEvent {
     
     eventType = "interface_program_closed";
     program = false;

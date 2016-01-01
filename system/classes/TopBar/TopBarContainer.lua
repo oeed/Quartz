@@ -3,7 +3,7 @@ local ANIMATION_TIME = 0.3
 local ANIMATION_EASING = Animation.easings.OUT_SINE
 local pins = TopBarItem.pins
 
-class "TopBarContainer" extends "Container" {
+class TopBarContainer extends Container {
     
     interfaceName = "topbarcontainer";
     separatorView = TopBarSeparatorView.link;

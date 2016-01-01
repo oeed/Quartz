@@ -1,5 +1,5 @@
 
-class "SilicaProgramEnvironment" extends "ProgramEnvironment" {
+class SilicaProgramEnvironment extends ProgramEnvironment {
     
 }
 

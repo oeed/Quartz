@@ -1,5 +1,5 @@
 
-class "QuartzApplicationContainer" extends "ApplicationContainer" {
+class QuartzApplicationContainer extends ApplicationContainer {
 
     topBar = TopBarContainer.link;
     homeContainer = HomeContainer.link;

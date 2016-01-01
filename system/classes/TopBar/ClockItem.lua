@@ -1,5 +1,5 @@
 
-class "ClockItem" extends "TopBarItem" {
+class ClockItem extends TopBarItem {
     
     pin = Number( TopBarItem.pins.RIGHT );
 

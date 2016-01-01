@@ -1,2 +1,2 @@
 
-class "HomeSearchBox" extends "SearchBox" implements "IHomeItem" {}
+class HomeSearchBox extends SearchBox implements "IHomeItem" {}

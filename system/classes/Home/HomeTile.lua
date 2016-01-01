@@ -2,7 +2,7 @@
 local SHADOW_SIZE_X = 2
 local SHADOW_SIZE_Y = 3
 
-class "HomeTile" extends "Container" implements "IHomeItem" {
+class HomeTile extends Container implements "IHomeItem" {
 
 }
 

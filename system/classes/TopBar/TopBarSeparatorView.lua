@@ -1,5 +1,5 @@
 
-class "TopBarSeparatorView" extends "SeparatorView" {
+class TopBarSeparatorView extends SeparatorView {
     
     activeX = Number( 1 );
     activeWidth = Number( 1 );

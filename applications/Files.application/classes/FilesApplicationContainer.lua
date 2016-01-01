@@ -1,5 +1,5 @@
 
-class "FilesApplicationContainer" extends "ApplicationContainer" {
+class FilesApplicationContainer extends ApplicationContainer {
     
     height = Number( 186 );
     path = String.allowsNil;

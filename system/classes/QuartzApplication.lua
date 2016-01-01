@@ -1,5 +1,5 @@
 
-class "QuartzApplication" extends "Application" {
+class QuartzApplication extends Application {
 	
 	name = String( "Quartz" );
 	interfaceName = String( "quartz" ).allowsNil;

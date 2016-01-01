@@ -8,7 +8,7 @@ local ANIMATION_SCALE_EASING = Animation.easings.OUT_SINE
 local ANIMATION_SCALE = 0.8
 local ANIMATION_OVERLAP_TIME = 0.1
 
-class "ProgramView" extends "View" implements "ISwitchableView" {
+class ProgramView extends View implements "ISwitchableView" {
     
     redirect = Table.allowsNil;
     program = Program;
