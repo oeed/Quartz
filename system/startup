@@ -70,4 +70,4 @@ os.pullEvent("damn_emulator")
 Application.static:load( "" )
 
 
-QuartzApplication():run( ... )
+QuartzApplication( ... ):run()
