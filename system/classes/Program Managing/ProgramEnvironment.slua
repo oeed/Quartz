@@ -36,7 +36,8 @@ function ProgramEnvironment:loadDefaultVariables()
     environment.fs = bundle.fs
     environment.io = bundle.io
     function environment.loadstring( ... )
-        local loaded = loadstring( ... )
+        local loaded, err = loadstring( ... )
+        if err then error("loadstring error: "..err) end
         setfenv( loaded, environment )
         return loaded
     end

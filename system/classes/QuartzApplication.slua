@@ -17,6 +17,7 @@ function QuartzApplication:initialise()
 	self:super()
 	self.programManager = ProgramManager( self )
 	self:event( CharacterEvent, self.onChar )
+	self.programManager:run( SilicaProgram( Bundle( "/applications/Files.application" ) ) )
 end
 
 function QuartzApplication:initialiseSettings()

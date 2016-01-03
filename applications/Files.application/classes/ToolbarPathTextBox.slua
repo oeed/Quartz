@@ -2,7 +2,7 @@
 local fs = Quartz.fs
 local MAX_COMPONENT_WIDTH = 70
 
-class ToolbarPathTextBox extends TextBox implements "IToolbarItem" implements "IToolbarDynamicItem" {
+class ToolbarPathTextBox extends TextBox implements IToolbarItem implements IToolbarDynamicItem {
     
     path = String.allowsNil;
     pathComponents = Table.allowsNil;
