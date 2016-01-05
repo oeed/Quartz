@@ -9,12 +9,12 @@ class TopBarItem extends View {
     pins = Enum( Number, pins );
     
     isPressed = Boolean( false );
-    isCanvasHitTested = Boolean( false );
     pin = Number( pins.LEFT ); -- TODO: this doesn't work: TopBarItem.pins( TopBarItem.pins.LEFT );
     isRemoving = Boolean( false );
     size = Number.allowsNil;
     height = Number( 14 );
     isSeparatorVisible = Boolean( true );
+    cursor = Cursor( ClickableCursor.static ).allowsNil;
 
 }
 
