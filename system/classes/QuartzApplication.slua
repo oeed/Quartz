@@ -17,7 +17,7 @@ function QuartzApplication:initialise()
 	self:super()
 	self.programManager = ProgramManager( self )
 	self:event( CharacterEvent, self.onChar )
-	self.programManager:run( SilicaProgram( Bundle( "/applications/Files.application" ) ) )
+	self.programManager:run( SilicaProgram( Bundle( "/applications/About.application" ) ) )
 end
 
 function QuartzApplication:initialiseSettings()
@@ -38,7 +38,7 @@ end
 function QuartzApplication:onChar( CharacterEvent event, Event.phases phase )
 	if event.character == 'r' then
 		-- self.programManager:run( Program( Bundle( "/applications/Test.application" ) ) )
-		self.programManager:run( SilicaProgram( Bundle( "/applications/Files.application" ) ) )
+		self.programManager:run( SilicaProgram( Bundle( "/applications/About.application" ) ) )
 	elseif event.character == '\\' then
 		os.reboot()
 	end

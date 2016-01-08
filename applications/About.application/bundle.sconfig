@@ -1,0 +1,9 @@
+{
+    title = "About",
+    identifier = "oeed.Quartz.About",
+    bootPath = "startup",
+    iconPath = "icon.sicon",
+    supportedMimes = {
+        "text/plain",
+    }
+}
