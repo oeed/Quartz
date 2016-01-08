@@ -34,15 +34,16 @@ function ProgramItem:onDraw()
         closeRightMargin = theme:value( "closeRightMargin" )
         closeSymbol = theme:value( "closeSymbol" )
         closeWidth = closeSymbol.width
+        maxContentWidth = maxContentWidth - closeLeftMargin - closeRightMargin - closeWidth
     end
 
     local configs = {
-        { closeWidth + closeLeftMargin + closeRightMargin + ICON_WIDTH + iconTitleMargin + titleWidth + titleStatusMargin + statusWidth, true, true, true };
-        { closeWidth + closeLeftMargin + closeRightMargin + titleWidth + titleStatusMargin + statusWidth, false, true, true };
-        statusWidth > 0 and { closeWidth + closeLeftMargin + closeRightMargin + ICON_WIDTH + iconTitleMargin + statusWidth, true, false, true };
-        { closeWidth + closeLeftMargin + closeRightMargin + ICON_WIDTH + iconTitleMargin + titleWidth, true, true, false };
-        { closeWidth + closeLeftMargin + closeRightMargin + titleWidth, false, true, false };
-        { closeWidth + closeLeftMargin + closeRightMargin + ICON_WIDTH, true, false, false };
+        { ICON_WIDTH + iconTitleMargin + titleWidth + titleStatusMargin + statusWidth, true, true, true };
+        { titleWidth + titleStatusMargin + statusWidth, false, true, true };
+        statusWidth > 0 and { ICON_WIDTH + iconTitleMargin + statusWidth, true, false, true } or nil;
+        { ICON_WIDTH + iconTitleMargin + titleWidth, true, true, false };
+        { titleWidth, false, true, false };
+        { ICON_WIDTH, true, false, false };
     }
 
     local selectedConfig
@@ -55,13 +56,6 @@ function ProgramItem:onDraw()
     selectedConfig = selectedConfig or configs[#configs] -- none of them fit, revert to icon
 
     local x = math.floor( ( width - selectedConfig[1] ) / 2 ) + 1
-    if isMouseInView then
-        if self.isCloseActive then
-           canvas:fill( theme:value( "closeFillColour" ), RectangleMask( 1, 1, leftMargin + closeLeftMargin + closeWidth + closeRightMargin, height ) )
-        end
-        canvas:fill( theme:value( "closeSymbolColour" ), SymbolMask( 1 + leftMargin + closeLeftMargin, 1 + math.floor( ( self.height - closeSymbol.height ) / 2 ), closeSymbol ) )
-        x = x + closeWidth + closeLeftMargin + closeRightMargin
-    end
     -- Icon
     if selectedConfig[2] then
         canvas:image( program.icon, x, topMargin, ICON_WIDTH, ICON_HEIGHT )
@@ -78,10 +72,16 @@ function ProgramItem:onDraw()
     if selectedConfig[4] then
         canvas:fill( theme:value( "statusColour" ), TextMask( x, 1 + topMargin, statusWidth, statusFont.height, programStatus, statusFont ) )
     end
+
+    -- Close button
+    if isMouseInView then
+       canvas:fill( theme:value( "closeFillColour" ), RectangleMask( 1, 1, leftMargin + closeLeftMargin + closeWidth + closeRightMargin, height ) )
+        canvas:fill( theme:value( "closeSymbolColour" ), SymbolMask( 1 + leftMargin + closeLeftMargin, 1 + math.floor( ( self.height - closeSymbol.height ) / 2 ), closeSymbol ) )
+    end
 end
 
 function ProgramItem:updateThemeStyle()
-    self.theme.style = self.isCloseActive and ( self.isPressed and "closePressed" or "closeHover" ) or ( self.isPressed and "pressed" or ( self.program.programView.isFocused and "focused" or "default" ) )
+    self.theme.style = self.isCloseActive and ( self.program.programView.isFocused and ( self.isPressed and "closePressedFocused" or "closeHoverFocused" ) or ( self.isPressed and "closePressed" or "closeHover" ) ) or ( self.isPressed and "pressed" or ( self.program.programView.isFocused and "focused" or "default" ) )
 end
 
 function ProgramItem.program:set( program )
@@ -93,20 +93,30 @@ end
 
 function ProgramItem:onMouseExited( MouseExitedInterfaceEvent event, Event.phases phase )
     self.needsDraw = true
+    self.isCloseActive = false
+    self:updateThemeStyle()
 end
 
 function ProgramItem:onMouseEntered( MouseEnteredInterfaceEvent event, Event.phases phase )
-    self.needsDraw = true
+    if not self:updateIsCloseActive( event.x ) then
+        self.needsDraw = true
+    end
 end
 
 function ProgramItem:onMouseMoved( MouseMoveEvent event, Event.phases phase )
+    self:updateIsCloseActive( event.x )
+end
+
+function ProgramItem:updateIsCloseActive( Number x )
     local theme = self.theme
-    local isCloseActive = event.x <= theme:value( "leftMargin" ) + theme:value( "closeLeftMargin" ) + theme:value( "closeSymbol" ).width + theme:value( "closeRightMargin" )
+    local isCloseActive = x <= theme:value( "leftMargin" ) + theme:value( "closeLeftMargin" ) + theme:value( "closeSymbol" ).width + theme:value( "closeRightMargin" )
     if isCloseActive ~= self.isCloseActive then
         self.isCloseActive = isCloseActive
         self:updateThemeStyle()
         self.needsDraw = true
+        return true
     end
+    return false
 end
 
 --[[
