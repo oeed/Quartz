@@ -39,6 +39,9 @@ function QuartzApplication:onChar( CharacterEvent event, Event.phases phase )
 	if event.character == 'r' then
 		-- self.programManager:run( Program( Bundle( "/applications/Test.application" ) ) )
 		self.programManager:run( SilicaProgram( Bundle( "/applications/About.application" ) ) )
+	elseif event.character == 'f' then
+		-- self.programManager:run( Program( Bundle( "/applications/Test.application" ) ) )
+		self.programManager:run( SilicaProgram( Bundle( "/applications/Files.application" ) ) )
 	elseif event.character == '\\' then
 		os.reboot()
 	end
