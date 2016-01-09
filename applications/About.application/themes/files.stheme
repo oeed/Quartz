@@ -1,14 +1,3 @@
 <Theme extends="default">
 
-    <ToolbarPathTextBox>
-        <outlineColour type="Graphics.colours" default="LIGHT_BLUE" />
-        <componentFirstLeftMargin type="Number" default="11" />
-        <componentLeftMargin type="Number" default="5" />
-        <componentRightMargin type="Number" default="5" />
-        <componentFont type="Font" default="systemFont"/>
-        <componentTextColour type="Graphics.colours" default="GREY"/>
-        <componentSymbolColour type="Graphics.colours" default="GREY"/>
-        <componentSymbol type="Symbol" default="pathComponent"/>
-    </ToolbarPathTextBox>
-
 </Theme>
