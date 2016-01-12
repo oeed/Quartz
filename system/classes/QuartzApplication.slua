@@ -24,6 +24,9 @@ function QuartzApplication:initialiseSettings()
 	self.settings = QuartzSettings()
 end
 
+function QuartzApplication:initialiseFileAssociations()
+end
+
 function QuartzApplication:update()
 	self:super()
 	self.programManager:update()
