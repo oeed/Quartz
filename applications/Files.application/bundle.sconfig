@@ -4,6 +4,13 @@
     bootPath = "startup",
     iconPath = "icon.sicon",
     supportedMimes = {
-        "text/plain",
+        ["text/plain"] = {
+        	iconPath = "icon.sicon",
+        	extensions = {
+        		"text",
+        		"txt",
+        	},
+        	argumentFormat = "%1"
+        }
     }
 }
