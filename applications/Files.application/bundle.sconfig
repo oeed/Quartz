@@ -2,14 +2,11 @@
     title = "Files",
     identifier = "oeed.Quartz.Files",
     bootPath = "startup",
-    iconPath = "icon.sicon",
+    iconPath = "resources/Icons/icon.sicon",
     supportedMimes = {
-        ["text/plain"] = {
-        	iconPath = "icon.sicon",
-        	extensions = {
-        		"text",
-        		"txt",
-        	},
+        ["folder"] = {
+		    iconPath = "resources/Icons/folder.sicon",
+        	extensions = {},
         	argumentFormat = "%1"
         }
     }
