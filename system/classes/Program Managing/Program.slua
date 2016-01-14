@@ -11,6 +11,10 @@ local configKeys = {
     BOOT_PATH = "bootPath",
     ICON_PATH = "iconPath",
     IDENTIFIER = "identifier",
+    MIMES = "supportedMimes",
+    MIME_ICON_PATH = "iconPath",
+    MIME_EXTENSIONS = "extensions",
+    MIME_ARGUMENT_FORMAT = "argumentFormat",
 }
 
 class Program {

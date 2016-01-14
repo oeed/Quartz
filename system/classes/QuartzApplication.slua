@@ -25,6 +25,34 @@ function QuartzApplication:initialiseSettings()
 end
 
 function QuartzApplication:initialiseFileAssociations()
+	-- scan over all of the programs
+	local configKeys = Program.configKeys
+	local root = Folder( "/" )
+	local programs = root:findAll( Metadata.mimes.APPLICATION )
+	for i, programBundle in ipairs( programs ) do
+		if programBundle:typeOf( Bundle ) then
+			local config = programBundle.config
+			local supportedMimes = config[configKeys.MIMES]
+			if supportedMimes and type( supportedMimes ) == "table" then
+				for mime, options in pairs( supportedMimes ) do
+					if type( mime ) == "string" then
+						local iconPath, extensions, argumentFormat = config[configKeys.MIME_ICON_PATH], config[configKeys.MIME_EXTENSIONS], config[configKeys.MIME_ARGUMENT_FORMAT]
+						if type( iconPath ) == "string" then
+							local iconFile = programBundle:fileFromPath( iconPath )
+							if iconFile then
+								local icon = Image.static:fromFile( iconFile )
+								if icon and icon:typeOf( Icon ) then
+									extensions = type( extensions ) == "table" and extensions or {}
+									argumentFormat = type( argumentFormat ) == "string" and argumentFormat or "%1"
+									FileAssociationManager.static:registerAssociation( FileAssociation( mime, icon, extensions, argumentFormat, programBundle ) )
+								end
+							end
+						end
+					end
+				end
+			end
+		end
+	end
 end
 
 function QuartzApplication:update()
