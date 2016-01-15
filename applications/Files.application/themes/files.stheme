@@ -14,7 +14,8 @@
     <FileItem>
         <largeIconSize type="Number" default="32" />
         <smallIconSize type="Number" default="9" />
-        <focusPadding type="Number" default="5" />
+        <focusPaddingX type="Number" default="5" />
+        <focusPaddingY type="Number" default="2" />
         <focusGap type="Number" default="2" />
         <textMargin type="Number" default="7" />
         <sideMargin type="Number" default="1" />
