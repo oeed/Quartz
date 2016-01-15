@@ -75,20 +75,18 @@ function FileItem:onDraw()
 		iconSize = theme:value( "largeIconSize" )
 	end
 	canvas:image( fileSystemItem.icon, leftMargin, 1, iconSize, iconSize )
-
 	leftMargin = leftMargin + iconSize
--- contentWidth - LARGE_ICON_SIZE - FOCUS_GAP - 2 * FOCUS_PADDING - 2 * SIDE_MARGIN
+
 	local title = self.title
 	local titleHeight, titleWidth = titleFont.height, math.min( titleFont:getWidth( title ), width - iconSize - 2 * sideMargin - focusGap - 2 * focusPaddingX )
-	local titleY = math.max( math.floor( ( iconSize - titleHeight ) / 3 + 0.5 ) + 1, 1 + focusPaddingY )
-
+	local subtitleHeight = subtitleFont.height
+	local titleY = math.max( math.floor( ( iconSize - titleHeight - focusPaddingY - focusGap - subtitleHeight + 1 ) / 2 + 0.5 ) + 1, 1 + focusPaddingY )
 	local focusRoundedRect = RoundedRectangleMask( leftMargin + focusGap, titleY - focusPaddingY, titleWidth + 2 * focusPaddingX, titleHeight + 2 * focusPaddingY, theme:value( "focusRadius" ) )
 	canvas:fill( theme:value( "focusFillColour" ), focusRoundedRect )
 	canvas:fill( theme:value( "titleColour" ), TextMask( leftMargin + focusPaddingX + focusGap, titleY, titleWidth, titleHeight, title, titleFont ) )
 
-
 	local subtitle = self.subtitle
-	local subtitleHeight, subtitleWidth = subtitleFont.height, math.min( subtitleFont:getWidth( subtitle ), width - iconSize - 2 * sideMargin - focusGap - 2 * focusPaddingX )
+	local subtitleWidth = math.min( subtitleFont:getWidth( subtitle ), width - iconSize - 2 * sideMargin - focusGap - 2 * focusPaddingX )
 	local subtitleY = titleY + titleHeight + focusPaddingY + focusGap
 	canvas:fill( theme:value( "subtitleColour" ), TextMask( leftMargin + focusPaddingX + focusGap, subtitleY, subtitleWidth, subtitleHeight, subtitle, subtitleFont ) )
 end
@@ -119,7 +117,7 @@ function FileItem:updateIdealSize()
 		self.idealHeight = smallIconSize + 2
 	elseif style == styles.THUMBNAIL then
 		self.idealWidth = contentWidth
-		self.maxWidth = contentWidth * 1.5
+		self.maxWidth = math.floor( contentWidth * 1.5 + 0.5 )
 		self.minWidth = 85
 		self.idealHeight = largeIconSize + 2
 	end
