@@ -18,6 +18,7 @@ class FileItem extends View implements IDraggableView implements IFlowItem imple
 	-- isFocused = Boolean( false );
 	-- isCanvasHitTested = Boolean( false );
 
+	path = String.allowsNil;
 	fileSystemItem = FileSystemItem;
 	title = String;
 	subtitle = String;
@@ -50,17 +51,22 @@ function FileItem:initialise( ... )
 	-- self:event( Event.KEY_UP, self.onKeyUp )
 	-- self.event:connectGlobal( MouseUpEvent, self.onGlobalMouseUp, Event.phases.BEFORE )
 
-	self.fileSystemItem = Folder( "/applications" )
+	-- self.fileSystemItem = Folder( "/applications" )
+end
+
+function FileItem.path:set( path )
+	self.path = path
+	self.fileSystemItem = FileSystemItem( path )  
 end
 
 function FileItem:onDraw()
-	local canvas, theme, width, height = self.canvas, self.theme, self.width, self.height
+	local canvas, theme, width, height, style = self.canvas, self.theme, self.width, self.height, self.style
 	-- canvas:fill( 2^math.random(0,15) )
 
 	local fileSystemItem = self.fileSystemItem
 	local titleFont = theme:value( "titleFont" )
 	local subtitleFont = theme:value( "subtitleFont" )
-	local focusPadding, focusGap, sideMargin = theme:value( "focusPadding" ), theme:value( "focusGap" ), theme:value( "sideMargin" )
+	local focusPaddingX, focusPaddingY, focusGap, sideMargin = theme:value( "focusPaddingX" ), theme:value( "focusPaddingY" ), theme:value( "focusGap" ), theme:value( "sideMargin" )
 
 	local leftMargin, iconSize = 1 + sideMargin
 	if style == styles.LIST then
@@ -71,40 +77,36 @@ function FileItem:onDraw()
 	canvas:image( fileSystemItem.icon, leftMargin, 1, iconSize, iconSize )
 
 	leftMargin = leftMargin + iconSize
+-- contentWidth - LARGE_ICON_SIZE - FOCUS_GAP - 2 * FOCUS_PADDING - 2 * SIDE_MARGIN
+	local title = self.title
+	local titleHeight, titleWidth = titleFont.height, math.min( titleFont:getWidth( title ), width - iconSize - 2 * sideMargin - focusGap - 2 * focusPaddingX )
+	local titleY = math.max( math.floor( ( iconSize - titleHeight ) / 3 + 0.5 ) + 1, 1 + focusPaddingY )
 
-	-- canvas:fill( theme:value( "titleColour" ), TextMask(  ) )
+	local focusRoundedRect = RoundedRectangleMask( leftMargin + focusGap, titleY - focusPaddingY, titleWidth + 2 * focusPaddingX, titleHeight + 2 * focusPaddingY, theme:value( "focusRadius" ) )
+	canvas:fill( theme:value( "focusFillColour" ), focusRoundedRect )
+	canvas:fill( theme:value( "titleColour" ), TextMask( leftMargin + focusPaddingX + focusGap, titleY, titleWidth, titleHeight, title, titleFont ) )
+
+
+	local subtitle = self.subtitle
+	local subtitleHeight, subtitleWidth = subtitleFont.height, math.min( subtitleFont:getWidth( subtitle ), width - iconSize - 2 * sideMargin - focusGap - 2 * focusPaddingX )
+	local subtitleY = titleY + titleHeight + focusPaddingY + focusGap
+	canvas:fill( theme:value( "subtitleColour" ), TextMask( leftMargin + focusPaddingX + focusGap, subtitleY, subtitleWidth, subtitleHeight, subtitle, subtitleFont ) )
 end
 
--- function FileItem:initialiseCanvas()
--- 	self:super()
-
--- 	local width, height, canvas, theme = self.width, self.height, self.canvas, self.theme
--- 	local focusObject = canvas:insert( RoundedRectangle( SIDE_MARGIN + LARGE_ICON_SIZE + 3, 7, 2 * FOCUS_PADDING, 12 ) )
--- 	local titleObject = canvas:insert( Text( SIDE_MARGIN + LARGE_ICON_SIZE + TEXT_MARGIN + 1, 9, width - LARGE_ICON_SIZE - TEXT_MARGIN, 8, self.title ) )
--- 	local subtitleObject = canvas:insert( Text( SIDE_MARGIN + LARGE_ICON_SIZE + TEXT_MARGIN + 1, 20, width - LARGE_ICON_SIZE - TEXT_MARGIN, 8, self.subtitle ) )
--- 	local imageObject = canvas:insert( ImageObject( SIDE_MARGIN + 1, 1, LARGE_ICON_SIZE, LARGE_ICON_SIZE, folderIcon ) )
--- 	imageObject.drawsShadow = true
-	
--- 	theme:connect( focusObject, "fillColour", "focusFillColour" )
--- 	theme:connect( focusObject, "outlineColour", "focusOutlineColour" )
--- 	theme:connect( focusObject, "radius", "focusRadius" )
--- 	theme:connect( titleObject, "textColour", "titleColour" )
--- 	theme:connect( subtitleObject, "textColour", "subtitleColour" )
-
--- 	self.titleObject = titleObject
--- 	self.subtitleObject = subtitleObject
--- 	self.focusObject = focusObject
--- 	self.imageObject = imageObject
--- end
+function FileItem.fileSystemItem:set( fileSystemItem )
+    self.fileSystemItem = fileSystemItem
+    self.title = fileSystemItem.name
+    self.subtitle = fileSystemItem.sizeString .. " " .. fileSystemItem.metadata.mime
+end
 
 function FileItem:updateIdealSize()
 	local style, theme, parent = self.style, self.theme, self.parent
 
 	local titleWidth = theme:value( "titleFont" ):getWidth( self.title )
 	local subtitleWidth = theme:value( "subtitleFont" ):getWidth( self.subtitle )
-	local largeIconSize, smallIconSize, focusPadding, focusGap, sideMargin = theme:value( "largeIconSize" ), theme:value( "smallIconSize" ), theme:value( "focusPadding" ), theme:value( "focusGap" ), theme:value( "sideMargin" )
+	local largeIconSize, smallIconSize, focusPaddingX, focusPaddingY, focusGap, sideMargin = theme:value( "largeIconSize" ), theme:value( "smallIconSize" ), theme:value( "focusPaddingX" ), theme:value( "focusPaddingY" ), theme:value( "focusGap" ), theme:value( "sideMargin" )
 
-	local contentWidth = largeIconSize + focusGap + math.max( subtitleWidth, titleWidth ) + 2 * focusPadding + 2 * sideMargin
+	local contentWidth = largeIconSize + focusGap + math.max( subtitleWidth, titleWidth ) + 2 * focusPaddingX + 2 * sideMargin
 	self.contentWidth = contentWidth
 
 	if style == styles.LIST then
