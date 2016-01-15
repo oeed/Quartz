@@ -13,9 +13,18 @@
     </ToolbarContainer>
     
     <!-- <SplitContainer width=320 y=27 height=160>
-        <ColourView/>
-        <ColourView/>
-        <ColourView/>
     </SplitContainer> -->
+
+
+    <FlowContainer identifier="filesContainer" y=27 width=320 height=160>
+        <FileItem path="/applications" />
+        <FileItem path="/applications/Files.application" />
+        <FileItem path="/system" />
+        <FileItem path="/system/resources/Wallpapers/Europe/Arc de Triomphe.ucg" />
+    <!--<FileItem path="/applications" />
+        <FileItem path="/applications" />
+        <FileItem path="/applications" /> -->
+    </FlowContainer>
+
 
 </FilesApplicationContainer>
