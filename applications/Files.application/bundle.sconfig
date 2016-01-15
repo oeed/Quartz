@@ -5,6 +5,7 @@
     iconPath = "resources/Icons/icon.sicon",
     supportedMimes = {
         ["folder"] = {
+            name = "Folder",
 		    iconPath = "resources/Icons/folder.sicon",
         	extensions = {},
         	argumentFormat = "%1"

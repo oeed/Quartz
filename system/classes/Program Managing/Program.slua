@@ -15,6 +15,7 @@ local configKeys = {
     MIME_ICON_PATH = "iconPath",
     MIME_EXTENSIONS = "extensions",
     MIME_ARGUMENT_FORMAT = "argumentFormat",
+    MIME_NAME = "name"
 }
 
 class Program {
