@@ -1,0 +1,14 @@
+{
+    title = "Sketch",
+    identifier = "oeed.Quartz.Sketch",
+    bootPath = "startup",
+    iconPath = "folder.sicon",
+    supportedMimes = {
+        ["image/ucg"] = {
+            name = "UCG Image",
+		    --iconPath = "resources/Icons/folder.sicon",
+        	extensions = {},
+            argumentFormat = { true }
+        }
+    }
+}

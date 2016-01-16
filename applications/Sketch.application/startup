@@ -1,0 +1,11 @@
+local args = { ... }
+log("args:")
+log(textutils.serialise(args))
+
+for i, arg in ipairs(args) do
+	log(arg)
+end
+term.setBackgroundColor(colours.orange)
+term.clear()
+
+os.pullEvent("mouse_click")
