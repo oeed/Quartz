@@ -49,8 +49,7 @@ class Program {
 
 }
 
-function Program:initialise( Bundle bundle, ... )
-    local arguments = { ... }
+function Program:initialise( Bundle bundle, Table( {} ) arguments )
     self.bundle = bundle
     self.arguments = arguments
     self.eventQueue = { arguments }
@@ -94,7 +93,7 @@ function Program:run()
     self.coroutine = coroutine.create( function()
         local func = loadfile( self.bootPath )
         setfenv( func, self.environment.environment )
-        func( arguments )
+        func( unpack( self.arguments ) )
     end )
 end
 
