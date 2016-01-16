@@ -8,6 +8,7 @@ local states = {
 
 local configKeys = {
     PROGRAM_TITLE = "title",
+    IS_SILICA = "isSilica",
     BOOT_PATH = "bootPath",
     ICON_PATH = "iconPath",
     IDENTIFIER = "identifier",
@@ -54,6 +55,16 @@ function Program:initialise( Bundle bundle, ... )
     self.arguments = arguments
     self.eventQueue = { arguments }
     self:initialiseEnvironment()
+end
+
+function Program.static:fromBundle( Bundle bundle, Table.allowsNil arguments )
+    local config = bundle.config
+    local isSilica = config[configKeys.IS_SILICA]
+    if isSilica then
+        return SilicaProgram( bundle, arguments )
+    else
+        return Program( bundle, arguments )
+    end
 end
 
 --[[
