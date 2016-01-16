@@ -31,22 +31,22 @@ function QuartzApplication:initialiseFileAssociations()
 	local programs = root:findAll( Metadata.mimes.APPLICATION )
 	for i, programBundle in ipairs( programs ) do
 		if programBundle:typeOf( Bundle ) then
-			local config = programBundle.config
-			local supportedMimes = config[configKeys.MIMES]
+			local supportedMimes = programBundle.config[configKeys.MIMES]
 			if supportedMimes and type( supportedMimes ) == "table" then
 				for mime, options in pairs( supportedMimes ) do
 					if type( mime ) == "string" then
-						local name, iconPath, extensions, argumentFormat = config[configKeys.MIME_NAME], config[configKeys.MIME_ICON_PATH], config[configKeys.MIME_EXTENSIONS], config[configKeys.MIME_ARGUMENT_FORMAT]
-						if type( name ) == "string" and type( iconPath ) == "string" then
-							local iconFile = programBundle:fileFromPath( iconPath )
-							if iconFile then
-								local icon = Image.static:fromFile( iconFile )
-								if icon and icon:typeOf( Icon ) then
-									extensions = type( extensions ) == "table" and extensions or {}
-									argumentFormat = type( argumentFormat ) == "string" and argumentFormat or "%1"
-									FileAssociationManager.static:registerAssociation( FileAssociation( name, mime, icon, extensions, argumentFormat, programBundle ) )
+						local name, iconPath, extensions, argumentFormat = options[configKeys.MIME_NAME], options[configKeys.MIME_ICON_PATH], options[configKeys.MIME_EXTENSIONS], options[configKeys.MIME_ARGUMENT_FORMAT]
+						if type( name ) == "string" then
+							local icon
+							if iconPath then
+								local iconFile = programBundle:fileFromPath( iconPath )
+								if iconFile then
+									icon = Icon.static:fromFile( iconFile )
 								end
 							end
+							extensions = type( extensions ) == "table" and extensions or {}
+							argumentFormat = type( argumentFormat ) == "table" and argumentFormat
+							FileAssociationManager.static:registerAssociation( FileAssociation( name, mime, icon, extensions, argumentFormat, programBundle ) )
 						end
 					end
 				end
