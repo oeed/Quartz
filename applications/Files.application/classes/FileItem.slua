@@ -1,12 +1,6 @@
 
--- local LARGE_ICON_SIZE = 32
--- local SMALL_ICON_SIZE = 10
--- local FOCUS_PADDING = 5
--- local FOCUS_GAP = 2
--- local SIDE_MARGIN = 1
--- local DRAG_COPY_KEY = "alt"
--- -- local ADD_FOCUS_KEY = "shift"
--- local ADD_FOCUS_KEY = "ctrl"
+local DRAG_COPY_KEY = "alt"
+local ADD_FOCUS_KEY = "ctrl"
 
 local styles = {
 	LIST = 1;
@@ -180,9 +174,7 @@ function FileItem:onMouseDown( MouseDownEvent event, Event.phases phase )
 			else
 				self:addFocus()
 			end
-		elseif #self.application:focusesOfType( FileItem ) > 1 then
-			self:addFocus()
-		else
+		elseif not self.isFocused then
 			self:focus()
 		end
 	end
