@@ -199,7 +199,7 @@ end
 
 function FileItem:onMouseDoubleClick( MouseDoubleClickEvent event, Event.phases phase )
 	if self.isEnabled and event.mouseButton == MouseEvent.mouseButtons.LEFT then
-		-- error('oepn')
+		self.fileSystemItem:open()
 	end
 	return true
 end
