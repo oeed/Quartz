@@ -94,8 +94,8 @@ end
 function FileItem.fileSystemItem:set( fileSystemItem )
     self.fileSystemItem = fileSystemItem
     self.title = fileSystemItem.name
-    local mime = fileSystemItem.metadata.mime
-    self.subtitle = fileSystemItem.sizeString .. ( mime and " " .. mime or "" )
+    local association = fileSystemItem.association
+    self.subtitle = fileSystemItem.sizeString .. ( association and " " .. association.name or "" )
 end
 
 function FileItem:updateIdealSize()
