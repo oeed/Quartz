@@ -25,6 +25,14 @@ function QuartzProxy:initialise( Program program )
     self.userDataPath = folder.path
 end
 
+--[[
+    @desc Opens a file in the appropriate program. Paths are relative to the program, but absolute paths are recommended.
+]]
+function QuartzProxy:open( String path, Number.allowsNil id )
+    path = FileSystemItem.static:resolve( path, self._program.bundle.path )
+    FileAssociationManager.static:open( FileSystemItem( path ), nil, id )
+end
+
 function QuartzProxy:redraw( Table.allowsNil pixels )
     local programView = self._program.programView
     if pixels then
