@@ -9,6 +9,7 @@ class QuartzProxy {
     userDataPath = String;
 
     status = String.allowsNil;
+    fileAssociationBridge = Function.allowsNil;
     
 }
 

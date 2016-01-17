@@ -97,6 +97,33 @@ function Program:run()
     end )
 end
 
+--[[
+    @desc Bridge ALL of the file assocations we currently have loaded
+]]
+function Program:bridgeFileAssociations()
+    -- inject all of the FileAssociations
+    local fileAssociationBridge = self.environment.environment.Quartz.fileAssociationBridge
+    if fileAssociationBridge then
+        for mime, fileAssociations in pairs( FileAssociationManager.static.associations ) do
+            for i, fileAssociation in ipairs( fileAssociations ) do
+                local serialised = fileAssociation:serialise()
+                fileAssociationBridge( serialised )
+            end
+        end
+    end
+end
+
+--[[
+    @desc Bridge a SINGLE file assocation (used when one is loaded after the program has begun)
+]]
+function Program:bridgeFileAssociation( FileAssociation fileAssociation )
+    local fileAssociationBridge = self.environment.environment.Quartz.fileAssociationBridge
+    if fileAssociationBridge then
+        local serialised = fileAssociation:serialise()
+        fileAssociationBridge( serialised )
+    end
+end
+
 function Program:initialiseEnvironment()
     self.environment = ProgramEnvironment( self )
 end

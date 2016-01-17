@@ -17,6 +17,7 @@ function QuartzApplication:initialise()
 	self:super()
 	self.programManager = ProgramManager( self )
 	self:event( CharacterEvent, self.onChar )
+	self:event( FileAssociationRegisteredInterfaceEvent, self.onFileAssociationRegistered )
 	self.programManager:run( Program.static:fromBundle( Bundle( "/applications/Files.application" ) ) )
 end
 
@@ -58,6 +59,13 @@ end
 function QuartzApplication:update()
 	self:super()
 	self.programManager:update()
+end
+
+function QuartzApplication:onFileAssociationRegistered( FileAssociationRegisteredInterfaceEvent event, Event.phases phase )
+	local fileAssociation = event.fileAssociation
+	for i, program in ipairs( self.programManager.programs ) do
+		program:bridgeFileAssociation( fileAssociation )
+	end
 end
 
 --[[
