@@ -133,30 +133,6 @@ function FileItem.subtitle:set( subtitle )
 	self:updateIdealSize()
 end
 
--- function FileItem:updateWidth( width )
--- 	local titleObject, subtitleObject = self.titleObject, self.subtitleObject
--- 	local contentWidth = math.min( width, self.contentWidth )
--- 	self.focusObject.width = contentWidth - LARGE_ICON_SIZE - FOCUS_GAP - 2 * SIDE_MARGIN
--- 	self.titleObject.width = contentWidth - LARGE_ICON_SIZE - FOCUS_GAP - 2 * FOCUS_PADDING - 2 * SIDE_MARGIN
--- 	self.subtitleObject.width = contentWidth - LARGE_ICON_SIZE - FOCUS_GAP - 2 * FOCUS_PADDING - 2 * SIDE_MARGIN
--- end
-
--- function FileItem:updateHeight( height )
--- 	local imageObject, titleObject, focusObject = self.imageObject, self.titleObject, self.focusObject
--- 	local iconSize = math.min( height - 2, LARGE_ICON_SIZE )
--- 	imageObject.width = iconSize
--- 	imageObject.height = iconSize
--- 	local icon = ( iconSize > (LARGE_ICON_SIZE - SMALL_ICON_SIZE) / 2 + SMALL_ICON_SIZE ) and "folder" or "folder-small"
--- 	if imageObject.image ~= icon then
--- 		imageObject.image = icon
--- 	end
--- 	titleObject.x = iconSize + SIDE_MARGIN + TEXT_MARGIN + 1
--- 	local textY = math.max( math.floor( ( iconSize - 8 --[[ FONT_HEIGHT == 8 ]] ) / 3 + 0.5 ) + 1, 3 )
--- 	titleObject.y = textY
--- 	focusObject.x = SIDE_MARGIN + iconSize + 3
--- 	focusObject.y = textY - 2
--- end
-
 function FileItem.style:set( style )
 	self.style = style
 	self:updateIdealSize()
