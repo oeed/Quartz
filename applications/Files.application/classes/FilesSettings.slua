@@ -1,0 +1,7 @@
+
+class FilesSettings extends Settings {
+    
+    isThumbnailLayout = Boolean( true );
+    isHiddenVisible = Boolean( false );
+
+}

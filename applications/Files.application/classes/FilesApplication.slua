@@ -11,6 +11,10 @@ function FilesApplication:initialise()
 	self:event( CharacterEvent, self.onChar )
 end
 
+function FilesApplication:initialiseSettings()
+	self.settings = FilesSettings()
+end
+
 --[[
 	@desc React to a character being fired
 	@param [Event] event -- description
