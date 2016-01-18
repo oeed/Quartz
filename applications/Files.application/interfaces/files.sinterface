@@ -9,7 +9,10 @@
         <ToolbarStaticSpace/>
         <ToolbarPathTextBox identifier="pathTextBox" />
         <ToolbarStaticSpace/>
-        <ToolbarSymbolButton symbolName="settings"/>
+        <ToolbarSegmentContainer>
+            <ToolbarSymbolSegmentButton identifier="thumbnailToggleButton" symbolName="list" />
+            <ToolbarSymbolSegmentButton symbolName="settings" />
+        </ToolbarSegmentContainer>
     </ToolbarContainer>
     
     <!-- <SplitContainer width=320 y=27 height=160>

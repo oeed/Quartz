@@ -1,9 +1,13 @@
 
 class FilesApplicationContainer extends ApplicationContainer {
-    
-    height = Number( 186 );
-    path = String.allowsNil;
-    pathTextBox = ToolbarPathTextBox.link;
+	
+	height = Number( 186 );
+	path = String.allowsNil;
+	pathTextBox = ToolbarPathTextBox.link;
+	thumbnailToggleButton = ToolbarSymbolSegmentButton.link;
+	filesContainer = FlowContainer.link;
+
+	isThumbnailLayout = Boolean( self.application.settings.isThumbnailLayout );
 
 }
 
