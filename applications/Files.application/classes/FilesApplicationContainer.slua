@@ -12,22 +12,53 @@ class FilesApplicationContainer extends ApplicationContainer {
 }
 
 function FilesApplicationContainer:initialise( ... )
-    self:super( ... )
+	self:super( ... )
 
    self:event( ReadyInterfaceEvent, self.onReady )
 end
 
 function FilesApplicationContainer:onReady( ReadyInterfaceEvent event, Event.phases phase )
-    self.path = self.application.arguments[1] or "/user"
+	self.path = self.application.arguments[1] or "/user"
 end
 
 function FilesApplicationContainer.path:set( path )
-    if path:sub( 1, 1) ~= "/" then
-        path = "/" .. path
-    end
-    path = FileSystemItem.static:resolve( path )
-    if FileSystemItem.static:exists( path ) then
-        self.path = path
-        self.pathTextBox.path = path
-    end
+	if path:sub( 1, 1) ~= "/" then
+		path = "/" .. path
+	end
+	path = FileSystemItem.static:resolve( path )
+	if FileSystemItem.static:exists( path ) then
+		self.path = path
+		self.pathTextBox.path = path
+	end
+end
+
+function FilesApplicationContainer:update(delta)
+	log("update "..delta)
+	self:super(delta)
+end
+
+function FilesApplicationContainer:refresh()
+end
+
+function FilesApplicationContainer.thumbnailToggleButton:action( ActionInterfaceEvent event )
+	self.isThumbnailLayout = not self.isThumbnailLayout
+end
+
+function FilesApplicationContainer.isThumbnailLayout:set( isThumbnailLayout )
+	self.isThumbnailLayout = isThumbnailLayout
+	local thumbnailToggleButton = self.thumbnailToggleButton
+	if thumbnailToggleButton then
+		thumbnailToggleButton.symbolName = isThumbnailLayout and "list" or "thumbnail"
+	end
+	local filesContainer = self.filesContainer
+	if filesContainer then
+		local style = isThumbnailLayout and FileItem.styles.THUMBNAIL or FileItem.styles.LIST
+		for i, fileItem in ipairs( filesContainer.children ) do
+			fileItem.style = style
+		end
+	end
+
+	local settings = self.application.settings
+	settings.isThumbnailLayout = isThumbnailLayout
+	settings:save()
 end
