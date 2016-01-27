@@ -62,11 +62,11 @@ function FileItem:onDraw()
 	local subtitleFont = theme:value( "subtitleFont" )
 	local focusPaddingX, focusPaddingY, focusGap, sideMargin = theme:value( "focusPaddingX" ), theme:value( "focusPaddingY" ), theme:value( "focusGap" ), theme:value( "sideMargin" )
 
-	local leftMargin, iconSize = 1 + sideMargin
+	local leftMargin, iconSize = 1 + sideMargin, height
 	if style == styles.LIST then
-		iconSize = theme:value( "smallIconSize" )
+		iconSize = math.max( theme:value( "smallIconSize" ), height - 2 )
 	elseif style == styles.THUMBNAIL then
-		iconSize = theme:value( "largeIconSize" )
+		iconSize = math.min( theme:value( "largeIconSize" ), height - 2 )
 	end
 	canvas:image( fileSystemItem.icon, leftMargin, 1, iconSize, iconSize )
 	leftMargin = leftMargin + iconSize
