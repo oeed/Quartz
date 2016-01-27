@@ -16,9 +16,13 @@
         <smallIconSize type="Number" default="9" />
         <focusPaddingX type="Number" default="5" />
         <focusPaddingY type="Number" default="2" />
+        <subtitleMargin type="Number" default="5" />
+        <leftMargin type="Number" default="1" />
+        <topMargin type="Number" default="1" />
+        <rightMargin type="Number" default="1" />
+        <bottomMargin type="Number" default="1" />
         <focusGap type="Number" default="2" />
         <textMargin type="Number" default="7" />
-        <sideMargin type="Number" default="1" />
         <focusRadius type="Number" default="6" />
         <focusFillColour type="Graphics.colours" default="TRANSPARENT" focused="BLUE" />
         <focusOutlineColour type="Graphics.colours" default="TRANSPARENT" hover="BLUE" />
