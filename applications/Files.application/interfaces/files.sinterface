@@ -25,6 +25,7 @@
         <FileItem path="/system" />
         <FileItem path="/system/resources/Wallpapers/Europe/Arc de Triomphe.ucg" />
         <FileItem path="/startup" />
+        <FileItem path="/log" />
     <!--<FileItem path="/applications" />
         <FileItem path="/applications" />
         <FileItem path="/applications" /> -->
