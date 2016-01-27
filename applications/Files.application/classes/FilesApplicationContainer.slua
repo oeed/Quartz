@@ -32,10 +32,6 @@ function FilesApplicationContainer.path:set( path )
 	end
 end
 
-function FilesApplicationContainer:update(delta)
-	log("update "..delta)
-	self:super(delta)
-end
 
 function FilesApplicationContainer:refresh()
 end
