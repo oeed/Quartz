@@ -23,7 +23,8 @@ class FileItem extends View implements IDraggableView implements IFlowItem imple
 	idealHeight = Number;
 	contentWidth = Number;
 	maxWidth = Number;
-	style = styles.THUMBNAIL;
+	style = Number( self.application.settings.isThumbnailLayout and styles.THUMBNAIL or styles.LIST );
+	transition = Number( 1 );
 
 	styles = Enum( Number, {
 		LIST = 1;
@@ -55,34 +56,46 @@ end
 
 function FileItem:onDraw()
 	local canvas, theme, width, height, style = self.canvas, self.theme, self.width, self.height, self.style
-	-- canvas:fill( 2^math.random(0,15) )
 
 	local fileSystemItem = self.fileSystemItem
 	local titleFont = theme:value( "titleFont" )
 	local subtitleFont = theme:value( "subtitleFont" )
-	local focusPaddingX, focusPaddingY, focusGap, sideMargin = theme:value( "focusPaddingX" ), theme:value( "focusPaddingY" ), theme:value( "focusGap" ), theme:value( "sideMargin" )
+	local focusPaddingX, focusPaddingY, focusGap, leftMargin, topMargin, rightMargin, bottomMargin = theme:value( "focusPaddingX" ), theme:value( "focusPaddingY" ), theme:value( "focusGap" ), theme:value( "leftMargin" ), theme:value( "topMargin" ), theme:value( "rightMargin" ), theme:value( "bottomMargin" )
 
-	local leftMargin, iconSize = 1 + sideMargin, height
-	if style == styles.LIST then
-		iconSize = math.max( theme:value( "smallIconSize" ), height - 2 )
-	elseif style == styles.THUMBNAIL then
-		iconSize = math.min( theme:value( "largeIconSize" ), height - 2 )
+	local iconSize = height
+	local isList = style == styles.LIST
+	local isThumbnail = style == styles.THUMBNAIL
+	if isList then
+		iconSize = math.max( theme:value( "smallIconSize" ), height - topMargin - bottomMargin )
+	elseif isThumbnail then
+		iconSize = math.min( theme:value( "largeIconSize" ), height - topMargin - bottomMargin )
 	end
-	canvas:image( fileSystemItem.icon, leftMargin, 1, iconSize, iconSize )
-	leftMargin = leftMargin + iconSize
+	canvas:image( fileSystemItem.icon, 1 + leftMargin, 1 + topMargin, iconSize, iconSize )
+	local x = leftMargin + iconSize
 
 	local title = self.title
-	local titleHeight, titleWidth = titleFont.height, math.min( titleFont:getWidth( title ), width - iconSize - 2 * sideMargin - focusGap - 2 * focusPaddingX )
+	local titleHeight, titleWidth = titleFont.height, math.min( titleFont:getWidth( title ), width - iconSize - leftMargin - rightMargin - focusGap - 2 * focusPaddingX )
 	local subtitleHeight = subtitleFont.height
 	local titleY = math.max( math.floor( ( iconSize - titleHeight - focusPaddingY - focusGap - subtitleHeight + 1 ) / 2 + 0.5 ) + 1, 1 + focusPaddingY )
-	local focusRoundedRect = RoundedRectangleMask( leftMargin + focusGap, titleY - focusPaddingY, titleWidth + 2 * focusPaddingX, titleHeight + 2 * focusPaddingY, theme:value( "focusRadius" ) )
+	local focusRoundedRect = RoundedRectangleMask( 1 + iconSize + leftMargin + focusGap, titleY - focusPaddingY, titleWidth + 2 * focusPaddingX, titleHeight + 2 * focusPaddingY, theme:value( "focusRadius" ) )
 	canvas:fill( theme:value( "focusFillColour" ), focusRoundedRect )
-	canvas:fill( theme:value( "titleColour" ), TextMask( leftMargin + focusPaddingX + focusGap, titleY, titleWidth, titleHeight, title, titleFont ) )
+	canvas:fill( theme:value( "titleColour" ), TextMask( 1 + iconSize + leftMargin + focusPaddingX + focusGap, titleY, titleWidth, titleHeight, title, titleFont ) )
 
 	local subtitle = self.subtitle
-	local subtitleWidth = math.min( subtitleFont:getWidth( subtitle ), width - iconSize - 2 * sideMargin - focusGap - 2 * focusPaddingX )
-	local subtitleY = titleY + titleHeight + focusPaddingY + focusGap
-	canvas:fill( theme:value( "subtitleColour" ), TextMask( leftMargin + focusPaddingX + focusGap, subtitleY, subtitleWidth, subtitleHeight, subtitle, subtitleFont ) )
+	local subtitleWidth = math.min( subtitleFont:getWidth( subtitle ), width - iconSize - leftMargin - rightMargin - focusGap - 2 * focusPaddingX )
+
+
+	local listSubtitleY = titleY
+	local listSubtitleX = 1 + iconSize + leftMargin + focusGap + titleWidth + 2 * focusPaddingX + theme:value( "subtitleMargin" )
+	local thumbnailSubtitleY = titleY + titleHeight + focusPaddingY + focusGap
+	local thumbnailSubtitleX = 1 + iconSize + leftMargin + focusPaddingX + focusGap
+
+	local transition = self.transition
+	transition = math.min( math.max( isList and transition or 1 - transition, 0 ), 1 )
+	local subtitleY = math.floor( transition * listSubtitleY + ( 1 - transition ) * thumbnailSubtitleY + 0.5 )
+	local subtitleX = math.floor( transition * listSubtitleX + ( 1 - transition ) * thumbnailSubtitleX + 0.5 )
+
+	canvas:fill( theme:value( "subtitleColour" ), TextMask( subtitleX, subtitleY, subtitleWidth, subtitleHeight, subtitle, subtitleFont ) )
 end
 
 function FileItem.fileSystemItem:set( fileSystemItem )
@@ -97,9 +110,9 @@ function FileItem:updateIdealSize()
 
 	local titleWidth = theme:value( "titleFont" ):getWidth( self.title )
 	local subtitleWidth = theme:value( "subtitleFont" ):getWidth( self.subtitle )
-	local largeIconSize, smallIconSize, focusPaddingX, focusPaddingY, focusGap, sideMargin = theme:value( "largeIconSize" ), theme:value( "smallIconSize" ), theme:value( "focusPaddingX" ), theme:value( "focusPaddingY" ), theme:value( "focusGap" ), theme:value( "sideMargin" )
+	local largeIconSize, smallIconSize, focusPaddingX, focusPaddingY, focusGap, topMargin, bottomMargin = theme:value( "largeIconSize" ), theme:value( "smallIconSize" ), theme:value( "focusPaddingX" ), theme:value( "focusPaddingY" ), theme:value( "focusGap" ), theme:value( "topMargin" ), theme:value( "bottomMargin" )
 
-	local contentWidth = largeIconSize + focusGap + math.max( subtitleWidth, titleWidth ) + 2 * focusPaddingX + 2 * sideMargin
+	local contentWidth = largeIconSize + focusGap + math.max( subtitleWidth, titleWidth ) + 2 * focusPaddingX + topMargin + bottomMargin
 	self.contentWidth = contentWidth
 
 	if style == styles.LIST then
@@ -109,12 +122,12 @@ function FileItem:updateIdealSize()
 			self.idealWidth = parentWidth
 			self.maxWidth = parentWidth
 		end
-		self.idealHeight = smallIconSize + 2
+		self.idealHeight = smallIconSize + topMargin + bottomMargin
 	elseif style == styles.THUMBNAIL then
 		self.idealWidth = contentWidth
 		self.maxWidth = math.floor( contentWidth * 1.5 + 0.5 )
 		self.minWidth = 85
-		self.idealHeight = largeIconSize + 2
+		self.idealHeight = largeIconSize + topMargin + bottomMargin
 	end
 
 	if parent then
