@@ -37,6 +37,7 @@ function ProgramView:initialise( ... )
     self:event( KeyUpEvent, self.onKeyUpEvent )
     self:event( KeyDownEvent, self.onKeyDownEvent )
     self:event( CharacterEvent, self.onCharacterEvent )
+    self:event( MouseEnteredInterfaceEvent, self.onMouseEnteredEvent )
     self:event( FocusesChangedInterfaceEvent, self.onFocusesChanged )
     self:event( ParentChangedInterfaceEvent, self.onParentChanged )
 end
@@ -176,6 +177,10 @@ end
 
 function ProgramView:onCharacterEvent( CharacterEvent event, Event.phases phase )
     self.program:queueEvent( event.eventType, event.character  )
+end
+
+function ProgramView:onMouseEnteredEvent( MouseEnteredInterfaceEvent event, Event.phases phase )
+    BridgedCursor.static:updateBridge( self.program.quartzProxy.cursor )
 end
 
 function ProgramView:getRedirect()
