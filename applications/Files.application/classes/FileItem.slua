@@ -150,6 +150,8 @@ end
 function FileItem.style:set( style )
 	self.style = style
 	self:updateIdealSize()
+	self.transition = 0
+	self:animate( "transition", 1, 0.3, nil, Animation.easings.IN_OUT_SINE, nil, false )
 end
 
 function FileItem:updateThemeStyle()
