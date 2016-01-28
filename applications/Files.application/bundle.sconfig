@@ -5,7 +5,7 @@
     isSilica = true,
     iconPath = "resources/Icons/icon.sicon",
     supportedMimes = {
-        ["folder"] = {
+        ["application/directory"] = {
             name = "Folder",
 		    iconPath = "resources/Icons/folder.sicon",
         	extensions = {},
