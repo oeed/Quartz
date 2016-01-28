@@ -6,14 +6,8 @@
     supportedMimes = {
         ["image/ucg"] = {
             name = "UCG Image",
-            iconPath = "folder.sicon",
+            iconPath = "ucg.sicon",
         	extensions = {},
-            argumentFormat = { true }
-        },
-        ["text/lua"] = {
-            name = "Lua Program",
-            iconPath = "folder.sicon",
-            extensions = {},
             argumentFormat = { true }
         }
     }
