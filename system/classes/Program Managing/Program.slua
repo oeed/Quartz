@@ -217,3 +217,8 @@ function Program.title:set( title )
     self.title = title
     self.application.container.topBar.event:handleEvent( ProgramInformationChangedInterfaceEvent( self ) )    
 end
+
+function Program.programView:set( programView )
+    self.programView = programView
+    self.quartzProxy._programView = programView
+end
