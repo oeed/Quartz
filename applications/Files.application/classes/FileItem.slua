@@ -82,7 +82,6 @@ function FileItem:onDraw()
 	canvas:fill( theme:value( "titleColour" ), TextMask( 1 + iconSize + leftMargin + focusPaddingX + focusGap, titleY, titleWidth, titleHeight, title, titleFont ) )
 
 	local subtitle = self.subtitle
-	local subtitleWidth = math.min( subtitleFont:getWidth( subtitle ), width - iconSize - leftMargin - rightMargin - focusGap - 2 * focusPaddingX )
 
 
 	local listSubtitleY = titleY
@@ -94,8 +93,10 @@ function FileItem:onDraw()
 	transition = math.min( math.max( isList and transition or 1 - transition, 0 ), 1 )
 	local subtitleY = math.floor( transition * listSubtitleY + ( 1 - transition ) * thumbnailSubtitleY + 0.5 )
 	local subtitleX = math.floor( transition * listSubtitleX + ( 1 - transition ) * thumbnailSubtitleX + 0.5 )
-
-	canvas:fill( theme:value( "subtitleColour" ), TextMask( subtitleX, subtitleY, subtitleWidth, subtitleHeight, subtitle, subtitleFont ) )
+	local subtitleWidth = width - subtitleX - rightMargin
+	if subtitleWidth >= 1 then
+		canvas:fill( theme:value( "subtitleColour" ), TextMask( subtitleX, subtitleY, subtitleWidth, subtitleHeight, subtitle, subtitleFont ) )
+	end
 end
 
 function FileItem.fileSystemItem:set( fileSystemItem )
