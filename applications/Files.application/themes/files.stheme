@@ -32,4 +32,11 @@
         <subtitleFont type="Font" default="systemFont"/>
     </FileItem>
 
+    <SidebarTreeContainer>
+        <outlineColour type="Graphics.colours" default="TRANSPARENT" />
+        <outlineThickness type="Number" default="0" />
+        <topMargin type="Number" default="2" />
+        <bottomMargin type="Number" default="2" />
+    </SidebarTreeContainer>
+
 </Theme>
