@@ -78,7 +78,8 @@ function QuartzApplication:onChar( CharacterEvent event, Event.phases phase )
 	if event.character == 'r' then
 		-- self.programManager:run( Program( Bundle( "/applications/Test.application" ) ) )
 		-- self.programManager:run( SilicaProgram( Bundle( "/applications/Files.application" ) ) )
-		FileAssociationManager.static:open( File( "/system/resources/Wallpapers/Europe/Arc de Triomphe.ucg" ) )
+		self.programManager:run( Program.static:fromBundle( Bundle( "/applications/Files.application" ) ) )
+		-- FileAssociationManager.static:open( File( "/system/resources/Wallpapers/Europe/Arc de Triomphe.ucg" ) )
 	elseif event.character == '\\' then
 		os.reboot()
 	end
