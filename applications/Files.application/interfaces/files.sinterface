@@ -17,7 +17,20 @@
     
 
     <SplitContainer width=320 y=27 height=160>
-        <SidebarView/>
+        <SidebarTreeContainer>
+            <TreeNode text="Node 1">
+                <TreeItem text="Item 1"/>
+                <TreeItem text="Item 2"/>
+                <TreeItem text="Item 3"/>
+            </TreeNode>
+            <TreeNode text="Node 2">
+                <TreeItem text="Item 4"/>
+                <TreeItem text="Item 5"/>
+                <TreeItem text="Item 6"/>
+            </TreeNode>
+            <TreeItem text="Item 7"/>
+            <TreeItem text="Item 8"/>
+        </SidebarTreeContainer>
         <SplitHandleView position=0.5 />
         <FlowContainer identifier="filesContainer">
             <FileItem path="/applications" />
