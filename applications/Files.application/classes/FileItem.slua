@@ -184,6 +184,16 @@ function FileItem:onMouseDoubleClick( MouseDoubleClickEvent event, Event.phases 
 	return true
 end
 
+function FileItem:onKeyDown( KeyDownEvent event, Event.phases phase )
+	if self.isEnabled and self.isFocused then
+		local key = event.keyCode
+		if key == keys.enter then
+			self:open()
+			return true
+		end
+	end
+end
+
 function FileItem:open()
 	local fileSystemItem = self.fileSystemItem
 	if fileSystemItem:typeOf( IEditableFileSystemItem ) then
