@@ -17,6 +17,7 @@ class FileItem extends View implements IDraggableView implements IDragDropDestin
 
 	dropStyle = DragDropManager.dropStyles.SHRINK;
 	isDropHovering = Boolean( false );
+	cursor = Cursor( ClickableCursor.static ).allowsNil;
 
 }
 
