@@ -38,7 +38,9 @@
     </SidebarNode>
 
     <FilesGridContainer>
-        <fillColour type="Graphics.colours" default="TRANSPARENT" />
+        <selectionFillColour type="Graphics.colours" default="LIGHT_BLUE" />
+        <selectionOutlineColour type="Graphics.colours" default="BLUE" />
+        <selectionOutlineThickness type="Number" default="1" />
         <cellHeight type="Number" list="12" thumbnail="35" />
         <minimumCellWidth type="Number.allowsNil" list="nil" thumbnail="85" />
         <leftMargin type="Number" default="4" />

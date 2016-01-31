@@ -7,6 +7,8 @@ local styles = {
 class FilesGridContainer extends GridContainer {
 	
 	style = Number; -- TODO: should be FilesGridContainer.styles
+	selection = Table.allowsNil;
+	isPressed = Boolean( false );
 
 	styles = Enum( Number, {
 		LIST = 1;
@@ -17,7 +19,59 @@ class FilesGridContainer extends GridContainer {
 
 function FilesGridContainer:initialise( ... )
 	self:super( ... )
+	self:event( MouseDownEvent, self.onMouseDown, Event.phases.BEFORE )
+	self:event( MouseDragEvent, self.onMouseDrag )
+	self.event:connectGlobal( MouseUpEvent, self.onGlobalMouseUp, Event.phases.BEFORE )
 	self.style = self.application.settings.isThumbnailLayout and styles.THUMBNAIL or styles.LIST
+end
+
+function FilesGridContainer:onDraw()
+	local selection = self.selection
+	if selection then
+		local width, height = self.width, self.height
+		local selectionX, selectionY = math.max( math.min( selection[1], selection[3] ), 1 ), math.max( math.min( selection[2], selection[4] ), 1 )
+		local selectionWidth, selectionHeight = math.min( math.max( selection[1], selection[3] ), width ) - selectionX, math.min( math.max( selection[2], selection[4] ), height ) - selectionY
+
+		if selectionWidth >= 3 and selectionHeight >= 3 then
+			local canvas, theme = self.canvas, self.theme
+			local rectangleMask = RectangleMask( selectionX, selectionY, selectionWidth, selectionHeight )
+			canvas:fill( theme:value( "selectionFillColour" ), rectangleMask )
+			canvas:outline( theme:value( "selectionOutlineColour" ), rectangleMask, theme:value( "selectionOutlineThickness" ) )
+		end
+	end
+end
+
+function FilesGridContainer:onMouseDown( MouseDownEvent event, Event.phases phase )
+	if self.isEnabled and event.mouseButton == MouseEvent.mouseButtons.LEFT then
+		local x, y = event.x, event.y
+		self.selection = { x, y, x, y }
+		return true
+	end
+end
+
+function FilesGridContainer:onMouseDrag( MouseDragEvent event, Event.phases phase )
+	if self.isEnabled and event.mouseButton == MouseEvent.mouseButtons.LEFT then
+		local selection = self.selection
+		if selection then
+			selection[3] = event.x
+			selection[4] = event.y
+			self.needsDraw = true
+			return true
+		end
+	end
+end
+
+function FilesGridContainer:onGlobalMouseUp( MouseUpEvent event, Event.phases phase )
+	local selection = self.selection
+	if selection and self.isEnabled and event.mouseButton == MouseEvent.mouseButtons.LEFT then
+		self.selection = nil
+		return true
+	end
+end
+
+function FilesGridContainer.selection:set( selection )
+    self.selection = selection
+    self.needsDraw = true
 end
 
 function FilesGridContainer:updateThemeStyle()
