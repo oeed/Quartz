@@ -6,8 +6,17 @@ class ToolbarPathTextBox extends TextBox implements IToolbarItem implements IToo
     
     path = String.allowsNil;
     pathComponents = Table.allowsNil;
+    activeSymbol = Number.allowsNil;
+    drawnSymbols = Table( {} );
 
 }
+
+function ToolbarPathTextBox:initialise( ... )
+    self:super( ... )
+    self:event( MouseEnteredInterfaceEvent, self.onMouseEntered )
+    self:event( MouseExitedInterfaceEvent, self.onMouseExited )
+    self:event( MouseMoveEvent, self.onMouseMoved )
+end
 
 function ToolbarPathTextBox.isFocused:set( isFocused )
     self:super( isFocused )
@@ -31,7 +40,6 @@ end
 
 function ToolbarPathTextBox.path:set( path )
     self.path = path
-
     local pathComponents = {}
     local theme = self.theme
     local font, leftMargin, componentLeftMargin, componentRightMargin = theme:value( "componentFont" ), theme:value( "leftMargin" ), theme:value( "componentLeftMargin" ), theme:value( "componentRightMargin" )
@@ -43,7 +51,82 @@ function ToolbarPathTextBox.path:set( path )
         } )
     end
     self.pathComponents = pathComponents
+    self.activeSymbol = nil
     self.needsDraw = true
+end
+
+function ToolbarPathTextBox:onMouseExited( MouseExitedInterfaceEvent event, Event.phases phase )
+    self.needsDraw = true
+    self.activeSymbol = nil
+    self:updateThemeStyle()
+end
+
+function ToolbarPathTextBox:onMouseEntered( MouseEnteredInterfaceEvent event, Event.phases phase )
+    if not self:updateActiveSymbol( event.x ) then
+        self.needsDraw = true
+    end
+end
+
+function ToolbarPathTextBox:onMouseMoved( MouseMoveEvent event, Event.phases phase )
+    self:updateActiveSymbol( event.x )
+end
+
+function ToolbarPathTextBox:updateActiveSymbol( Number x )
+    local drawnSymbols = self.drawnSymbols
+    local activeSymbol
+    for i, component in pairs( drawnSymbols ) do
+        local x1, x2 = component[1], component[2]
+        if x < x1 then
+            -- as the components go from left to right, if x2 is to the left of us then none of the procceding components are in either
+            break
+        elseif x1 <= x and x <= x2 then
+            activeSymbol = i
+            break
+        end
+    end
+
+    if activeSymbol ~= self.activeSymbol then
+        self.activeSymbol = activeSymbol
+        self.needsDraw = true
+        return true
+    end
+    return false
+end
+
+function ToolbarPathTextBox.activeSymbol:set( activeSymbol )
+    self.activeSymbol = activeSymbol
+    if activeSymbol then
+        self.cursor = ClickableCursor.static
+    else
+        self.cursor = TextCursor.static
+    end
+end
+
+function ToolbarPathTextBox:onMouseUp( MouseUpEvent event, Event.phases phase )
+    if self.isEnabled and event.mouseButton == MouseEvent.mouseButtons.LEFT then
+        local activeSymbol = self.activeSymbol
+        if activeSymbol then
+            local pathComponents = self.pathComponents
+            local path = "/"
+            for i = 1, activeSymbol - 1 do
+                path = path .. pathComponents[i].text .. "/"
+            end
+            self.application.container.folder = Folder( path )
+            return true
+        end
+    end
+    return self:super( event, phase )
+end
+
+function ToolbarPathTextBox:onMouseDown( MouseDownEvent event, Event.phases phase )
+    if self.isEnabled and event.mouseButton == MouseEvent.mouseButtons.LEFT then
+        local activeSymbol = self.activeSymbol
+        if activeSymbol then
+            self.isPressed = true
+            return true
+        end
+    end
+    return self:super( event, phase )
 end
 
 function ToolbarPathTextBox:onDraw()
@@ -52,8 +135,12 @@ function ToolbarPathTextBox:onDraw()
     if not isFocused then
         local pathComponents = self.pathComponents
         if pathComponents then
-            local width, height, theme, canvas, path = self.width, self.height, self.theme, self.canvas, self.path
+            local width, height, theme, canvas, path, drawnSymbols = self.width, self.height, self.theme, self.canvas, self.path, self.drawnSymbols
             local font, componentLeftMargin, componentRightMargin, componentFirstLeftMargin, leftMargin, rightMargin, topMargin, bottomMargin = theme:value( "componentFont" ), theme:value( "componentLeftMargin" ), theme:value( "componentRightMargin" ), theme:value( "componentFirstLeftMargin" ), theme:value( "leftMargin" ), theme:value( "rightMargin" ), theme:value( "topMargin" ), theme:value( "bottomMargin" )
+
+            for i = 1, #drawnSymbols do
+                drawnSymbols[i] = nil
+            end
 
             -- if there are too many components we'll chop out the first few until there is room
             local totalWidth = leftMargin + rightMargin
@@ -66,13 +153,15 @@ function ToolbarPathTextBox:onDraw()
                 local component = pathComponents[i]
                 totalWidth = totalWidth + component.width + ( i ~= pathComponentsCount and symbolWidth or 0 )
                 if totalWidth + ellipsisWidth > width then
-                firstFullComponent = i + 1
+                    firstFullComponent = i + 1
+                    break
                 end
             end
 
+            local activeSymbol = self.activeSymbol
             local componentTextColour = theme:value( "componentTextColour" )
             local componentSymbolColour = theme:value( "componentSymbolColour" )
-            local x = 1 + leftMargin - componentLeftMargin
+            local x = 1 + leftMargin -- - componentLeftMargin
             local symbolY = math.ceil( ( height - symbolHeight ) / 2 ) + 1
             for i = 1, pathComponentsCount do
                 local text, width
@@ -85,10 +174,11 @@ function ToolbarPathTextBox:onDraw()
                     width = component.width
                 end
                 if text then
-                    canvas:fill( componentTextColour, TextMask( x + componentLeftMargin, 1 + topMargin, width - componentLeftMargin - componentRightMargin, height - topMargin - bottomMargin, text, font ) )
-                    if i ~= pathComponentsCount then
-                        canvas:fill( theme:value( "componentSymbolColour" ), SymbolMask( x + width, symbolY, symbol ) )
-                    end
+                    drawnSymbols[i] = {
+                        x - componentRightMargin, x + symbolWidth - 1 + componentLeftMargin
+                    }
+                    canvas:fill( componentTextColour, TextMask( x + symbolWidth + componentLeftMargin, 1 + topMargin, width - componentLeftMargin - componentRightMargin, height - topMargin - bottomMargin, text, font ) )
+                    canvas:fill( i == activeSymbol and theme:value( "componentActiveSymbolColour" ) or componentSymbolColour, SymbolMask( x, symbolY, symbol ) )
                     x = x + width + symbolWidth
                 end
             end

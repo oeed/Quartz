@@ -7,6 +7,7 @@
         <componentRightMargin type="Number" default="5" />
         <componentFont type="Font" default="systemFont"/>
         <componentTextColour type="Graphics.colours" default="GREY"/>
+        <componentActiveSymbolColour type="Graphics.colours" default="BLACK" pressed="BLUE"/>
         <componentSymbolColour type="Graphics.colours" default="GREY"/>
         <componentSymbol type="Symbol" default="pathComponent"/>
     </ToolbarPathTextBox>
