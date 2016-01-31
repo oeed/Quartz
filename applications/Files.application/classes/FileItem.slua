@@ -27,7 +27,7 @@ function FileItem:initialise( ... )
 	self:event( MouseHeldEvent, self.onMouseHeld )
 	self:event( MouseDoubleClickEvent, self.onMouseDoubleClick )
 	-- self:event( ParentChangedInterfaceEvent, self.onParentChanged )
-	-- self:event( Event.KEY_DOWN, self.onKeyDown )
+	self:event( KeyDownEvent, self.onKeyDown )
 	-- self:event( Event.KEY_UP, self.onKeyUp )
 	-- self.event:connectGlobal( MouseUpEvent, self.onGlobalMouseUp, Event.phases.BEFORE )
 
@@ -179,9 +179,18 @@ end
 
 function FileItem:onMouseDoubleClick( MouseDoubleClickEvent event, Event.phases phase )
 	if self.isEnabled and event.mouseButton == MouseEvent.mouseButtons.LEFT then
-		self.fileSystemItem:open()
+		self:open()
 	end
 	return true
+end
+
+function FileItem:open()
+	local fileSystemItem = self.fileSystemItem
+	if fileSystemItem:typeOf( IEditableFileSystemItem ) then
+		fileSystemItem:open()
+	else
+		self.application.container.folder = fileSystemItem
+	end
 end
 
 function FileItem.isDropHovering:set( isDropHovering )
