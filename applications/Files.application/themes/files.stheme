@@ -20,7 +20,7 @@
         <leftMargin type="Number" default="1" />
         <topMargin type="Number" default="1" />
         <rightMargin type="Number" default="1" />
-        <bottomMargin type="Number" default="1" />
+        <bottomMargin type="Number" default="2" />
         <focusGap type="Number" default="2" />
         <textMargin type="Number" default="7" />
         <focusRadius type="Number" default="6" />
@@ -31,6 +31,21 @@
         <titleFont type="Font" default="systemFont"/>
         <subtitleFont type="Font" default="systemFont"/>
     </FileItem>
+
+    <SidebarNode>
+        <textColour type="Graphics.colours" default="GREY" disabled="LIGHT_GREY"/>
+    </SidebarNode>
+
+
+    <SidebarItem>
+        <rightTextMargin type="Number" default="2" />
+        <leftTextMargin type="Number" default="16" />
+        <leftIconMargin type="Number" default="3" />
+        <iconSize type="Number" default="9" />
+        <fillColour type="Graphics.colours" selected="TRANSPARENT"/>
+        <textColour type="Graphics.colours" default="BLACK" selected="BLUE"/>
+
+    </SidebarItem>
 
     <SidebarTreeContainer>
         <outlineColour type="Graphics.colours" default="TRANSPARENT" />

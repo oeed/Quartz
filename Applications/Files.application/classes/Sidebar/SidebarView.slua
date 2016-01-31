@@ -1,0 +1,8 @@
+
+class SidebarView extends View {
+	
+}
+
+function SidebarView:onDraw()
+	self.canvas:fill( colours.red )
+end

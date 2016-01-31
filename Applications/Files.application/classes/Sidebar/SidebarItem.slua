@@ -1,0 +1,35 @@
+
+class SidebarItem extends TreeItem {
+
+	fileSystemItem = FileSystemItem;
+	path = String.allowsNil;
+	
+}
+
+function SidebarItem:initialise( ... )
+	self:super( ... )
+	self:event( ActionInterfaceEvent, self.onAction )
+end
+
+function SidebarItem.path:set( path )
+	if path:sub( 1, 1) ~= "/" then
+		path = "/" .. path
+	end
+    self.fileSystemItem = FileSystemItem( path )
+end
+
+function SidebarItem.fileSystemItem:set( fileSystemItem )
+    self.fileSystemItem = fileSystemItem
+    self.text = fileSystemItem.name
+end
+
+function SidebarItem:onDraw()
+	self:super()
+	local theme = self.theme
+	local iconSize = theme:value( "iconSize" )
+	self.canvas:image( self.fileSystemItem.icon, 1 + theme:value( "leftIconMargin" ), math.floor( ( self.height - iconSize ) / 2 + 0.5 ), iconSize, iconSize )
+end
+
+function SidebarItem:onAction( ActionInterfaceEvent event, Event.phases phase )
+	self.application.container.fileSystemItem = self.fileSystemItem
+end

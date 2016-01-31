@@ -18,18 +18,16 @@
 
     <SplitContainer width=320 y=27 height=160>
         <SidebarTreeContainer>
-            <TreeNode text="Node 1">
-                <TreeItem text="Item 1"/>
-                <TreeItem text="Item 2"/>
-                <TreeItem text="Item 3"/>
-            </TreeNode>
-            <TreeNode text="Node 2">
-                <TreeItem text="Item 4"/>
-                <TreeItem text="Item 5"/>
-                <TreeItem text="Item 6"/>
-            </TreeNode>
-            <TreeItem text="Item 7"/>
-            <TreeItem text="Item 8"/>
+            <SidebarNode text="Favourites">
+                <SidebarItem path="/Applications"/>
+                <SidebarItem path="/User"/>
+                <SidebarItem path="/system/resources/Wallpapers/Europe/Arc de Triomphe.ucg"/>
+            </SidebarNode>
+            <SidebarNode text="Computer">
+                <!-- <SidebarItem text="Item 7"/>
+                <SidebarItem text="Item 8"/>
+                <SidebarItem text="Item 9"/> -->
+            </SidebarNode>
         </SidebarTreeContainer>
         <SplitHandleView position=0.5 />
         <FlowContainer identifier="filesContainer">
