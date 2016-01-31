@@ -51,20 +51,15 @@ end
 
 function FilesApplicationContainer.folder:set( folder )
 	self.folder = folder
-	self.pathTextBox.path = folder.path
+	local path = folder.path
+	self.upButton.isEnabled = path ~= "/"
+	self.pathTextBox.path = path
 	self:refresh()
 end
 
 function FilesApplicationContainer:refresh()
 	local folder, filesContainer = self.folder, self.filesContainer
 	filesContainer:disposeAll()
-	log("we have "..#filesContainer.children)
-	for i, v in ipairs(filesContainer.children) do
-		log(v)
-		-- log(v.fileSystemItem.path)
-	end
-	log("--")
-	log(" ")
 	for i, fileSystemItem in ipairs( folder.items ) do
 		filesContainer:insert( FileItem( { fileSystemItem = fileSystemItem } ) )
 	end
