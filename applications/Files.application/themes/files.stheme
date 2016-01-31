@@ -36,6 +36,15 @@
         <textColour type="Graphics.colours" default="GREY" disabled="LIGHT_GREY"/>
     </SidebarNode>
 
+    <FilesGridContainer>
+        <fillColour type="Graphics.colours" default="TRANSPARENT" />
+        <cellHeight type="Number" list="12" thumbnail="35" />
+        <minimumCellWidth type="Number.allowsNil" list="nil" thumbnail="85" />
+        <leftMargin type="Number" default="4" />
+        <rightMargin type="Number" default="4" />
+        <topMargin type="Number" default="3" />
+        <bottomMargin type="Number" default="3" />
+    </FilesGridContainer>
 
     <SidebarItem>
         <rightTextMargin type="Number" default="2" />

@@ -5,7 +5,7 @@
             <ToolbarSymbolSegmentButton symbolName="back" />
             <ToolbarSymbolSegmentButton symbolName="forward" />
         </ToolbarSegmentContainer>
-        <ToolbarSymbolButton symbolName="up"/>
+        <ToolbarSymbolButton symbolName="up" identifier="upButton"/>
         <ToolbarStaticSpace/>
         <ToolbarPathTextBox identifier="pathTextBox" />
         <ToolbarStaticSpace/>
@@ -30,14 +30,14 @@
             </SidebarNode>
         </SidebarTreeContainer>
         <SplitHandleView position=0.5 />
-        <FlowContainer identifier="filesContainer">
-            <FileItem path="/applications" />
+        <FilesGridContainer identifier="filesContainer">
+<!--             <FileItem path="/applications" />
             <FileItem path="/applications/Files.application" />
             <FileItem path="/system" />
             <FileItem path="/system/resources/Wallpapers/Europe/Arc de Triomphe.ucg" />
             <FileItem path="/startup" />
-            <FileItem path="/log" />
-        </FlowContainer>
+            <FileItem path="/log" /> -->
+        </FilesGridContainer>
     </SplitContainer>
 
 </FilesApplicationContainer>

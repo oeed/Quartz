@@ -2,10 +2,12 @@
 class FilesApplicationContainer extends ApplicationContainer {
 	
 	height = Number( 186 );
-	path = String.allowsNil;
+	fileSystemItem = FileSystemItem.allowsNil;
+	folder = Folder.allowsNil;
 	pathTextBox = ToolbarPathTextBox.link;
 	thumbnailToggleButton = ToolbarSymbolSegmentButton.link;
-	filesContainer = FlowContainer.link;
+	filesContainer = FilesGridContainer.link;
+	upButton = ToolbarSymbolButton.link;
 
 	isThumbnailLayout = Boolean( self.application.settings.isThumbnailLayout );
 
@@ -13,31 +15,68 @@ class FilesApplicationContainer extends ApplicationContainer {
 
 function FilesApplicationContainer:initialise( ... )
 	self:super( ... )
-
    self:event( ReadyInterfaceEvent, self.onReady )
 end
 
 function FilesApplicationContainer:onReady( ReadyInterfaceEvent event, Event.phases phase )
-	self.path = self.application.arguments[1] or "/user"
+	local startingPath = self.application.arguments[1]
+	if startingPath then
+		if startingPath:sub( 1, 1) ~= "/" then
+			startingPath = "/" .. startingPath
+		end
+		local folder = FileSystemItem( startingPath )
+		if folder then
+			self.fileSystemItem = folder
+			return
+		end
+	end
+	self.folder = Folder( "/User" )
 end
 
-function FilesApplicationContainer.path:set( path )
-	if path:sub( 1, 1) ~= "/" then
-		path = "/" .. path
-	end
-	path = FileSystemItem.static:resolve( path )
-	if FileSystemItem.static:exists( path ) then
-		self.path = path
-		self.pathTextBox.path = path
+function FilesApplicationContainer.fileSystemItem:set( fileSystemItem )
+	if fileSystemItem then
+		if fileSystemItem:typeOf( Folder ) then
+			self.folder = fileSystemItem
+		else
+			self.folder = fileSystemItem.parent
+			local path = fileSystemItem.path
+			for i, fileItem in ipairs( self.filesContainer.children ) do
+				if fileItem.fileSystemItem.path == path then
+					fileItem:focus( FileItem )
+				end
+			end
+		end
 	end
 end
 
+function FilesApplicationContainer.folder:set( folder )
+	self.folder = folder
+	self.pathTextBox.path = folder.path
+	self:refresh()
+end
 
 function FilesApplicationContainer:refresh()
+	local folder, filesContainer = self.folder, self.filesContainer
+	filesContainer:disposeAll()
+	log("we have "..#filesContainer.children)
+	for i, v in ipairs(filesContainer.children) do
+		log(v)
+		-- log(v.fileSystemItem.path)
+	end
+	log("--")
+	log(" ")
+	for i, fileSystemItem in ipairs( folder.items ) do
+		filesContainer:insert( FileItem( { fileSystemItem = fileSystemItem } ) )
+	end
+	filesContainer:updateLayout( true )
 end
 
 function FilesApplicationContainer.thumbnailToggleButton:action( ActionInterfaceEvent event )
 	self.isThumbnailLayout = not self.isThumbnailLayout
+end
+
+function FilesApplicationContainer.upButton:action( ActionInterfaceEvent event )
+    self.folder = self.folder.parent
 end
 
 function FilesApplicationContainer.isThumbnailLayout:set( isThumbnailLayout )
@@ -48,10 +87,7 @@ function FilesApplicationContainer.isThumbnailLayout:set( isThumbnailLayout )
 	end
 	local filesContainer = self.filesContainer
 	if filesContainer then
-		local style = isThumbnailLayout and FileItem.styles.THUMBNAIL or FileItem.styles.LIST
-		for i, fileItem in ipairs( filesContainer.children ) do
-			fileItem.style = style
-		end
+		filesContainer.style = isThumbnailLayout and FilesGridContainer.styles.THUMBNAIL or FilesGridContainer.styles.LIST
 	end
 
 	local settings = self.application.settings

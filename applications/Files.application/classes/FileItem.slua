@@ -2,34 +2,18 @@
 local DRAG_COPY_KEY = "alt"
 local ADD_FOCUS_KEY = "ctrl"
 
-local styles = {
-	LIST = 1;
-	THUMBNAIL = 2;
-}
+local styles = FilesGridContainer.styles
 
-class FileItem extends View implements IDraggableView implements IFlowItem implements IDragDropDestination {
+class FileItem extends View implements IDraggableView implements IDragDropDestination {
 	
 	-- isFocused = Boolean( false );
 	-- isCanvasHitTested = Boolean( false );
 
-	path = String.allowsNil;
 	fileSystemItem = FileSystemItem;
 	title = String;
 	subtitle = String;
 	isFolder = Boolean( true );
-
-	minWidth = Number;
-	idealWidth = Number;
-	idealHeight = Number;
-	contentWidth = Number;
-	maxWidth = Number;
-	style = Number( self.application.settings.isThumbnailLayout and styles.THUMBNAIL or styles.LIST );
 	transition = Number( 1 );
-
-	styles = Enum( Number, {
-		LIST = 1;
-		THUMBNAIL = 2;
-	} );
 
 	dropStyle = DragDropManager.dropStyles.SHRINK;
 	isDropHovering = Boolean( false );
@@ -42,21 +26,17 @@ function FileItem:initialise( ... )
 	self:event( MouseDownEvent, self.onMouseDown )
 	self:event( MouseHeldEvent, self.onMouseHeld )
 	self:event( MouseDoubleClickEvent, self.onMouseDoubleClick )
+	-- self:event( ParentChangedInterfaceEvent, self.onParentChanged )
 	-- self:event( Event.KEY_DOWN, self.onKeyDown )
 	-- self:event( Event.KEY_UP, self.onKeyUp )
 	-- self.event:connectGlobal( MouseUpEvent, self.onGlobalMouseUp, Event.phases.BEFORE )
 
 	-- self.fileSystemItem = Folder( "/applications" )
-end
-
-function FileItem.path:set( path )
-	self.path = path
-	self.fileSystemItem = FileSystemItem( path )  
+	-- self.raw.style = self.application.settings.isThumbnailLayout and styles.THUMBNAIL or styles.LIST
 end
 
 function FileItem:onDraw()
-	local canvas, theme, width, height, style = self.canvas, self.theme, self.width, self.height, self.style
-
+	local canvas, theme, width, height, style = self.canvas, self.theme, self.width, self.height, self.parent.style
 	local fileSystemItem = self.fileSystemItem
 	local titleFont = theme:value( "titleFont" )
 	local subtitleFont = theme:value( "subtitleFont" )
@@ -106,53 +86,61 @@ function FileItem.fileSystemItem:set( fileSystemItem )
     self.subtitle = fileSystemItem.sizeString .. ( association and " " .. association.name or "" )
 end
 
-function FileItem:updateIdealSize()
-	local style, theme, parent = self.style, self.theme, self.parent
+-- function FileItem:updateIdealSize()
+-- 	local theme, parent = self.theme, self.parent
+-- 	local style = parent.style
 
-	local titleWidth = theme:value( "titleFont" ):getWidth( self.title )
-	local subtitleWidth = theme:value( "subtitleFont" ):getWidth( self.subtitle )
-	local largeIconSize, smallIconSize, focusPaddingX, focusPaddingY, focusGap, topMargin, bottomMargin = theme:value( "largeIconSize" ), theme:value( "smallIconSize" ), theme:value( "focusPaddingX" ), theme:value( "focusPaddingY" ), theme:value( "focusGap" ), theme:value( "topMargin" ), theme:value( "bottomMargin" )
+-- 	local titleWidth = theme:value( "titleFont" ):getWidth( self.title )
+-- 	local subtitleWidth = theme:value( "subtitleFont" ):getWidth( self.subtitle )
+-- 	local largeIconSize, smallIconSize, focusPaddingX, focusPaddingY, focusGap, topMargin, bottomMargin = theme:value( "largeIconSize" ), theme:value( "smallIconSize" ), theme:value( "focusPaddingX" ), theme:value( "focusPaddingY" ), theme:value( "focusGap" ), theme:value( "topMargin" ), theme:value( "bottomMargin" )
 
-	local contentWidth = largeIconSize + focusGap + math.max( subtitleWidth, titleWidth ) + 2 * focusPaddingX + topMargin + bottomMargin
-	self.contentWidth = contentWidth
+-- 	local contentWidth = largeIconSize + focusGap + math.max( subtitleWidth, titleWidth ) + 2 * focusPaddingX + topMargin + bottomMargin
+-- 	self.contentWidth = contentWidth
 
-	if style == styles.LIST then
-		if parent then
-			local parentWidth = parent.width
-			self.minWidth = parentWidth
-			self.idealWidth = parentWidth
-			self.maxWidth = parentWidth
-		end
-		self.idealHeight = smallIconSize + topMargin + bottomMargin
-	elseif style == styles.THUMBNAIL then
-		self.idealWidth = contentWidth
-		self.maxWidth = math.floor( contentWidth * 1.5 + 0.5 )
-		self.minWidth = 85
-		self.idealHeight = largeIconSize + topMargin + bottomMargin
-	end
+-- 	if style == styles.LIST then
+-- 		if parent then
+-- 			local parentWidth = parent.width
+-- 			self.minWidth = parentWidth
+-- 			self.idealWidth = parentWidth
+-- 			self.maxWidth = parentWidth
+-- 		end
+-- 		self.idealHeight = smallIconSize + topMargin + bottomMargin
+-- 	elseif style == styles.THUMBNAIL then
+-- 		self.idealWidth = contentWidth
+-- 		self.maxWidth = math.floor( contentWidth * 1.5 + 0.5 )
+-- 		self.minWidth = 85
+-- 		self.idealHeight = largeIconSize + topMargin + bottomMargin
+-- 	end
+-- 	log("updating")
+-- 	log(self.idealWidth)
+-- 	log(self.idealHeight)
+-- 	if parent then
+-- 		log("Parent too")
+-- 		parent.needsLayoutUpdate = true
+-- 	end
+-- 	self.needsDraw = true
+-- end
 
-	if parent then
-		self.parent.needsLayoutUpdate = true
-	end
-	self.needsDraw = true
-end
+-- function FileItem:onParentChanged( ParentChangedInterfaceEvent event, Event.phases phase )
+-- 	self:updateIdealSize()
+-- end
 
-function FileItem.title:set( title )
-	self.title = title
-	self:updateIdealSize()
-end
+-- function FileItem.title:set( title )
+-- 	self.title = title
+-- 	self:updateIdealSize()
+-- end
 
-function FileItem.subtitle:set( subtitle )
-	self.subtitle = subtitle
-	self:updateIdealSize()
-end
+-- function FileItem.subtitle:set( subtitle )
+-- 	self.subtitle = subtitle
+-- 	self:updateIdealSize()
+-- end
 
-function FileItem.style:set( style )
-	self.style = style
-	self:updateIdealSize()
-	self.transition = 0
-	self:animate( "transition", 1, 0.3, nil, Animation.easings.IN_OUT_SINE, nil, false )
-end
+-- function FileItem.style:set( style )
+-- 	self.style = style
+-- 	self:updateIdealSize()
+-- 	self.transition = 0
+-- 	self:animate( "transition", 1, 0.3, nil, Animation.easings.IN_OUT_SINE, nil, false )
+-- end
 
 function FileItem:updateThemeStyle()
 	self.theme.style = self.isEnabled and ( self.isDropHovering and "hover" or (self.isFocused and "focused" or "default") ) or "disabled"

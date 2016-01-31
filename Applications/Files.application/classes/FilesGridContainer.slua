@@ -1,0 +1,43 @@
+
+local styles = {
+	LIST = 1;
+	THUMBNAIL = 2;
+}
+
+class FilesGridContainer extends GridContainer {
+	
+	style = Number; -- TODO: should be FilesGridContainer.styles
+
+	styles = Enum( Number, {
+		LIST = 1;
+		THUMBNAIL = 2;
+	} );
+
+}
+
+function FilesGridContainer:initialise( ... )
+	self:super( ... )
+	self.style = self.application.settings.isThumbnailLayout and styles.THUMBNAIL or styles.LIST
+end
+
+function FilesGridContainer:updateThemeStyle()
+	local style, theme = self.style, self.theme
+	theme.style = style == styles.LIST and "list" or "thumbnail"
+	self.minimumCellWidth = theme:value( "minimumCellWidth" )
+	self.cellHeight = theme:value( "cellHeight" )
+end
+
+function FilesGridContainer.style:set( style )
+	if style ~= self.style then
+		self.style = style
+		self:updateThemeStyle()
+		self.needsLayoutUpdate = true
+
+		local theme = self.theme
+		local time, easing = theme:value( "animationDuration" ), theme:value( "animationEasing" )
+		for i, childView in ipairs( self.children ) do
+			childView.transition = 0
+			childView:animate( "transition", 1, time, nil, easing, nil, false )
+		end
+	end
+end

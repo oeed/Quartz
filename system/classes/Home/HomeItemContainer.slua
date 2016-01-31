@@ -31,7 +31,7 @@ function HomeItemContainer:onThemeChanged( ThemeChangedInterfaceEvent event, Eve
     self.needsLayoutUpdate = true
 end
 
-function HomeItemContainer:updateLayout( dontAnimate )
+function HomeItemContainer:updateLayout( Boolean( false ) dontAnimate )
     local children, width, theme = self.children, self.width, self.theme
     local tileMargin = theme:value( "tileMargin" )
     local y = theme:value( "tileMargin" )

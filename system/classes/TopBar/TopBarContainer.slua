@@ -46,7 +46,7 @@ function TopBarContainer.activeView:set( activeView )
     separatorView:animate( "activeWidth", width, ANIMATION_TIME, nil, ANIMATION_EASING )
 end
 
-function TopBarContainer:updateLayout( dontAnimate )
+function TopBarContainer:updateLayout( Boolean( false ) dontAnimate )
     local width = self.width
     local remainingWidth = width + 1 -- add one to hide the last separator between the left and right pinned items
     local leftX, rightX = 1, -1
