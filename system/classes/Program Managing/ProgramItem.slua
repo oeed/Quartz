@@ -128,8 +128,9 @@ function ProgramItem:onProgramInformationChanged( ProgramInformationChangedInter
     end
 end
 
+-- TODO: maybe this should use the action?
 function ProgramItem:onGlobalMouseUp( MouseUpEvent event, Event.phases phase )
-    local wasPressed = true--self.isPressed
+    local wasPressed = self.isPressed
     self:super( event, phase )
     if wasPressed and self:hitTestEvent( event ) then
         local mouseButton = event.mouseButton
