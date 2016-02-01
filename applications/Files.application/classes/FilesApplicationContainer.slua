@@ -53,6 +53,7 @@ function FilesApplicationContainer.folder:set( folder )
 	self.folder = folder
 	local path = folder.path
 	self.upButton.isEnabled = path ~= "/"
+	self.pathTextBox:unfocus()
 	self.pathTextBox.path = path
 	self:refresh()
 end
