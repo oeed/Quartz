@@ -1,4 +1,6 @@
 
+local cursorStatic, clickableCursorStatic = Cursor.static, ClickableCursor.static
+
 local styles = {
 	LIST = 1;
 	THUMBNAIL = 2;
@@ -46,6 +48,9 @@ function FilesGridContainer:onMouseDown( MouseDownEvent event, Event.phases phas
 		local x, y = event.x, event.y
 		self:updateSelectionFocuses()
 		self.selection = { x, y, x, y }
+		for i, childView in ipairs( self.children ) do
+			childView.cursor = cursorStatic
+		end
 		return true
 	end
 end
@@ -95,7 +100,14 @@ function FilesGridContainer:updateSelectionFocuses()
 end
 
 function FilesGridContainer.selection:set( selection )
+	local oldSelection = self.selection
     self.selection = selection
+    if ( selection and not oldSelection ) or ( not selection and oldSelection ) then
+    	local cursor = selection and cursorStatic or clickableCursorStatic
+		for i, childView in ipairs( self.children ) do
+			childView.cursor = cursor
+		end
+    end
     self.needsDraw = true
 end
 
