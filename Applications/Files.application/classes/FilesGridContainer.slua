@@ -19,7 +19,7 @@ class FilesGridContainer extends GridContainer {
 
 function FilesGridContainer:initialise( ... )
 	self:super( ... )
-	self:event( MouseDownEvent, self.onMouseDown, Event.phases.BEFORE )
+	self:event( MouseDownEvent, self.onMouseDown, Event.phases.AFTER )
 	self:event( MouseDragEvent, self.onMouseDrag )
 	self.event:connectGlobal( MouseUpEvent, self.onGlobalMouseUp, Event.phases.BEFORE )
 	self.style = self.application.settings.isThumbnailLayout and styles.THUMBNAIL or styles.LIST
