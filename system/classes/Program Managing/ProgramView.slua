@@ -159,7 +159,9 @@ function ProgramView:flyOutFocused( toRight )
 end
 
 function ProgramView:onMouseEvent( MouseEvent event, Event.phases phase )
-    if not event:typeOf( MouseMoveEvent ) then
+    if event:typeOf( MouseDoubleClickEvent ) or event:typeOf( MouseHeldEvent ) then
+        return false
+    elseif not event:typeOf( MouseMoveEvent ) then
         self.program:queueEvent( event.eventType, event.mouseButton, event.x, event.y  )
     else
         self.program:queueEvent( event.eventType, event.x, event.y  )
