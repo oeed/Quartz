@@ -29,9 +29,12 @@ function ToolbarPathTextBox.isFocused:set( isFocused )
     else
         local text = self.text
         if text ~= self.path then
-            local container = self.application.container
-            if container then
-                container.path = text
+            local fileSystemItem = FileSystemItem( text )
+            if fileSystemItem then
+                local container = self.application.container
+                if container then
+                    container.fileSystemItem = fileSystemItem
+                end
             end
         end
         self.text = ""
