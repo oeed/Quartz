@@ -123,7 +123,7 @@ function TopBarContainer:update( deltaTime )
 end
 
 function TopBarContainer:animateRemove( childView )
-    childView:animate( "y", 1 - childView.height, ANIMATION_TIME, function() self:remove( childView )  end, ANIMATION_EASING )
+    childView:animate( "y", 1 - childView.height, ANIMATION_TIME, function() childView:dispose()  end, ANIMATION_EASING )
     childView.isRemoving = true
     childView.isSeparatorVisible = false
     self.needsLayoutUpdate = true
