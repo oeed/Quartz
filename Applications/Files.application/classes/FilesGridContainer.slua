@@ -51,7 +51,6 @@ function FilesGridContainer:onMouseDown( MouseDownEvent event, Event.phases phas
 		for i, childView in ipairs( self.children ) do
 			childView.cursor = cursorStatic
 		end
-		return true
 	end
 end
 
