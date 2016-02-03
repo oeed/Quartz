@@ -27,7 +27,7 @@
         <focusRadius type="Number" default="6" />
         <focusFillColour type="Graphics.colours" default="TRANSPARENT" focused="BLUE" />
         <focusOutlineColour type="Graphics.colours" default="TRANSPARENT" hover="BLUE" />
-        <titleColour type="Graphics.colours" default="BLACK" focused="WHITE" />
+        <titleColour type="Graphics.colours" default="BLACK" drop="BLUE" focused="WHITE" />
         <subtitleColour type="Graphics.colours" default="LIGHT_GREY" />
         <titleFont type="Font" default="systemFont"/>
         <subtitleFont type="Font" default="systemFont"/>
