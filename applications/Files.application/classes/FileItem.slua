@@ -82,69 +82,14 @@ end
 
 function FileItem.fileSystemItem:set( fileSystemItem )
     self.fileSystemItem = fileSystemItem
+    self.isFolder = not fileSystemItem:typeOf( IEditableFileSystemItem )
     self.title = fileSystemItem.name
     local association = fileSystemItem.association
     self.subtitle = fileSystemItem.sizeString .. ( association and " " .. association.name or "" )
 end
 
--- function FileItem:updateIdealSize()
--- 	local theme, parent = self.theme, self.parent
--- 	local style = parent.style
-
--- 	local titleWidth = theme:value( "titleFont" ):getWidth( self.title )
--- 	local subtitleWidth = theme:value( "subtitleFont" ):getWidth( self.subtitle )
--- 	local largeIconSize, smallIconSize, focusPaddingX, focusPaddingY, focusGap, topMargin, bottomMargin = theme:value( "largeIconSize" ), theme:value( "smallIconSize" ), theme:value( "focusPaddingX" ), theme:value( "focusPaddingY" ), theme:value( "focusGap" ), theme:value( "topMargin" ), theme:value( "bottomMargin" )
-
--- 	local contentWidth = largeIconSize + focusGap + math.max( subtitleWidth, titleWidth ) + 2 * focusPaddingX + topMargin + bottomMargin
--- 	self.contentWidth = contentWidth
-
--- 	if style == styles.LIST then
--- 		if parent then
--- 			local parentWidth = parent.width
--- 			self.minWidth = parentWidth
--- 			self.idealWidth = parentWidth
--- 			self.maxWidth = parentWidth
--- 		end
--- 		self.idealHeight = smallIconSize + topMargin + bottomMargin
--- 	elseif style == styles.THUMBNAIL then
--- 		self.idealWidth = contentWidth
--- 		self.maxWidth = math.floor( contentWidth * 1.5 + 0.5 )
--- 		self.minWidth = 85
--- 		self.idealHeight = largeIconSize + topMargin + bottomMargin
--- 	end
--- 	log("updating")
--- 	log(self.idealWidth)
--- 	log(self.idealHeight)
--- 	if parent then
--- 		log("Parent too")
--- 		parent.needsLayoutUpdate = true
--- 	end
--- 	self.needsDraw = true
--- end
-
--- function FileItem:onParentChanged( ParentChangedInterfaceEvent event, Event.phases phase )
--- 	self:updateIdealSize()
--- end
-
--- function FileItem.title:set( title )
--- 	self.title = title
--- 	self:updateIdealSize()
--- end
-
--- function FileItem.subtitle:set( subtitle )
--- 	self.subtitle = subtitle
--- 	self:updateIdealSize()
--- end
-
--- function FileItem.style:set( style )
--- 	self.style = style
--- 	self:updateIdealSize()
--- 	self.transition = 0
--- 	self:animate( "transition", 1, 0.3, nil, Animation.easings.IN_OUT_SINE, nil, false )
--- end
-
 function FileItem:updateThemeStyle()
-	self.theme.style = self.isEnabled and ( self.isDropHovering and "hover" or (self.isFocused and "focused" or "default") ) or "disabled"
+	self.theme.style = self.isEnabled and ( self.isDropHovering and "drop" or (self.isFocused and "focused" or "default") ) or "disabled"
 end
 
 function FileItem:onMouseDown( MouseDownEvent event, Event.phases phase )
@@ -168,12 +113,12 @@ function FileItem:onMouseHeld( MouseHeldEvent event, Event.phases phase )
 		local isMove = not self.application.keyboardShortcutManager:isKeyDown( DRAG_COPY_KEY )
 		local views = self.application:focusesOfType( FileItem )
 		self:startDragDrop( event, FileClipboardData( "" ), isMove, function( destination )
-				if destination and isMove then
-					for i, view in ipairs( views ) do
-						view:dispose()
-					end
+			if destination and isMove then
+				for i, view in ipairs( views ) do
+					view:dispose()
 				end
-			end, views )
+			end
+		end, views )
 	end
 	return true
 end
@@ -209,22 +154,21 @@ function FileItem.isDropHovering:set( isDropHovering )
 	self:updateThemeStyle()
 end
 
-function FileItem:canAcceptDragDrop( data )
+function FileItem:canAcceptDragDrop( ClipboardData data )
 	return self.isFolder and data:typeOf( FileClipboardData )
 end
 
-function FileItem:dragDropEntered( data, dragView )
+function FileItem:dragDropEntered( ClipboardData data, DragView dragView )
 	self.isDropHovering = true
-	-- self.imageObject.image = "folder-open"
 end
 
-function FileItem:dragDropMoved( data, dragView )
+function FileItem:dragDropMoved( ClipboardData data, DragView dragView )
 end
 
-function FileItem:dragDropExited( data, dragView )
+function FileItem:dragDropExited( ClipboardData data, DragView dragView )
 	self.isDropHovering = false
 	-- self.imageObject.image = "folder"
 end
 
-function FileItem:dragDropDropped( data )
+function FileItem:dragDropDropped( ClipboardData data )
 end
