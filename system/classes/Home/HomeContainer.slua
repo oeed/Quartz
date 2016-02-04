@@ -8,66 +8,114 @@ local ANIMATION_SCALE_EASING = Animation.easings.OUT_SINE
 local ANIMATION_SCALE = 0.8
 local ANIMATION_OVERLAP_TIME = 0.20
 
+local scaleMethods = Image.scaleMethods
+local mimes = Metadata.mimes
+
 class HomeContainer extends Container implements ISwitchableView {
-    
-    isFocusDismissable = Boolean( false );
-    isOpening = Boolean( true );
-    scale = Number( 1 );
-    backgroundImage = Image;
-    hadFirstFocus = Boolean( false );
-    
+	
+	isFocusDismissable = Boolean( false );
+	isOpening = Boolean( true );
+	scale = Number( 1 );
+	backgroundImage = Image;
+	hadFirstFocus = Boolean( false );
+	
 }
 
 function HomeContainer:initialise( ... )
-    self:super( ... )
-    self.backgroundImage = Image.static:fromPath( self.application.settings.backgroundImagePath )
+	self:super( ... )
+	self.backgroundImage = Image.static:fromPath( self.application.settings.backgroundImagePath )
+	self:event( ReadyInterfaceEvent, self.onReady )
 end
 
 function HomeContainer:initialiseCanvas()
-    self.canvas = ScaleableCanvas( self.width, self.height, self )
+	self.canvas = ScaleableCanvas( self.width, self.height, self )
 end
 
+
+
 function HomeContainer.backgroundImage:set( backgroundImage )
-    self.backgroundImage = backgroundImage
-    self.needsDraw = true
+	self.backgroundImage = backgroundImage
+	if self.hadFirstFocus then
+		self:renderBootImage()
+	end
+	self.needsDraw = true
+end
+
+function HomeContainer:onReady( ReadyInterfaceEvent event, Event.phases phase )
+	local start = os.clock()
+	log("render now")
+	self:renderBootImage()
+	log("done "..os.clock()-start)
+end
+
+--[[
+	@desc Renders an image to be shown at boot to have a graceful transition
+]]
+function HomeContainer:renderBootImage()
+	local width, height = self.width, self.height
+	local canvas = Canvas( width, height )
+	canvas:image( self.backgroundImage, 1, 1, width, height, scaleMethods.COVER )
+
+	-- draw the corners
+	local corner = { 
+		[1] = { [1] = true, [2] = true, [3] = true, [4] = true, [height - 3] = true, [height - 2] = true, [height - 1] = true, [height] = true },
+		[2] = { [1] = true, [2] = true, [height - 1] = true, [height] = true },
+		[3] = { [1] = true, [height] = true },
+		[4] = { [1] = true, [height] = true },
+		[width - 3] = { [1] = true, [height] = true },
+		[width - 2] = { [1] = true, [height] = true },
+		[width - 1] = { [1] = true, [2] = true, [height - 1] = true, [height] = true },
+		[width] = { [1] = true, [2] = true, [3] = true, [4] = true, [height - 3] = true, [height - 2] = true, [height - 1] = true, [height] = true },
+	}
+	local pixels = canvas.pixels
+	local blackColour = Graphics.colours.BLACK
+	for x, v in pairs( corner ) do
+		for y, v in pairs( v ) do
+			pixels[ ( y - 1 ) * width + x ] = blackColour
+		end
+	end
+
+	local image = canvas:toImage()
+	local userDataFolder = self.application.userDataFolder
+	userDataFolder:makeSubfile( "bootImage.nfp", mimes.NFP, false, image:toPaintFormat() )
 end
 
 function HomeContainer:onDraw()
-    self.canvas:image( self.backgroundImage, 1, 1, self.width, self.height ) -- TODO: image fitting options (e.g. centre, squish etc.)
+	self.canvas:image( self.backgroundImage, 1, 1, self.width, self.height, scaleMethods.COVER )
 end
 
 function HomeContainer.scale:set( scale )
-    self.scale = scale
-    local canvas = self.canvas
-    canvas.scaleX = scale
-    canvas.scaleY = scale
-    local parent = self.parent
-    if parent then
-        parent.needsDraw = true
-    end
+	self.scale = scale
+	local canvas = self.canvas
+	canvas.scaleX = scale
+	canvas.scaleY = scale
+	local parent = self.parent
+	if parent then
+		parent.needsDraw = true
+	end
 end
 
 function HomeContainer.isFocused:set( isFocused )
-    self:super( isFocused )
-    if not self.hadFirstFocus then
-        if isFocused then
-            self.hadFirstFocus = true
-        end
-    elseif isFocused then
-        self:flyInFocused()
-    else
-        self:flyOutFocused()
-    end
+	self:super( isFocused )
+	if not self.hadFirstFocus then
+		if isFocused then
+			self.hadFirstFocus = true
+		end
+	elseif isFocused then
+		self:flyInFocused()
+	else
+		self:flyOutFocused()
+	end
 end
 
 function HomeContainer:flyInFocused( fromLeft )
-    self.scale = ANIMATION_SCALE
-    self.x = -self.width
-    self:animate( "x", 1, ANIMATION_FLY_TIME, nil, ANIMATION_FLY_EASING, ANIMATION_FLY_TIME / 2 - 0.1 )
-    self:animate( "scale", 1, ANIMATION_SCALE_TIME, nil, ANIMATION_SCALE_EASING, ANIMATION_FLY_TIME - 0.1, false )
+	self.scale = ANIMATION_SCALE
+	self.x = -self.width
+	self:animate( "x", 1, ANIMATION_FLY_TIME, nil, ANIMATION_FLY_EASING, ANIMATION_FLY_TIME / 2 - 0.1 )
+	self:animate( "scale", 1, ANIMATION_SCALE_TIME, nil, ANIMATION_SCALE_EASING, ANIMATION_FLY_TIME - 0.1, false )
 end
 
 function HomeContainer:flyOutFocused( toRight )
-    self:animate( "x", -self.width, ANIMATION_FLY_TIME, nil, ANIMATION_FLY_EASING, ANIMATION_FLY_TIME/2 - 0.1 )
-    self:animate( "scale", ANIMATION_SCALE, ANIMATION_SCALE_TIME, nil, ANIMATION_SCALE_EASING, nil, false )
+	self:animate( "x", -self.width, ANIMATION_FLY_TIME, nil, ANIMATION_FLY_EASING, ANIMATION_FLY_TIME/2 - 0.1 )
+	self:animate( "scale", ANIMATION_SCALE, ANIMATION_SCALE_TIME, nil, ANIMATION_SCALE_EASING, nil, false )
 end
