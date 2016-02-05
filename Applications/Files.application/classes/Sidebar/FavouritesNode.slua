@@ -1,0 +1,69 @@
+
+class FavouritesNode extends SidebarNode  {
+
+	dropY = Number.allowsNil;
+	dropIndex = Number.allowsNil;
+	
+}
+
+function FavouritesNode:onDraw()
+	self:super()
+	local dropY = self.dropY
+	if dropY then
+		local theme = self.theme
+		local leftMargin, rightMargin = theme:value( "leftMargin" ), theme:value( "rightMargin" )
+		self.canvas:fill( theme:value( "dropPositionFillColour" ), RectangleMask( 1 + leftMargin, dropY, self.width - leftMargin - rightMargin, 1 ) )
+	end
+end
+
+function FavouritesNode:saveLayout()
+	
+end
+
+function FavouritesNode.dropY:set( dropY )
+    self.dropY = dropY
+    self.needsDraw = true
+end
+
+function FavouritesNode:canAcceptDragDrop( ClipboardData data )
+	return data:typeOf( FileClipboardData ) or self:super( data )
+end
+
+function FavouritesNode:dragDropMoved( ClipboardData data, DragView dragView, Number x, Number y )
+	if data:typeOf( FileClipboardData ) then
+		local children = self.children
+		local theme = self.theme
+		local dropY = self.minHeight + theme:value( "childrenMarginTop" )
+		local dropIndex = 1
+		local childBottomMargin = theme:value( "childBottomMargin" )
+		for i = #children, 1, -1 do
+			local childView = children[i]
+			local childY = childView.y
+			if y > childY then
+				dropY = childY + childView.height + childBottomMargin - 1
+				dropIndex = i + 1
+				break
+			end
+		end
+		self.dropIndex = dropIndex
+		self.dropY = dropY
+	else
+		self:super( data, dragView, x, y )
+	end
+end
+
+function FavouritesNode:dragDropDropped( ClipboardData data, Boolean isMove, Number x, Number y )
+	self.dropY = nil
+	if data:typeOf( FileClipboardData ) then
+		self:insert( SidebarItem( { fileSystemItem = data.fileSystemItem } ), self.dropIndex )
+	end
+end
+
+function FavouritesNode:dragDropExited( ClipboardData data, DragView dragView, Number x, Number y )
+	self.dropY = nil
+end
+
+function FavouritesNode:dragDropDropped( ClipboardData data, Boolean isMove, Number x, Number y )
+	self.dropY = nil
+	self:saveLayout()
+end

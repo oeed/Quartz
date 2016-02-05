@@ -18,11 +18,11 @@
 
     <SplitContainer width=320 y=27 height=160>
         <SidebarTreeContainer>
-            <SidebarNode text="Favourites">
+            <FavouritesNode text="Favourites" identifier="favouritesNode">
                 <SidebarItem path="/Applications"/>
                 <SidebarItem path="/User"/>
                 <SidebarItem path="/system/resources/Wallpapers/Europe/Arc de Triomphe.ucg"/>
-            </SidebarNode>
+            </FavouritesNode>
             <SidebarNode text="Computer">
                 <!-- <SidebarItem text="Item 7"/>
                 <SidebarItem text="Item 8"/>

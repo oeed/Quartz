@@ -43,6 +43,10 @@
         <childBottomMargin type="Number" default="2" />
     </SidebarNode>
 
+    <FavouritesNode>
+        <dropPositionFillColour type="Graphics.colours" default="BLUE" />
+    </FavouritesNode>
+
     <FilesGridContainer>
         <selectionFillColour type="Graphics.colours" default="LIGHT_BLUE" />
         <selectionOutlineColour type="Graphics.colours" default="BLUE" />

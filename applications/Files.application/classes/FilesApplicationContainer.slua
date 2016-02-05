@@ -8,6 +8,7 @@ class FilesApplicationContainer extends ApplicationContainer {
 	thumbnailToggleButton = ToolbarSymbolSegmentButton.link;
 	filesContainer = FilesGridContainer.link;
 	upButton = ToolbarSymbolButton.link;
+	favouritesNode = FavouritesNode.link;
 
 	isThumbnailLayout = Boolean( self.application.settings.isThumbnailLayout );
 
