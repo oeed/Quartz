@@ -11,6 +11,7 @@ class FilesGridContainer extends GridContainer {
 	style = Number; -- TODO: should be FilesGridContainer.styles
 	selection = Table.allowsNil;
 	isPressed = Boolean( false );
+	needsSelectionFocusesUpdate = Boolean( false );
 
 	styles = Enum( Number, {
 		LIST = 1;
@@ -60,7 +61,7 @@ function FilesGridContainer:onMouseDrag( MouseDragEvent event, Event.phases phas
 		if selection then
 			selection[3] = event.x
 			selection[4] = event.y
-			self:updateSelectionFocuses()
+			self.needsSelectionFocusesUpdate = true
 			self.needsDraw = true
 			return true
 		end
@@ -75,7 +76,19 @@ function FilesGridContainer:onGlobalMouseUp( MouseUpEvent event, Event.phases ph
 	end
 end
 
+--[[
+	@desc Description
+	@return Any returnedValue
+]]
+function FilesGridContainer:update( ... )
+	if self.needsSelectionFocusesUpdate then
+		self:updateSelectionFocuses()
+	end
+	self:super( ... )
+end
+
 function FilesGridContainer:updateSelectionFocuses()
+	self.needsSelectionFocusesUpdate = false
 	local selection = self.selection
 	if not selection then
 		self.application:unfocusAll( FileItem )
