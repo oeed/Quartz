@@ -1,7 +1,7 @@
 _G.BOOT_TIME = os.clock()
 if fs.exists("system/Silica.resourcepkg") then -- DEBUG ONLY
 
-local BOOT_IMAGE_PATH = "/System/userdata/bootimage.nfp"
+local BOOT_IMAGE_PATH = "/System/userdata/bootImage.nfp"
 if fs.exists( BOOT_IMAGE_PATH ) then
 	paintutils.drawImage( paintutils.loadImage( BOOT_IMAGE_PATH ), 1, 1 )
 	sleep(0)
