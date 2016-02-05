@@ -1,8 +1,12 @@
 
-class SidebarItem extends TreeItem {
+class SidebarItem extends TreeItem implements IDragDropDestination {
 
 	fileSystemItem = FileSystemItem;
+	isFolder = Boolean( false );
 	path = String.allowsNil;
+
+	dropStyle = DragDropManager.dropStyles.SHRINK;
+	isDropHovering = Boolean( false );
 	
 }
 
@@ -20,6 +24,7 @@ end
 
 function SidebarItem.fileSystemItem:set( fileSystemItem )
     self.fileSystemItem = fileSystemItem
+    self.isFolder = not fileSystemItem:typeOf( IEditableFileSystemItem )
     self.text = fileSystemItem.name
 end
 
@@ -32,4 +37,37 @@ end
 
 function SidebarItem:onAction( ActionInterfaceEvent event, Event.phases phase )
 	self.application.container.fileSystemItem = self.fileSystemItem
+end
+
+function SidebarItem:updateThemeStyle()
+	self.theme.style = self.isEnabled and ( self.isDropHovering and "drop" or ( self.isSelected and "selected" or "default" ) ) or "disabled"
+end
+
+function SidebarItem.isDropHovering:set( isDropHovering )
+	self.isDropHovering = isDropHovering
+	self:updateThemeStyle()
+end
+
+function SidebarItem:canAcceptDragDrop( ClipboardData data )
+	return self.isFolder and data:typeOf( FileClipboardData )
+end
+
+function SidebarItem:dragDropEntered( ClipboardData data, DragView dragView )
+	self.isDropHovering = true
+end
+
+function SidebarItem:dragDropMoved( ClipboardData data, DragView dragView )
+end
+
+function SidebarItem:dragDropExited( ClipboardData data, DragView dragView )
+	self.isDropHovering = false
+end
+
+function SidebarItem:dragDropDropped( ClipboardData data, Boolean isMove )
+	self.isDropHovering = false
+	if isMove then
+		data.fileSystemItem:moveTo( self.fileSystemItem )
+	else
+		data.fileSystemItem:copyTo( self.fileSystemItem )
+	end
 end

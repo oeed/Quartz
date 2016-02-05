@@ -59,7 +59,7 @@
         <leftIconMargin type="Number" default="3" />
         <iconSize type="Number" default="9" />
         <fillColour type="Graphics.colours" selected="TRANSPARENT"/>
-        <textColour type="Graphics.colours" default="BLACK" selected="BLUE"/>
+        <textColour type="Graphics.colours" default="BLACK" drop="BLUE" selected="BLUE"/>
 
     </SidebarItem>
 

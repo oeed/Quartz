@@ -12,7 +12,7 @@ class FileItem extends View implements IDraggableView implements IDragDropDestin
 	fileSystemItem = FileSystemItem;
 	title = String;
 	subtitle = String;
-	isFolder = Boolean( true );
+	isFolder = Boolean( false );
 	transition = Number( 1 );
 
 	dropStyle = DragDropManager.dropStyles.SHRINK;
