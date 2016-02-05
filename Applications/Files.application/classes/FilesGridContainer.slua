@@ -6,12 +6,16 @@ local styles = {
 	THUMBNAIL = 2;
 }
 
-class FilesGridContainer extends GridContainer {
+class FilesGridContainer extends GridContainer implements IDragDropDestination {
 	
 	style = Number; -- TODO: should be FilesGridContainer.styles
 	selection = Table.allowsNil;
 	isPressed = Boolean( false );
 	needsSelectionFocusesUpdate = Boolean( false );
+
+	dropStyle = DragDropManager.dropStyles.DISAPPEAR;
+	isDropHovering = Boolean( false );
+	outlineThickness = Number( 0 );
 
 	styles = Enum( Number, {
 		LIST = 1;
@@ -29,17 +33,21 @@ function FilesGridContainer:initialise( ... )
 end
 
 function FilesGridContainer:onDraw()
-	local selection = self.selection
-	if selection then
-		local width, height = self.width, self.height
-		local selectionX, selectionY = math.max( math.min( selection[1], selection[3] ), 1 ), math.max( math.min( selection[2], selection[4] ), 1 )
-		local selectionWidth, selectionHeight = math.min( math.max( selection[1], selection[3] ), width ) - selectionX, math.min( math.max( selection[2], selection[4] ), height ) - selectionY
+	local selection, outlineThickness = self.selection, self.outlineThickness
+	if selection or outlineThickness > 0 then
+		local theme, canvas, width, height = self.theme, self.canvas, self.width, self.height
+		if selection then
+			local selectionX, selectionY = math.max( math.min( selection[1], selection[3] ), 1 ), math.max( math.min( selection[2], selection[4] ), 1 )
+			local selectionWidth, selectionHeight = math.min( math.max( selection[1], selection[3] ), width ) - selectionX, math.min( math.max( selection[2], selection[4] ), height ) - selectionY
 
-		if selectionWidth >= 2 and selectionHeight >= 2 then
-			local canvas, theme = self.canvas, self.theme
-			local rectangleMask = RectangleMask( selectionX, selectionY, selectionWidth, selectionHeight )
-			canvas:fill( theme:value( "selectionFillColour" ), rectangleMask )
-			canvas:outline( theme:value( "selectionOutlineColour" ), rectangleMask, theme:value( "selectionOutlineThickness" ) )
+			if selectionWidth >= 2 and selectionHeight >= 2 then
+				local rectangleMask = RectangleMask( selectionX, selectionY, selectionWidth, selectionHeight )
+				canvas:fill( theme:value( "selectionFillColour" ), rectangleMask )
+				canvas:outline( theme:value( "selectionOutlineColour" ), rectangleMask, theme:value( "selectionOutlineThickness" ) )
+			end
+		end
+		if outlineThickness > 0 then
+			canvas:outline( theme:value( "outlineColour" ), canvas.mask, outlineThickness )
 		end
 	end
 end
@@ -74,6 +82,10 @@ function FilesGridContainer:onGlobalMouseUp( MouseUpEvent event, Event.phases ph
 		self.selection = nil
 		return true
 	end
+end
+
+function FilesGridContainer:canAcceptDragDrop( ClipboardData data, Boolean isMove )
+	return not isMove and data:typeOf( FileClipboardData )
 end
 
 --[[
@@ -144,3 +156,35 @@ function FilesGridContainer.style:set( style )
 		end
 	end
 end
+
+function FilesGridContainer.outlineThickness:set( outlineThickness )
+    self.outlineThickness = outlineThickness
+    self.needsDraw = true
+end
+
+function FilesGridContainer.isDropHovering:set( isDropHovering )
+	if self.isDropHovering ~= isDropHovering then
+	local theme = self.theme
+		self:animate( "outlineThickness", isDropHovering and theme:value( "maximumOutlineThickness" ) or 0, theme:value( "outlineAnimationDuration" ), nil, theme:value( "outlineAnimationEasing" ) )
+	end
+	self.isDropHovering = isDropHovering
+end
+
+function FilesGridContainer:dragDropEntered( ClipboardData data, DragView dragView, Number x, Number y )
+	self.isDropHovering = true
+end
+
+function FilesGridContainer:dragDropMoved( ClipboardData data, DragView dragView, Number x, Number y )
+end
+
+function FilesGridContainer:dragDropExited( ClipboardData data, DragView dragView, Number x, Number y )
+	self.isDropHovering = false
+end
+
+function FilesGridContainer:dragDropDropped( ClipboardData data, Boolean isMove, Number x, Number y )
+	self.isDropHovering = false
+	if not isMove then
+		data.fileSystemItem:copyTo( self.application.container.folder.parent )
+	end
+end
+

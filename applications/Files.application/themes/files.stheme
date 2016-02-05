@@ -57,6 +57,10 @@
         <rightMargin type="Number" default="4" />
         <topMargin type="Number" default="3" />
         <bottomMargin type="Number" default="3" />
+        <outlineColour type="Graphics.colours" default="LIGHT_BLUE" />
+        <maximumOutlineThickness type="Number" default="3" />
+        <outlineAnimationDuration type="Number" default="0.3" />
+        <outlineAnimationEasing type="Animation.easings" default="IN_OUT_SINE" />
     </FilesGridContainer>
 
     <SidebarItem>
