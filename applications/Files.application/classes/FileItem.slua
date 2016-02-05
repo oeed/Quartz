@@ -117,7 +117,7 @@ function FileItem:onMouseHeld( MouseHeldEvent event, Event.phases phase )
 		local isMove = not self.application.keyboardShortcutManager:isKeyDown( DRAG_COPY_KEY )
 		local views = self.application:focusesOfType( FileItem )
 		self:startDragDrop( event, FileClipboardData( self.fileSystemItem ), isMove, function( destination )
-			if destination and isMove and destination:typeOf( FileItem ) then
+			if destination and isMove and not destination:typeOf( SidebarNode ) then
 				for i, view in ipairs( views ) do
 					view:dispose()
 				end
