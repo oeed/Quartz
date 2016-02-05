@@ -51,7 +51,7 @@ function FileItem:onDraw()
 	elseif isThumbnail then
 		iconSize = math.min( theme:value( "largeIconSize" ), height - topMargin - bottomMargin )
 	end
-	canvas:image( fileSystemItem.icon, 1 + leftMargin, 1 + topMargin, iconSize, iconSize )
+	canvas:image( ( self.isFolder and self.isDropHovering ) and fileSystemItem.openIcon or  fileSystemItem.icon, 1 + leftMargin, 1 + topMargin, iconSize, iconSize )
 	local x = leftMargin + iconSize
 
 	local title = self.title
@@ -61,6 +61,8 @@ function FileItem:onDraw()
 	local focusRoundedRect = RoundedRectangleMask( 1 + iconSize + leftMargin + focusGap, titleY - focusPaddingY, titleWidth + 2 * focusPaddingX, titleHeight + 2 * focusPaddingY, theme:value( "focusRadius" ) )
 	canvas:fill( theme:value( "focusFillColour" ), focusRoundedRect )
 	canvas:fill( theme:value( "titleColour" ), TextMask( 1 + iconSize + leftMargin + focusPaddingX + focusGap, titleY, titleWidth, titleHeight, title, titleFont ) )
+
+	self.shadowMask = canvas.contentMask
 
 	local subtitle = self.subtitle
 
@@ -78,6 +80,10 @@ function FileItem:onDraw()
 	if subtitleWidth >= 1 then
 		canvas:fill( theme:value( "subtitleColour" ), TextMask( subtitleX, subtitleY, subtitleWidth, subtitleHeight, subtitle, subtitleFont ) )
 	end
+end
+
+function FileItem.shadowMask:get()
+	return self.shadowMask
 end
 
 function FileItem.fileSystemItem:set( fileSystemItem )
@@ -112,7 +118,7 @@ function FileItem:onMouseHeld( MouseHeldEvent event, Event.phases phase )
 		self:addFocus()
 		local isMove = not self.application.keyboardShortcutManager:isKeyDown( DRAG_COPY_KEY )
 		local views = self.application:focusesOfType( FileItem )
-		self:startDragDrop( event, FileClipboardData( "" ), isMove, function( destination )
+		self:startDragDrop( event, FileClipboardData( self.fileSystemItem ), isMove, function( destination )
 			if destination and isMove then
 				for i, view in ipairs( views ) do
 					view:dispose()
@@ -167,8 +173,13 @@ end
 
 function FileItem:dragDropExited( ClipboardData data, DragView dragView )
 	self.isDropHovering = false
-	-- self.imageObject.image = "folder"
 end
 
-function FileItem:dragDropDropped( ClipboardData data )
+function FileItem:dragDropDropped( ClipboardData data, Boolean isMove )
+	self.isDropHovering = false
+	if isMove then
+		data.fileSystemItem:moveTo( self.fileSystemItem )
+	else
+		data.fileSystemItem:copyTo( self.fileSystemItem )
+	end
 end

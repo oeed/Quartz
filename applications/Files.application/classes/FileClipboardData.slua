@@ -2,11 +2,11 @@
 class FileClipboardData extends ClipboardData {
 	
 	type = "Files:file";
-	path = String;
+	fileSystemItem = FileSystemItem;
 
 }
 
-function FileClipboardData:initialise( String path )
+function FileClipboardData:initialise( FileSystemItem fileSystemItem )
 	self:super()
-	self.path = path
+	self.fileSystemItem = fileSystemItem
 end
