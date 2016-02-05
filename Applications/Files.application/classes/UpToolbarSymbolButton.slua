@@ -1,0 +1,39 @@
+
+class UpToolbarSymbolButton extends ToolbarSymbolButton implements IDragDropDestination {
+	
+	dropStyle = DragDropManager.dropStyles.SHRINK;
+	isDropHovering = Boolean( false );
+	
+}
+
+function UpToolbarSymbolButton:updateThemeStyle()
+	self.theme.style = self.isEnabled and ( self.isDropHovering and "drop" or ( self.isPressed and "pressed" or ( self.isFocused and "focused" or "default" ) ) or "disabled" ) or "disabled"
+end
+function UpToolbarSymbolButton.isDropHovering:set( isDropHovering )
+	self.isDropHovering = isDropHovering
+	self:updateThemeStyle()
+end
+
+function UpToolbarSymbolButton:canAcceptDragDrop( ClipboardData data )
+	return self.isEnabled and data:typeOf( FileClipboardData )
+end
+
+function UpToolbarSymbolButton:dragDropEntered( ClipboardData data, DragView dragView )
+	self.isDropHovering = true
+end
+
+function UpToolbarSymbolButton:dragDropMoved( ClipboardData data, DragView dragView )
+end
+
+function UpToolbarSymbolButton:dragDropExited( ClipboardData data, DragView dragView )
+	self.isDropHovering = false
+end
+
+function UpToolbarSymbolButton:dragDropDropped( ClipboardData data, Boolean isMove )
+	self.isDropHovering = false
+	if isMove then
+		data.fileSystemItem:moveTo( self.application.container.folder.parent )
+	else
+		data.fileSystemItem:copyTo( self.application.container.folder.parent )
+	end
+end

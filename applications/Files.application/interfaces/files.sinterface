@@ -5,7 +5,7 @@
             <ToolbarSymbolSegmentButton symbolName="back" />
             <ToolbarSymbolSegmentButton symbolName="forward" />
         </ToolbarSegmentContainer>
-        <ToolbarSymbolButton symbolName="up" identifier="upButton"/>
+        <UpToolbarSymbolButton symbolName="up" identifier="upButton"/>
         <ToolbarStaticSpace/>
         <ToolbarPathTextBox identifier="pathTextBox" />
         <ToolbarStaticSpace/>

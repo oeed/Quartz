@@ -33,6 +33,10 @@
         <subtitleFont type="Font" default="systemFont"/>
     </FileItem>
 
+    <UpToolbarSymbolButton>
+        <symbolColour type="Graphics.colours" drop="BLUE"/>
+    </UpToolbarSymbolButton>
+
     <SidebarNode>
         <textColour type="Graphics.colours" default="GREY" disabled="LIGHT_GREY"/>
     </SidebarNode>
