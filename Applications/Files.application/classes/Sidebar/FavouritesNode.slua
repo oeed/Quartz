@@ -6,6 +6,15 @@ class FavouritesNode extends SidebarNode  {
 	
 }
 
+function FavouritesNode:initialise( ... )
+	self:super( ... )
+   self:event( LoadedInterfaceEvent, self.onLoaded )
+end
+
+function FavouritesNode:onLoaded( LoadedInterfaceEvent event, Event.phases phase )
+	self:loadLayout()
+end
+
 function FavouritesNode:onDraw()
 	self:super()
 	local dropY = self.dropY
@@ -16,8 +25,20 @@ function FavouritesNode:onDraw()
 	end
 end
 
+function FavouritesNode:loadLayout()
+	for i, path in ipairs( self.application.settings.sidebarLayout ) do
+		self:insert( SidebarItem( { path = path } ) )
+	end
+end
+
 function FavouritesNode:saveLayout()
-	
+	local layout = {}
+	for i, childView in ipairs( self.children ) do
+		table.insert( layout, childView.fileSystemItem.path )
+	end
+	local settings = self.application.settings
+	settings.sidebarLayout = layout
+	settings:save()
 end
 
 function FavouritesNode.dropY:set( dropY )
@@ -57,13 +78,9 @@ function FavouritesNode:dragDropDropped( ClipboardData data, Boolean isMove, Num
 	if data:typeOf( FileClipboardData ) then
 		self:insert( SidebarItem( { fileSystemItem = data.fileSystemItem } ), self.dropIndex )
 	end
+	self:saveLayout()
 end
 
 function FavouritesNode:dragDropExited( ClipboardData data, DragView dragView, Number x, Number y )
 	self.dropY = nil
-end
-
-function FavouritesNode:dragDropDropped( ClipboardData data, Boolean isMove, Number x, Number y )
-	self.dropY = nil
-	self:saveLayout()
 end
