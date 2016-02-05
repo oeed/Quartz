@@ -164,18 +164,18 @@ function FileItem:canAcceptDragDrop( ClipboardData data )
 	return self.isFolder and data:typeOf( FileClipboardData )
 end
 
-function FileItem:dragDropEntered( ClipboardData data, DragView dragView )
+function FileItem:dragDropEntered( ClipboardData data, DragView dragView, Number x, Number y )
 	self.isDropHovering = true
 end
 
-function FileItem:dragDropMoved( ClipboardData data, DragView dragView )
+function FileItem:dragDropMoved( ClipboardData data, DragView dragView, Number x, Number y )
 end
 
-function FileItem:dragDropExited( ClipboardData data, DragView dragView )
+function FileItem:dragDropExited( ClipboardData data, DragView dragView, Number x, Number y )
 	self.isDropHovering = false
 end
 
-function FileItem:dragDropDropped( ClipboardData data, Boolean isMove )
+function FileItem:dragDropDropped( ClipboardData data, Boolean isMove, Number x, Number y )
 	self.isDropHovering = false
 	if isMove then
 		data.fileSystemItem:moveTo( self.fileSystemItem )

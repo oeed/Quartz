@@ -52,18 +52,18 @@ function SidebarItem:canAcceptDragDrop( ClipboardData data )
 	return self.isFolder and data:typeOf( FileClipboardData )
 end
 
-function SidebarItem:dragDropEntered( ClipboardData data, DragView dragView )
+function SidebarItem:dragDropEntered( ClipboardData data, DragView dragView, Number x, Number y )
 	self.isDropHovering = true
 end
 
-function SidebarItem:dragDropMoved( ClipboardData data, DragView dragView )
+function SidebarItem:dragDropMoved( ClipboardData data, DragView dragView, Number x, Number y )
 end
 
-function SidebarItem:dragDropExited( ClipboardData data, DragView dragView )
+function SidebarItem:dragDropExited( ClipboardData data, DragView dragView, Number x, Number y )
 	self.isDropHovering = false
 end
 
-function SidebarItem:dragDropDropped( ClipboardData data, Boolean isMove )
+function SidebarItem:dragDropDropped( ClipboardData data, Boolean isMove, Number x, Number y )
 	self.isDropHovering = false
 	if isMove then
 		data.fileSystemItem:moveTo( self.fileSystemItem )

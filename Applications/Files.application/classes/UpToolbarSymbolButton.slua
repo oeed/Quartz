@@ -18,18 +18,18 @@ function UpToolbarSymbolButton:canAcceptDragDrop( ClipboardData data )
 	return self.isEnabled and data:typeOf( FileClipboardData )
 end
 
-function UpToolbarSymbolButton:dragDropEntered( ClipboardData data, DragView dragView )
+function UpToolbarSymbolButton:dragDropEntered( ClipboardData data, DragView dragView, Number x, Number y )
 	self.isDropHovering = true
 end
 
-function UpToolbarSymbolButton:dragDropMoved( ClipboardData data, DragView dragView )
+function UpToolbarSymbolButton:dragDropMoved( ClipboardData data, DragView dragView, Number x, Number y )
 end
 
-function UpToolbarSymbolButton:dragDropExited( ClipboardData data, DragView dragView )
+function UpToolbarSymbolButton:dragDropExited( ClipboardData data, DragView dragView, Number x, Number y )
 	self.isDropHovering = false
 end
 
-function UpToolbarSymbolButton:dragDropDropped( ClipboardData data, Boolean isMove )
+function UpToolbarSymbolButton:dragDropDropped( ClipboardData data, Boolean isMove, Number x, Number y )
 	self.isDropHovering = false
 	if isMove then
 		data.fileSystemItem:moveTo( self.application.container.folder.parent )
