@@ -71,11 +71,7 @@
         <activeSeparatorColour type="Graphics.colours" default="BLUE"/>
         <activeSeparatorIsDashed type="Boolean" default="false"/>
     </TopBarSeparatorView>
-
-    <HomeContainer>
-        <fillColour type="Graphics.colours" default="LIGHT_BLUE"/>
-    </HomeContainer>
-
+    
     <HomeItemContainer>
         <parentTopMargin type="Number" default="14"/>
         <topMargin type="Number" default="10"/>
