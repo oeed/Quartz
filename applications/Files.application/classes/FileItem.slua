@@ -181,3 +181,6 @@ function FileItem:dragDropDropped( ClipboardData data, Boolean isMove, Number x,
 		data.fileSystemItem:copyTo( self.fileSystemItem )
 	end
 end
+
+function FileItem:dragDropCancelled( ClipboardData data, DragView dragView, Number x, Number y )
+end
