@@ -77,3 +77,13 @@ function SidebarItem:dragDropDropped( ClipboardData data, Boolean isMove, Number
 		data.fileSystemItem:copyTo( self.fileSystemItem )
 	end
 end
+
+function SidebarItem:dragDropCancelled( ClipboardData data, DragView dragView, Number x, Number y )
+	local originalParent = self.originalParent
+	if originalParent then
+		dragView.isVisible = false
+		originalParent.removingIndex = nil
+		originalParent:saveLayout()
+	end
+end
+

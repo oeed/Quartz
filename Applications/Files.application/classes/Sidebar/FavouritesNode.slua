@@ -82,5 +82,15 @@ function FavouritesNode:dragDropDropped( ClipboardData data, Boolean isMove, Num
 end
 
 function FavouritesNode:dragDropExited( ClipboardData data, DragView dragView, Number x, Number y )
-	self.dropY = nil
+	if data:typeOf( FileClipboardData ) then
+		self.dropY = nil
+	else
+		self:super( data, dragView, x, y )
+	end
+end
+
+function FavouritesNode:dragDropEntered( ClipboardData data, DragView dragView, Number x, Number y )
+	if not data:typeOf( FileClipboardData ) then
+		self:super( data, dragView, x, y )
+	end
 end
