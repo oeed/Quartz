@@ -39,6 +39,8 @@
 
     <SidebarNode>
         <textColour type="Graphics.colours" default="GREY" disabled="LIGHT_GREY"/>
+        <childTopMargin type="Number" default="1" />
+        <childBottomMargin type="Number" default="2" />
     </SidebarNode>
 
     <FilesGridContainer>
@@ -60,7 +62,8 @@
         <iconSize type="Number" default="9" />
         <fillColour type="Graphics.colours" selected="TRANSPARENT"/>
         <textColour type="Graphics.colours" default="BLACK" drop="BLUE" selected="BLUE"/>
-
+        <topTextMargin type="Number" default="1" />
+        <bottomTextMargin type="Number" default="0" />
     </SidebarItem>
 
     <SidebarTreeContainer>

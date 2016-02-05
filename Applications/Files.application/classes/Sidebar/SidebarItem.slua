@@ -4,6 +4,7 @@ class SidebarItem extends TreeItem implements IDragDropDestination {
 	fileSystemItem = FileSystemItem;
 	isFolder = Boolean( false );
 	path = String.allowsNil;
+	height = Number( 9 );
 
 	dropStyle = DragDropManager.dropStyles.SHRINK;
 	isDropHovering = Boolean( false );
