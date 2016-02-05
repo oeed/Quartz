@@ -46,8 +46,8 @@ function FavouritesNode.dropY:set( dropY )
     self.needsDraw = true
 end
 
-function FavouritesNode:canAcceptDragDrop( ClipboardData data )
-	return data:typeOf( FileClipboardData ) or self:super( data )
+function FavouritesNode:canAcceptDragDrop( ClipboardData data, Boolean isMove )
+	return data:typeOf( FileClipboardData ) or self:super( data, isMove )
 end
 
 function FavouritesNode:dragDropMoved( ClipboardData data, DragView dragView, Number x, Number y )

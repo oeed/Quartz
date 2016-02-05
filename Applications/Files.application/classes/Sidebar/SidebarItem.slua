@@ -54,7 +54,7 @@ function SidebarItem.isDropHovering:set( isDropHovering )
 	self:updateThemeStyle()
 end
 
-function SidebarItem:canAcceptDragDrop( ClipboardData data )
+function SidebarItem:canAcceptDragDrop( ClipboardData data, Boolean isMove )
 	return self.isFolder and data:typeOf( FileClipboardData )
 end
 

@@ -158,7 +158,7 @@ function FileItem.isDropHovering:set( isDropHovering )
 	self:updateThemeStyle()
 end
 
-function FileItem:canAcceptDragDrop( ClipboardData data )
+function FileItem:canAcceptDragDrop( ClipboardData data, Boolean isMove )
 	return self.isFolder and data:typeOf( FileClipboardData )
 end
 

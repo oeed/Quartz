@@ -14,7 +14,7 @@ function UpToolbarSymbolButton.isDropHovering:set( isDropHovering )
 	self:updateThemeStyle()
 end
 
-function UpToolbarSymbolButton:canAcceptDragDrop( ClipboardData data )
+function UpToolbarSymbolButton:canAcceptDragDrop( ClipboardData data, Boolean isMove )
 	return self.isEnabled and data:typeOf( FileClipboardData )
 end
 
