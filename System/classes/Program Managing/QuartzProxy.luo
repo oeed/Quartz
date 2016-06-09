@@ -1,9 +1,9 @@
+class QuartzProxy
 
-class QuartzProxy 
+    local _program = Program;
 
 	property Table allowsNil screenBuffer
 	property Table allowsNil silicaApplication -- we have to use table because the Application class will be different, we just have to presume it's an Application
-    _program = Program;
 	property Table fs = fs -- TODO: .isReadOnly
 
 	property String userDataPath
@@ -12,7 +12,7 @@ class QuartzProxy
     
 
     function initialise( Program program )
-        self._program = program
+        _program = program
         local applicationUserDataFolder = self.application.userDataFolder
         local identifier = program.identifier
         local folder = applicationUserDataFolder:folderFromPath( identifier )
@@ -24,7 +24,7 @@ class QuartzProxy
     end
 
     function redraw( Table.allowsNil pixels )
-        local programView = self._program.programView
+        local programView = _program.programView
         if pixels then
             programView.buffer = pixels
         end
@@ -32,11 +32,11 @@ class QuartzProxy
     end
 
     function QuartzProxy.status:get()
-        return self._program.status
+        return _program.status
     end
 
     set status( status )
-        self._program.status = status
+        _program.status = status
     end
 
 end

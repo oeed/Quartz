@@ -1,5 +1,4 @@
-
-class ProgramManager 
+class ProgramManager
     
 	property Table programs = {}
 	property QuartzApplication owner

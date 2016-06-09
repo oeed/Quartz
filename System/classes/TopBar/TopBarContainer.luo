@@ -1,4 +1,3 @@
-
 local ANIMATION_TIME = 0.3
 local ANIMATION_EASING = Animation.easings.OUT_SINE
 local pins = TopBarItem.pins
@@ -11,7 +10,6 @@ class TopBarContainer extends Container
 	property Boolean needsLayoutUpdate = false
 	property TopBarItem allowsNil activeView
     default switchableItems = {}
-
 
     function initialise( ... )
         super( ... )

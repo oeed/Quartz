@@ -1,4 +1,3 @@
-
 class QuartzSettings extends Settings 
     
 	property Boolean isClockAnalogue = false

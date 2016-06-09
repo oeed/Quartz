@@ -1,4 +1,3 @@
-
 class QuartzApplicationContainer extends ApplicationContainer 
 
 	property TopBarContainer link topBar

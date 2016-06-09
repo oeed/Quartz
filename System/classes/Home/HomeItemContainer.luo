@@ -1,4 +1,3 @@
-
 class HomeItemContainer extends Container 
     
 	property needsLayoutUpdate

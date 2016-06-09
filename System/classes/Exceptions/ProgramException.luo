@@ -1,4 +1,3 @@
-
 class ProgramException extends Exception 
 
 	property Program program

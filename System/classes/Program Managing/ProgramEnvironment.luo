@@ -1,5 +1,4 @@
-
-class ProgramEnvironment 
+class ProgramEnvironment
 
 	property Program program
 	property Table environment = {}

@@ -1,4 +1,3 @@
-
 class ProgramOpenedInterfaceEvent extends InterfaceEvent 
     
     default eventType = "interface_program_opened"

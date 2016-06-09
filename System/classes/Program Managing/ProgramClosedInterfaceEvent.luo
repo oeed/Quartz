@@ -1,4 +1,3 @@
-
 class ProgramClosedInterfaceEvent extends InterfaceEvent 
     
     default eventType = "interface_program_closed"

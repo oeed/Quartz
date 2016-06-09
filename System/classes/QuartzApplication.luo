@@ -1,4 +1,3 @@
-
 class QuartzApplication extends Application 
 	
 	property String name = "Quartz"

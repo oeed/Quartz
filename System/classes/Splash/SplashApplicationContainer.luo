@@ -1,4 +1,3 @@
-
 class SplashApplicationContainer extends ApplicationContainer 
     -- splashView = InterfaceOutlet( "splashView" )
 

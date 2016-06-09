@@ -1,4 +1,3 @@
-
 class TopBarSeparatorView extends SeparatorView 
     
 	property Number activeX = 1

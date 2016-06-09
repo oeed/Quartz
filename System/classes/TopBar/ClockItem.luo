@@ -1,4 +1,3 @@
-
 class ClockItem extends TopBarItem 
     
 	property Number pin = TopBarItem.pins.RIGHT
