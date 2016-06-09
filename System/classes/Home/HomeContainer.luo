@@ -14,7 +14,7 @@ class HomeContainer extends Container implements ISwitchableView
 	property Boolean isOpening = true
 	property Number scale = 1
 	property Image backgroundImage
-    hadFirstFocus = Boolean( false, fasg );
+    default hadFirstFocus = false
     
 
     function initialise( ... )

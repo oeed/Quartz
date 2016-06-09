@@ -1,8 +1,8 @@
 
 class ProgramOpenedInterfaceEvent extends InterfaceEvent 
     
-    eventType = "interface_program_opened";
-	property false program
+    default eventType = "interface_program_opened"
+	property program
 
 
 	function initialise( program )

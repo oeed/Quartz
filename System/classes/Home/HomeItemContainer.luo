@@ -1,7 +1,7 @@
 
 class HomeItemContainer extends Container 
     
-	property false needsLayoutUpdate
+	property needsLayoutUpdate
 
 
     function initialise( ... )

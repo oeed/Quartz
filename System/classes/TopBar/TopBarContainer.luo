@@ -5,12 +5,12 @@ local pins = TopBarItem.pins
 
 class TopBarContainer extends Container 
     
-    interfaceName = "topbarcontainer";
+    default interfaceName = "topbarcontainer"
 	property TopBarSeparatorView link separatorView
 	property HomeItem link homeItem
 	property Boolean needsLayoutUpdate = false
 	property TopBarItem allowsNil activeView
-    switchableItems = {};
+    default switchableItems = {}
 
 
     function initialise( ... )

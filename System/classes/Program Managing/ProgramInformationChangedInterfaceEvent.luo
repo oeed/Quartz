@@ -1,9 +1,9 @@
 
 class ProgramInformationChangedInterfaceEvent extends InterfaceEvent 
     
-    static = {
-        eventType = "interface_program_info_changed";
-    };
+    
+    default eventType = "interface_program_info_changed";
+    
 
 	property Program program
 

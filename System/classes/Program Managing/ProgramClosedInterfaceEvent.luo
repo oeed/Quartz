@@ -1,8 +1,8 @@
 
 class ProgramClosedInterfaceEvent extends InterfaceEvent 
     
-    eventType = "interface_program_closed";
-	property false program
+    default eventType = "interface_program_closed"
+	property program
 
 
 	function initialise( program )
