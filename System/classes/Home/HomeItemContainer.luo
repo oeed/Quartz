@@ -5,7 +5,7 @@ class HomeItemContainer extends Container
 
 
     function initialise( ... )
-        self:super( ... )
+        super( ... )
 
         self:event( ReadyInterfaceEvent, self.onReady )
         self:event( ThemeChangedInterfaceEvent, self.onThemeChanged )
@@ -55,7 +55,7 @@ class HomeItemContainer extends Container
     end
 
     function update( deltaTime )
-        self:super( deltaTime )
+        super( deltaTime )
         if self.needsLayoutUpdate then
             self:updateLayout()
         end

@@ -21,7 +21,7 @@ class ProgramView extends View implements ISwitchableView
 
 
     function initialise( ... )
-        self:super( ... )
+        super( ... )
 
         local termSizes = self.termSizes
         termSizes.width = self.width
@@ -61,7 +61,7 @@ class ProgramView extends View implements ISwitchableView
         end
     end
 
-    function ProgramView.scale:set( scale )
+    set scale( scale )
         self.scale = scale
         local canvas = self.canvas
         canvas.scaleX = scale
@@ -72,13 +72,13 @@ class ProgramView extends View implements ISwitchableView
         end
     end
 
-    function ProgramView.width:set( width )
-        self:super( width )
+    set width( width )
+        super( width )
         self.termSizes.width = width
     end
 
-    function ProgramView.height:set( height )
-        self:super( height )
+    set height( height )
+        super( height )
         self.termSizes.height = height
     end
 

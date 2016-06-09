@@ -18,7 +18,7 @@ class HomeContainer extends Container implements ISwitchableView
     
 
     function initialise( ... )
-        self:super( ... )
+        super( ... )
         self.backgroundImage = Image.static:fromPath( self.application.settings.backgroundImagePath )
     end
 
@@ -26,7 +26,7 @@ class HomeContainer extends Container implements ISwitchableView
         self.canvas = ScaleableCanvas( self.width, self.height, self )
     end
 
-    function HomeContainer.backgroundImage:set( backgroundImage )
+    set backgroundImage( backgroundImage )
         self.backgroundImage = backgroundImage
         self.needsDraw = true
     end
@@ -35,7 +35,7 @@ class HomeContainer extends Container implements ISwitchableView
         self.canvas:image( self.backgroundImage, 1, 1, self.width, self.height ) -- TODO: image fitting options (e.g. centre, squish etc.)
     end
 
-    function HomeContainer.scale:set( scale )
+    set scale( scale )
         self.scale = scale
         local canvas = self.canvas
         canvas.scaleX = scale
@@ -46,8 +46,8 @@ class HomeContainer extends Container implements ISwitchableView
         end
     end
 
-    function HomeContainer.isFocused:set( isFocused )
-        self:super( isFocused )
+    set isFocused( isFocused )
+        super( isFocused )
         if not self.hadFirstFocus then
             if isFocused then
                 self.hadFirstFocus = true

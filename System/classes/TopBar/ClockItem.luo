@@ -10,13 +10,13 @@ class ClockItem extends TopBarItem
 
 
     function initialise( ... )
-        self:super( ... )
+        super( ... )
         self:event( ActionInterfaceEvent, self.onAction )
         self:event( ReadyInterfaceEvent, self.onReady )
     end
 
     function onDraw()
-        self:super()
+        super()
         local width, height, theme, canvas = self.width, self.height, self.theme, self.canvas
 
         local leftMargin, rightMargin, topMargin, bottomMargin = theme:value( "leftMargin" ), theme:value( "rightMargin" ), theme:value( "topMargin" ), theme:value( "bottomMargin" )
@@ -79,7 +79,7 @@ class ClockItem extends TopBarItem
         self:updateClock()
     end
 
-    function ClockItem.isAnalogue:set( isAnalogue )
+    set isAnalogue( isAnalogue )
         self.isAnalogue = isAnalogue
         self:updateClock()
         local parent = self.parent
@@ -91,7 +91,7 @@ class ClockItem extends TopBarItem
         settings:save()
     end
 
-    function ClockItem.isTwentyFourHour:set( isTwentyFourHour )
+    set isTwentyFourHour( isTwentyFourHour )
         self.isTwentyFourHour = isTwentyFourHour
         self:updateClock()
         local parent = self.parent
@@ -137,7 +137,7 @@ class ClockItem extends TopBarItem
         end
     end
 
-    function ClockItem.text:set( text )
+    set text( text )
         if self.text ~= text then
             self.text = text
             self.needsDraw = true

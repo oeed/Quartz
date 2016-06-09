@@ -9,7 +9,7 @@ class SilicaProgram extends Program
     end
 
     function update()
-        self:super( false )
+        super( false )
         local silicaApplication = self.quartzProxy.silicaApplication
         if silicaApplication then
             silicaApplication:update()
@@ -17,7 +17,7 @@ class SilicaProgram extends Program
     end
 
     function run()
-        self:super()
+        super()
         local environment = self.environment.environment
         local silicafunction = loadfile( "system/OldSilica.resourcepkg", "Silica Injection" )
         setfenv( silicafunction, environment )

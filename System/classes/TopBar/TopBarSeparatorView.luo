@@ -6,17 +6,17 @@ class TopBarSeparatorView extends SeparatorView
 
 
 	function onDraw()
-	    self:super()
+	    super()
 	    local theme = self.theme
 	    self.canvas:fill( theme:value( "activeSeparatorColour" ), theme:value( "activeSeparatorIsDashed" ) and SeparatorMask( self.activeX, 1, self.activeWidth, self.height ) or RectangleMask( self.activeX, 1, self.activeWidth, self.height ) )
 	end
 
-	function TopBarSeparatorView.activeX:set( activeX )
+	set activeX( activeX )
 	   self.activeX = activeX
 	   self.needsDraw = true
 	end
 
-	function TopBarSeparatorView.activeWidth:set( activeWidth )
+	set activeWidth( activeWidth )
 	    self.activeWidth = activeWidth
 	    self.needsDraw = true
 	end

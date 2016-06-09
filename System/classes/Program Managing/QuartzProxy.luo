@@ -35,7 +35,7 @@ class QuartzProxy
         return self._program.status
     end
 
-    function QuartzProxy.status:set( status )
+    set status( status )
         self._program.status = status
     end
 

@@ -18,13 +18,13 @@ class TopBarItem extends View
 
 
     function initialise( ... )
-        self:super( ... )
+        super( ... )
         self:event( MouseDownEvent, self.onMouseDown )
         self.event:connectGlobal( MouseUpEvent, self.onGlobalMouseUp, Event.phases.BEFORE )
     end
 
     function onDraw()
-        self:super()
+        super()
         local width, height, theme, canvas, isPinnedRight = self.width, self.height, self.theme, self.canvas, self.pin == pins.RIGHT
 
         local rectangleMask = RectangleMask( isPinnedRight and 2 or 1, 1, width - 1, height )
@@ -36,7 +36,7 @@ class TopBarItem extends View
         end
     end
 
-    function TopBarItem.isSeparatorVisible:set( isSeparatorVisible )
+    set isSeparatorVisible( isSeparatorVisible )
         self.isSeparatorVisible = isSeparatorVisible    
         self.needsDraw = true
     end
@@ -45,7 +45,7 @@ class TopBarItem extends View
         self.theme.style = self.isPressed and "pressed" or "default"
     end
 
-    function TopBarItem.isPressed:set( isPressed )
+    set isPressed( isPressed )
         self.isPressed = isPressed
         self:updateThemeStyle()
     end

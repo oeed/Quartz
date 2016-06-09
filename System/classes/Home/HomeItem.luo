@@ -7,7 +7,7 @@ class HomeItem extends TopBarItem
 
 
     function initialise( ... )
-        self:super( ... )
+        super( ... )
         self:event( ActionInterfaceEvent, self.onAction )
         self:event( ReadyInterfaceEvent, self.onReady )
     end
@@ -17,7 +17,7 @@ class HomeItem extends TopBarItem
     end
 
     function onDraw()
-        self:super()
+        super()
         local canvas, theme = self.canvas, self.theme
         local symbol = theme:value( "symbol" )
         local leftMargin = theme:value( "leftMargin" )

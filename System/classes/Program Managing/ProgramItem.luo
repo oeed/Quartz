@@ -10,14 +10,14 @@ class ProgramItem extends TopBarItem
 
 
     function initialise( ... )
-        self:super( ... )
+        super( ... )
         self:event( MouseEnteredInterfaceEvent, self.onMouseEntered )
         self:event( MouseExitedInterfaceEvent, self.onMouseExited )
         self:event( MouseMoveEvent, self.onMouseMoved )
     end
 
     function onDraw()
-        self:super()
+        super()
         local width, height, theme, canvas, program = self.width, self.height, self.theme, self.canvas, self.program
 
         local leftMargin, rightMargin, topMargin, bottomMargin, iconTitleMargin, titleStatusMargin = theme:value( "leftMargin" ), theme:value( "rightMargin" ), theme:value( "topMargin" ), theme:value( "bottomMargin" ), theme:value( "iconTitleMargin" ), theme:value( "titleStatusMargin" )
@@ -83,7 +83,7 @@ class ProgramItem extends TopBarItem
         self.theme.style = self.isCloseActive and ( self.program.programView.isFocused and ( self.isPressed and "closePressedFocused" or "closeHoverFocused" ) or ( self.isPressed and "closePressed" or "closeHover" ) ) or ( self.isPressed and "pressed" or ( self.program.programView.isFocused and "focused" or "default" ) )
     end
 
-    function ProgramItem.program:set( program )
+    set program( program )
         self.program = program
         self.needsDraw = true
         self:updateThemeStyle()
@@ -129,7 +129,7 @@ class ProgramItem extends TopBarItem
 
     function onGlobalMouseUp( MouseUpEvent event, Event.phases phase )
         local wasPressed = true--self.isPressed
-        self:super( event, phase )
+        super( event, phase )
         if wasPressed and self:hitTestEvent( event ) then
             local mouseButton = event.mouseButton
             if self.isCloseActive or mouseButton == MouseEvent.mouseButtons.MIDDLE then

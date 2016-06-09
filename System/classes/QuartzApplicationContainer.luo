@@ -6,7 +6,7 @@ class QuartzApplicationContainer extends ApplicationContainer
 
 
 	function initialise( ... )
-	    self:super( ... )
+	    super( ... )
 	    self:event( ReadyInterfaceEvent, self.onReady, Event.phases.AFTER )
 	end
 

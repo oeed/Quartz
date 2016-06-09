@@ -59,7 +59,7 @@ class Program
     --[[
         @desc Description
     ]]
-    function Program.bundle:set( bundle )
+    set bundle( bundle )
         self.bundle = bundle
         local config = bundle.config
         local bootPath = config[configKeys.BOOT_PATH]
@@ -171,12 +171,12 @@ class Program
         self.programView:focus( ISwitchableView )
     end
 
-    function Program.status:set( status )
+    set status( status )
         self.status = status
         self.application.container.topBar.event:handleEvent( ProgramInformationChangedInterfaceEvent( self ) )    
     end
 
-    function Program.title:set( title )
+    set title( title )
         self.title = title
         self.application.container.topBar.event:handleEvent( ProgramInformationChangedInterfaceEvent( self ) )    
     end

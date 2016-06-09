@@ -6,7 +6,7 @@ class ProgramException extends Exception
 
 	function initialise( String message, Program program )
 	    self.program = program
-	    self:super( message )
+	    super( message )
 	end
 
 end

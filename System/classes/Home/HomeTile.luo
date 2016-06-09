@@ -6,7 +6,7 @@ class HomeTile extends Container implements IHomeItem
 
 
 	function onDraw()
-	    self:super()
+	    super()
 	    local width, height, theme, canvas = self.width, self.height, self.theme, self.canvas
 
 	    local roundedRectangle = RoundedRectangleMask( 1, 1, width, height, theme:value( "cornerRadius" ) )

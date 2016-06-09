@@ -14,7 +14,7 @@ class TopBarContainer extends Container
 
 
     function initialise( ... )
-        self:super( ... )
+        super( ... )
         self:event( ReadyInterfaceEvent, self.onReady )
         self:event( ChildAddedInterfaceEvent, self.onChildAdded )
         self:event( ChildRemovedInterfaceEvent, self.onChildRemoved )
@@ -30,7 +30,7 @@ class TopBarContainer extends Container
     end
 
      -- this is the view with the separator under it. not neccesarily the active program/area (during mouse down)
-    function TopBarContainer.activeView:set( activeView )
+    set activeView( activeView )
         local oldView = self.activeView
         if not activeView then
             local focusedSwitchableView = self.application:focusesOfType( ISwitchableView )[1]
@@ -115,7 +115,7 @@ class TopBarContainer extends Container
     end
 
     function update( deltaTime )
-        self:super( deltaTime )
+        super( deltaTime )
         if self.needsLayoutUpdate then
             self:updateLayout()
         end
