@@ -1,0 +1,184 @@
+
+local states = {
+    UNINTIALISED = 0;
+    RUNNING = 1;
+    PAUSED = 2;
+    FINISHED = 3;
+}
+
+local configKeys = {
+    PROGRAM_TITLE = "title",
+    BOOT_PATH = "bootPath",
+    ICON_PATH = "iconPath",
+    IDENTIFIER = "identifier",
+}
+
+class Program 
+    
+	property states UNINTIALISED state
+	property Boolean isRunning = false -- whether the COROUTINE is running (not just the program)
+
+	property ProgramManager allowsNil programManager
+	property Bundle bundle
+	property Table config
+	property Icon icon
+
+	property String title
+	property String allowsNil status
+
+    enum Number states = states
+
+    enum Number numbers = {
+        ONE = EXTERNAL,
+        TWO = 2,
+        THREE = 3
+    }
+
+	property Table eventQueue
+	property ProgramEnvironment environment
+	property Thread allowsNil coroutine
+	property Table arguments
+	property ProgramView allowsNil programView
+	property Number allowsNil index
+	property QuartzProxy allowsNil quartzProxy
+	property Boolean hadFirstUpdate = false
+	property String bootPath
+	property String identifier
+
+    enum String configKeys = configKeys
+
+
+    function initialise( Bundle bundle, ... )
+        local arguments = { ... }
+        self.bundle = bundle
+        self.arguments = arguments
+        self.eventQueue = { arguments }
+        self:initialiseEnvironment()
+    end
+
+    --[[
+        @desc Description
+    ]]
+    function Program.bundle:set( bundle )
+        self.bundle = bundle
+        local config = bundle.config
+        local bootPath = config[configKeys.BOOT_PATH]
+        local iconPath = config[configKeys.ICON_PATH]
+        local identifier = config[configKeys.IDENTIFIER]
+        if not bootPath then
+            ConfigurationFatalProgramException( "Program bundle configuration did not specify required key '" .. configKeys.BOOT_PATH .. "'." )
+        end
+        if not identifier then
+            ConfigurationFatalProgramException( "Program bundle configuration did not specify required key '" .. configKeys.IDENTIFIER .. "'." )
+        end
+        self.bootPath = FileSystemItem.static:tidy( bundle.path .. "/" .. config[configKeys.BOOT_PATH] )
+        self.identifier = identifier
+        self.icon = Icon.static:fromPathInBundle( iconPath, bundle )
+        self.title = config.title or bundle.name
+        self.config = config
+    end
+
+    function run()
+        self.state = states.RUNNING
+        self.coroutine = coroutine.create( function()
+            local func = loadfile( self.bootPath )
+            setfenv( func, self.environment.environment )
+            func( arguments )
+        end )
+    end
+
+    function initialiseEnvironment()
+        self.environment = ProgramEnvironment( self )
+    end
+
+    function close( isForced )
+        local state = self.state
+        local willClose = isForced or state == states.FINISHED
+        if not isForced then
+            willClose = true
+            -- TODO: probe the program and see if it can close (for 'are you sure you want to close...' dialouges)
+        end
+
+        if willClose then
+            state = states.FINISHED
+            -- self.programView:dispose()
+            self.programManager:onProgramClosed( self )
+            self.application.event:handleEvent( ProgramClosedInterfaceEvent( self ) )
+        end
+    end
+
+    function queueEvent( ... )
+        table.insert( self.eventQueue, { ... } )
+    end
+
+    function Program.environment:get()
+        if self.environment then return self.environment end
+
+        -- Create the environment as it doesn't exist yet
+        -- TODO: clean environment
+        self.environment = setmetatable( {}, { __index = _G } )
+        return self.environment
+    end
+
+    function update( Boolean( true ) redirectTerm )
+        local eventQueue, programCoroutine, redirect = self.eventQueue, self.coroutine
+        local previousTarget
+        if redirectTerm then
+            previousTarget = term.redirect( self.programView.redirect )
+        end
+        local firstEvent = eventQueue[1]
+        while self.state == states.RUNNING and firstEvent do
+            local ok, data = coroutine.resume( programCoroutine, unpack( firstEvent ) )
+
+            if coroutine.status( programCoroutine )== "dead" then
+                if previousTarget then
+                    term.redirect( previousTarget )
+                end
+                self.state = states.FINISHED
+                self:close()
+                log("Program died")
+                log(data)
+                return
+            end
+
+            if ok then
+                -- TODO: not sure what filter does
+                -- self.filter = data
+            else
+                -- TODO: error handling
+                log("Program crashed")
+                log(data)
+                if previousTarget then
+                    term.redirect( previousTarget )
+                end
+                -- self:throw( data )
+                return
+            end
+
+            table.remove( eventQueue, 1 )
+            firstEvent = eventQueue[1]
+        end
+        if previousTarget then
+            term.redirect( previousTarget )
+        end
+        if not self.hadFirstUpdate then
+            self.hadFirstUpdate = true
+            self:focus()
+        end
+    end
+
+    function focus()
+        self.programView:focus( ISwitchableView )
+    end
+
+    function Program.status:set( status )
+        self.status = status
+        self.application.container.topBar.event:handleEvent( ProgramInformationChangedInterfaceEvent( self ) )    
+    end
+
+    function Program.title:set( title )
+        self.title = title
+        self.application.container.topBar.event:handleEvent( ProgramInformationChangedInterfaceEvent( self ) )    
+    end
+
+end

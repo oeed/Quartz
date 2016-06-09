@@ -1,6 +1,6 @@
 <FilesApplicationContainer themeName="files">
 
-    <ToolbarContainer width=320 y=1>
+    <ToolbarContainer identifier="toolbarContainer" >
         <ToolbarSegmentContainer>
             <ToolbarSymbolSegmentButton symbolName="back" />
             <ToolbarSymbolSegmentButton symbolName="forward" />
@@ -11,12 +11,11 @@
         <ToolbarStaticSpace/>
         <ToolbarSegmentContainer>
             <ToolbarSymbolSegmentButton identifier="thumbnailToggleButton" symbolName="list" />
-            <ToolbarSymbolSegmentButton symbolName="settings" />
+            <ToolbarSymbolSegmentButton identifier="settingsButton" symbolName="settings" />
         </ToolbarSegmentContainer>
     </ToolbarContainer>
     
-
-    <SplitContainer width=320 y=27 height=160>
+    <SplitContainer leftPin="1" rightPin="100%" topPin="toolbarContainer.bottom" bottomPin="100%">
         <SidebarTreeContainer>
             <FavouritesNode text="Favourites" identifier="favouritesNode">
                 <!-- <SidebarItem path="/Applications"/> -->
@@ -39,5 +38,11 @@
             <FileItem path="/log" /> -->
         </FilesGridContainer>
     </SplitContainer>
+
+    <!-- <Window>
+        <WindowContainer>
+            <Button rightPin="100% - 6" text="Hello"/>
+        </WindowContainer>
+    </Window> -->
 
 </FilesApplicationContainer>

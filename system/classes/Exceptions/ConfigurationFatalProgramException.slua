@@ -1,4 +1,0 @@
-
-class ConfigurationFatalProgramException extends Exception {
-    
-}

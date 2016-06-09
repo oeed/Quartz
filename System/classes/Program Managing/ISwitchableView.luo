@@ -1,0 +1,7 @@
+
+interface ISwitchableView {
+    
+	property Boolean isOpening = true
+	property Number scale = 1
+
+}

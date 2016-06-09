@@ -1,0 +1,26 @@
+
+local states = Program.states
+
+class SilicaProgram extends Program 
+    
+
+    function initialiseEnvironment()
+        self.environment = SilicaProgramEnvironment( self )
+    end
+
+    function update()
+        self:super( false )
+        local silicaApplication = self.quartzProxy.silicaApplication
+        if silicaApplication then
+            silicaApplication:update()
+        end
+    end
+
+    function run()
+        self:super()
+        local environment = self.environment.environment
+        local silicafunction = loadfile( "system/OldSilica.resourcepkg", "Silica Injection" )
+        setfenv( silicafunction, environment )
+        silicafunction()
+    end
+end

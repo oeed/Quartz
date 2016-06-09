@@ -1,0 +1,17 @@
+
+class QuartzApplicationContainer extends ApplicationContainer 
+
+	property TopBarContainer link topBar
+	property HomeContainer link homeContainer
+
+
+	function initialise( ... )
+	    self:super( ... )
+	    self:event( ReadyInterfaceEvent, self.onReady, Event.phases.AFTER )
+	end
+
+	function onReady( ReadyInterfaceEvent event, Event.phases phase )
+	    self.homeContainer:focus()
+	end
+
+end

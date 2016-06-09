@@ -1,0 +1,31 @@
+
+class HomeItem extends TopBarItem 
+    
+	property Number pin = TopBarItem.pins.LEFT
+	property HomeContainer allowsNil homeContainer
+	property Number allowsNil size = 29
+
+
+    function initialise( ... )
+        self:super( ... )
+        self:event( ActionInterfaceEvent, self.onAction )
+        self:event( ReadyInterfaceEvent, self.onReady )
+    end
+
+    function onReady( ReadyInterfaceEvent event, Event.phases phase )
+        self.homeContainer = self.application.container.homeContainer
+    end
+
+    function onDraw()
+        self:super()
+        local canvas, theme = self.canvas, self.theme
+        local symbol = theme:value( "symbol" )
+        local leftMargin = theme:value( "leftMargin" )
+        canvas:fill( theme:value( "contentColour" ), SymbolMask( 1 + leftMargin, 1 + math.floor( ( self.height - symbol.height ) / 2 ), symbol ) )
+    end
+
+    function onAction( ActionInterfaceEvent event, Event.phases phase )
+       self.homeContainer:focus() 
+    end
+
+end

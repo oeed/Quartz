@@ -1,0 +1,12 @@
+
+class ProgramException extends Exception 
+
+	property Program program
+    
+
+	function initialise( String message, Program program )
+	    self.program = program
+	    self:super( message )
+	end
+
+end

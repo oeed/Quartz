@@ -1,0 +1,12 @@
+
+class ProgramClosedInterfaceEvent extends InterfaceEvent 
+    
+    eventType = "interface_program_closed";
+	property false program
+
+
+	function initialise( program )
+	    self.program = program
+	end
+
+end

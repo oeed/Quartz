@@ -8,6 +8,7 @@ class FilesApplicationContainer extends ApplicationContainer {
 	thumbnailToggleButton = ToolbarSymbolSegmentButton.link;
 	filesContainer = FilesGridContainer.link;
 	upButton = ToolbarSymbolButton.link;
+	settingsButton = ToolbarSymbolSegmentButton.link;
 	favouritesNode = FavouritesNode.link;
 
 	isThumbnailLayout = Boolean( self.application.settings.isThumbnailLayout );
@@ -75,6 +76,11 @@ end
 function FilesApplicationContainer.upButton:action( ActionInterfaceEvent event )
     self.folder = self.folder.parent
 end
+
+function FilesApplicationContainer.settingsButton:action( ActionInterfaceEvent event )
+	AlertWindow.static:display( "explode" )
+end
+
 
 function FilesApplicationContainer.isThumbnailLayout:set( isThumbnailLayout )
 	self.isThumbnailLayout = isThumbnailLayout

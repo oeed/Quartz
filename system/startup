@@ -1,14 +1,3 @@
-_G.BOOT_TIME = os.clock()
-if fs.exists("system/Silica.resourcepkg") then -- DEBUG ONLY
-
-local BOOT_IMAGE_PATH = "/System/userdata/bootImage.nfp"
-if fs.exists( BOOT_IMAGE_PATH ) then
-	paintutils.drawImage( paintutils.loadImage( BOOT_IMAGE_PATH ), 1, 1 )
-	sleep(0)
-end
-
-end
-
 fs.open("log", "w").close()
 
 local _print = print
@@ -51,8 +40,7 @@ term.redirect(term.native())
 -- Everything above here is development only
 -- dofile( "system/Silica" )
 -- dofile( "system/Silica.resourcepkg" )
-function _G.error(message, level)   
-	logtraceback()   
+function _G.error(message, level)      
    _error(message, level)      
 end        
 

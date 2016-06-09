@@ -1,0 +1,6 @@
+
+class FatalProgramException extends Exception 
+    
+}
+
+end
