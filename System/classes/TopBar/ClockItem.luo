@@ -160,4 +160,5 @@ class ClockItem extends TopBarItem
         local fontWidth = self.theme:value( "font" ):getWidth( text )
         return fontWidth + margin
     end
+
 end

@@ -45,4 +45,5 @@ class QuartzApplication extends Application
 		end
 		return false
 	end
+
 end

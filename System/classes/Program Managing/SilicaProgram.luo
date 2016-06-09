@@ -23,4 +23,5 @@ class SilicaProgram extends Program
         setfenv( silicafunction, environment )
         silicafunction()
     end
+
 end
