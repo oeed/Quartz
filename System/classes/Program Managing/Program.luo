@@ -119,7 +119,7 @@ class Program
         return self.environment
     end
 
-    function update( Boolean( true ) redirectTerm )
+    function update( Boolean redirectTerm = true )
         local eventQueue, programCoroutine, redirect = self.eventQueue, self.coroutine
         local previousTarget
         if redirectTerm then
