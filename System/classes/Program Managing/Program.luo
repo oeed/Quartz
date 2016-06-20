@@ -14,7 +14,7 @@ local configKeys = {
 
 class Program
     
-	property states UNINTIALISED state
+	property Program.states state = states.UNINTIALISED
 	property Boolean isRunning = false -- whether the COROUTINE is running (not just the program)
 
 	property ProgramManager allowsNil programManager
@@ -110,7 +110,7 @@ class Program
         table.insert( self.eventQueue, { ... } )
     end
 
-    function Program.environment:get()
+    get environment()
         if self.environment then return self.environment end
 
         -- Create the environment as it doesn't exist yet
