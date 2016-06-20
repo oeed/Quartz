@@ -44,25 +44,30 @@ function _G.error(message, level)
    _error(message, level)      
 end        
 
-if fs.exists("system/Silica.resourcepkg") then
-    log("Using built package")
-    local _, err = pcall(function() dofile( "system/Silica.resourcepkg" ) end)
-    fs.delete("system/OldSilica.resourcepkg")
-    fs.move("system/Silica.resourcepkg","system/OldSilica.resourcepkg")
-    if err then error(err,2) end
-else
-    log("Using old style package")
-    shell.run( "package /src Silica" )
-    log("Packaged")
-    dofile( "Silica" )
+-- if fs.exists("system/Silica.resourcepkg") then
+--     log("Using built package")
+--     local _, err = pcall(function() dofile( "system/Silica.resourcepkg" ) end)
+--     fs.delete("system/OldSilica.resourcepkg")
+--     fs.move("system/Silica.resourcepkg","system/OldSilica.resourcepkg")
+--     if err then error(err,2) end
+-- else
+--     log("Using old style package")
+--     shell.run( "package /src Silica" )
+--     log("Packaged")
+--     dofile( "Silica" )
 
-    log("Building")
-    local folder = Folder( "/src" )
-    log(folder)
-    local package = folder:package( "/system/Silica.resourcepkg", true, true )
-    log("packaged!")
-    os.reboot()
-end
+--     log("Building")
+--     local folder = Folder( "/src" )
+--     log(folder)
+--     local package = folder:package( "/system/Silica.resourcepkg", true, true )
+--     log("packaged!")
+--     os.reboot()
+-- end
+
+loadfile("/luo")("/build.lua", "/System/classes", "/src/classes")
+dofile("/build.lua")
+dofile("test")
+print("\n")
 
 os.queueEvent("damn_emulator")
 os.pullEvent("damn_emulator")

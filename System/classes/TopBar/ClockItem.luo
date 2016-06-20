@@ -148,7 +148,7 @@ class ClockItem extends TopBarItem
     end
 
     -- TODO: this is being called twice each update
-    function ClockItem.size:get()
+    get size()
         local theme = self.theme
         local margin = theme:value( "leftMargin" ) + theme:value( "rightMargin" ) + 1
         if self.isAnalogue then
