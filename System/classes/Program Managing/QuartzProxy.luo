@@ -23,7 +23,7 @@ class QuartzProxy
         self.userDataPath = folder.path
     end
 
-    function redraw( Table.allowsNil pixels )
+    function redraw( Table allowsNil pixels )
         local programView = _program.programView
         if pixels then
             programView.buffer = pixels

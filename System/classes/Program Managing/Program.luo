@@ -51,7 +51,7 @@ class Program
         local arguments = { ... }
         self.bundle = bundle
         self.arguments = arguments
-        self.eventQueue = { arguments }
+        self.eventManagerQueue = { arguments }
         self:initialiseEnvironment()
     end
 
@@ -107,7 +107,7 @@ class Program
     end
 
     function queueEvent( ... )
-        table.insert( self.eventQueue, { ... } )
+        table.insert( self.eventManagerQueue, { ... } )
     end
 
     get environment()
@@ -120,7 +120,7 @@ class Program
     end
 
     function update( Boolean redirectTerm = true )
-        local eventQueue, programCoroutine, redirect = self.eventQueue, self.coroutine
+        local eventQueue, programCoroutine, redirect = self.eventManagerQueue, self.coroutine
         local previousTarget
         if redirectTerm then
             previousTarget = term.redirect( self.programView.redirect )

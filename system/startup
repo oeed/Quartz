@@ -40,7 +40,7 @@ term.redirect(term.native())
 -- Everything above here is development only
 -- dofile( "system/Silica" )
 -- dofile( "system/Silica.resourcepkg" )
-function _G.error(message, level)      
+function _G.error(message, level)   
    _error(message, level)      
 end        
 
