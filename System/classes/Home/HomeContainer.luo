@@ -9,7 +9,7 @@ local ANIMATION_OVERLAP_TIME = 0.20
 
 class HomeContainer extends Container implements ISwitchableView 
     
-	property Boolean isFocusDismissable = false
+	default isFocusDismissable = false
 	property Boolean isOpening = true
 	property Number scale = 1
 	property Image backgroundImage

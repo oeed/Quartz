@@ -14,7 +14,7 @@ class ProgramView extends View implements ISwitchableView
 	property Number scale = 1
 	property Boolean isClosing = false
 	property Boolean isOpening = true
-	property Boolean isFocusDismissable = false
+	default isFocusDismissable = false
 	property Table termSizes = { width = 1; height = 1; needsDraw = false; }
     buffer = Table( {} )
 

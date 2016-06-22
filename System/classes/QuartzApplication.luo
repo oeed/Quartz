@@ -1,7 +1,7 @@
 class QuartzApplication extends Application 
 	
-	property String name = "Quartz"
-	property String allowsNil interfaceName = "quartz"
+	default name = "Quartz"
+	default interfaceName = "quartz"
 	property ProgramManager programManager
 
 	-- For the demo the below code isn't really needed, it's just for debug
