@@ -13,7 +13,7 @@ class HomeContainer extends Container implements ISwitchableView
 	property Boolean isOpening = true
 	property Number scale = 1
 	property Image backgroundImage
-    default hadFirstFocus = false
+    property Boolean hadFirstFocus = false
 
     function initialise( ... )
         super( ... )

@@ -9,7 +9,7 @@ class TopBarContainer extends Container
 	property HomeItem link homeItem
 	property Boolean needsLayoutUpdate = false
 	property TopBarItem allowsNil activeView
-    default switchableItems = {}
+    property Table switchableItems = {}
 
     function initialise( ... )
         super( ... )
