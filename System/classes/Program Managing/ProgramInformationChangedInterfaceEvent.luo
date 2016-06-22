@@ -1,11 +1,8 @@
 class ProgramInformationChangedInterfaceEvent extends InterfaceEvent 
     
-    
-    default eventType = "interface_program_info_changed";
-    
+    static default eventType = "interface_program_info_changed";
 
 	property Program program
-
 
 	function initialise( Program program )
 	    self.program = program

@@ -31,8 +31,8 @@ class ProgramView extends View implements ISwitchableView
         end
 
         self:event( MouseEvent, self.onMouseEvent )
-        self:event( KeyUpEvent, self.onKeyUpEvent )
-        self:event( KeyDownEvent, self.onKeyDownEvent )
+        self:event( UpKeyEvent, self.onUpKeyEvent )
+        self:event( DownKeyEvent, self.onDownKeyEvent )
         self:event( CharacterEvent, self.onCharacterEvent )
         self:event( FocusesChangedInterfaceEvent, self.onFocusesChanged )
         self:event( ParentChangedInterfaceEvent, self.onParentChanged )
@@ -155,7 +155,7 @@ class ProgramView extends View implements ISwitchableView
     end
 
     function onMouseEvent( MouseEvent event, Event.phases phase )
-        if not event:typeOf( MouseMoveEvent ) then
+        if not event:typeOf( MoveMouseEvent ) then
             self.program:queueEvent( event.eventType, event.mouseButton, event.x, event.y  )
         else
             self.program:queueEvent( event.eventType, event.x, event.y  )
@@ -163,16 +163,16 @@ class ProgramView extends View implements ISwitchableView
         return true
     end
 
-    function onKeyUpEvent( KeyUpEvent event, Event.phases phase )
-        self.program:queueEvent( event.eventType, event.keyCode  )
+    function onUpKeyEvent( UpKeyEvent event, Event.phases phase )
+        self.program:queueEvent( "key_up", event.keyCode  )
     end
 
-    function onKeyDownEvent( KeyEvent event, Event.phases phase )
-        self.program:queueEvent( event.eventType, event.keyCode, event.isRepeat  )
+    function onDownKeyEvent( DownKeyEvent event, Event.phases phase )
+        self.program:queueEvent( "key", event.keyCode, event.isRepeat  )
     end
 
     function onCharacterEvent( CharacterEvent event, Event.phases phase )
-        self.program:queueEvent( event.eventType, event.character  )
+        self.program:queueEvent( "char", event.character  )
     end
 
     function getRedirect()

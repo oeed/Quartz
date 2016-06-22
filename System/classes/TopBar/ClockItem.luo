@@ -1,12 +1,10 @@
 class ClockItem extends TopBarItem 
     
-	property Number pin = TopBarItem.pins.RIGHT
+	default pin = TopBarItem.pins.RIGHT
 
 	property String text = "0:00am"
-
 	property Boolean isAnalogue = self.application.settings.isClockAnalogue
 	property Boolean isTwentyFourHour = self.application.settings.isClockTwentyFourHour
-
 
     function initialise( ... )
         super( ... )
@@ -102,7 +100,7 @@ class ClockItem extends TopBarItem
         settings:save()
     end
 
-    function updateClock( dontSchedule )
+    function updateClock()
         local isAnalogue = self.isAnalogue
         local refreshTime
         if not isAnalogue then

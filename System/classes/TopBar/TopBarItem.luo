@@ -5,21 +5,25 @@ local pins = {
 
 class TopBarItem extends View 
     
-    enum Number pins = pins
+    enum Number pins = {
+        LEFT = 0;
+        RIGHT = 1;
+    }
     
 	property Boolean isPressed = false
-	property Number pin = pins.LEFT -- TODO: this doesn't work: TopBarItem.pins( TopBarItem.pins.LEFT );
+	property Number pin = TopBarItem.pins.LEFT
 	property Boolean isRemoving = false
 	property Number allowsNil size
-	property Number height = 14
 	property Boolean isSeparatorVisible = true
-	property Cursor allowsNil cursor = ClickableCursor.static
+
+    default height = 14
+	default cursor = ClickableCursor.static
 
 
     function initialise( ... )
         super( ... )
-        self:event( MouseDownEvent, self.onMouseDown )
-        self.eventManager:connectGlobal( MouseUpEvent, self.onGlobalMouseUp, Event.phases.BEFORE )
+        self:event( DownMouseEvent, self.onMouseDown )
+        self.eventManager:connectGlobal( UpMouseEvent, self.onGlobalMouseUp, Event.phases.BEFORE )
     end
 
     function onDraw()
@@ -49,7 +53,7 @@ class TopBarItem extends View
         self:updateThemeStyle()
     end
 
-    function onMouseDown( MouseDownEvent event, Event.phases phase )
+    function onMouseDown( DownMouseEvent event, Event.phases phase )
         if event.mouseButton == MouseEvent.mouseButtons.LEFT then
             self.isPressed = true
             self.parent.activeView = self
@@ -57,7 +61,7 @@ class TopBarItem extends View
         return true
     end
 
-    function onGlobalMouseUp( MouseUpEvent event, Event.phases phase )
+    function onGlobalMouseUp( UpMouseEvent event, Event.phases phase )
         if self.isPressed and event.mouseButton == MouseEvent.mouseButtons.LEFT then
             local parent = self.parent
             if parent.activeView == self then

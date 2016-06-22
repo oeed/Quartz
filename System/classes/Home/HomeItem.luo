@@ -1,9 +1,8 @@
 class HomeItem extends TopBarItem 
     
-	property Number pin = TopBarItem.pins.LEFT
+	default pin = TopBarItem.pins.LEFT
 	property HomeContainer allowsNil homeContainer
-	property Number allowsNil size = 29
-
+	default size = 29
 
     function initialise( ... )
         super( ... )

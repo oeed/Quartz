@@ -9,9 +9,9 @@ class ProgramItem extends TopBarItem
 
     function initialise( ... )
         super( ... )
-        self:event( MouseEnteredInterfaceEvent, self.onMouseEntered )
-        self:event( MouseExitedInterfaceEvent, self.onMouseExited )
-        self:event( MouseMoveEvent, self.onMouseMoved )
+        self:event( EnteredInterfaceMouseEvent, self.onMouseEntered )
+        self:event( ExitedInterfaceMouseEvent, self.onMouseExited )
+        self:event( MoveMouseEvent, self.onMouseMoved )
     end
 
     function onDraw()
@@ -88,19 +88,19 @@ class ProgramItem extends TopBarItem
         self:event( ProgramInformationChangedInterfaceEvent, self.onProgramInformationChanged )
     end
 
-    function onMouseExited( MouseExitedInterfaceEvent event, Event.phases phase )
+    function onMouseExited( ExitedInterfaceMouseEvent event, Event.phases phase )
         self.needsDraw = true
         self.isCloseActive = false
         self:updateThemeStyle()
     end
 
-    function onMouseEntered( MouseEnteredInterfaceEvent event, Event.phases phase )
+    function onMouseEntered( EnteredInterfaceMouseEvent event, Event.phases phase )
         if not self:updateIsCloseActive( event.x ) then
             self.needsDraw = true
         end
     end
 
-    function onMouseMoved( MouseMoveEvent event, Event.phases phase )
+    function onMouseMoved( MoveMouseEvent event, Event.phases phase )
         self:updateIsCloseActive( event.x )
     end
 
@@ -125,7 +125,7 @@ class ProgramItem extends TopBarItem
         end
     end
 
-    function onGlobalMouseUp( MouseUpEvent event, Event.phases phase )
+    function onGlobalMouseUp( UpMouseEvent event, Event.phases phase )
         local wasPressed = true--self.isPressed
         super( event, phase )
         if wasPressed and self:hitTestEvent( event ) then
