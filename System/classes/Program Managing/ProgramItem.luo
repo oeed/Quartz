@@ -1,5 +1,5 @@
-local ICON_WIDTH = 9
-local ICON_HEIGHT = 9
+ICON_WIDTH = 9
+ICON_HEIGHT = 9
 
 class ProgramItem extends TopBarItem 
     

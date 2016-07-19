@@ -1,6 +1,6 @@
-local ANIMATION_TIME = 0.3
-local ANIMATION_EASING = Animation.easings.OUT_SINE
-local pins = TopBarItem.pins
+ANIMATION_TIME = 0.3
+ANIMATION_EASING = Animation.easings.OUT_SINE
+pins = TopBarItem.pins
 
 class TopBarContainer extends Container 
     

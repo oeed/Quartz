@@ -64,9 +64,13 @@ end
 --     os.reboot()
 -- end
 
+
+local w, h = term.getSize()
+print(w)
+print(h)
 loadfile("/luo")("/build.lua", "/System/classes", "/src/classes")
 dofile("/build.lua")
-dofile("test")
+-- dofile("test")
 print("\n")
 
 os.queueEvent("damn_emulator")

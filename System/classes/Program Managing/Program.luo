@@ -1,11 +1,11 @@
-local states = {
+states = {
     UNINTIALISED = 0;
     RUNNING = 1;
     PAUSED = 2;
     FINISHED = 3;
 }
 
-local configKeys = {
+configKeys = {
     PROGRAM_TITLE = "title",
     BOOT_PATH = "bootPath",
     ICON_PATH = "iconPath",

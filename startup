@@ -1,9 +1,9 @@
 --[[
 
-    Quartz was created by Oliver 'oeed' Cooper. Copyright 2015.
+    Quartz was created by Oliver 'oeed' Cooper. Copyright 2015 - 2016.
     Powered by Silica.
 
 ]]
 
 -- Begin the awesome stuff.
-shell.run("system/startup")
+shell.run("System/startup")

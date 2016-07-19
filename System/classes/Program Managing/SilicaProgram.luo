@@ -1,4 +1,4 @@
-local states = Program.states
+states = Program.states
 
 class SilicaProgram extends Program 
 

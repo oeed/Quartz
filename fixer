@@ -1,0 +1,191 @@
+do
+	fs.open("log", "w").close()
+
+	local _print = print
+	function _G.print( ... )
+		_print( ... )
+		log(tostring(... or ""))
+	end
+
+	function _G.log( text )
+		local h = fs.open("log", "a")
+		h.write( tostring(text ) .. '\n')
+		h.close()	
+	end
+
+	function _G.log2( text )
+		local h = fs.open("log2", "a")
+		h.write( tostring(text ) .. '\n')
+		h.close()	
+	end
+
+	local _error = error
+	function _G.logtraceback( level )
+		level = 2 + ( level or 1 )
+		local traceback, trace, source, line = {}
+		repeat
+			traceback[#traceback + 1] = trace
+			trace = select( 2, pcall( _error, "@", level ) ):match "^(.+) @"
+			if trace and trace:find "^.+%.lua:%d+:$" then
+				trace = trace:match "^(.+)%.lua:%d+:$" .. " on line " .. trace:match "^.+%.lua:(%d+):$"
+			end
+			level = level + 1
+			if trace == "startup:55:" then
+				break
+			end
+		until not trace
+		log( "Start of traceback:\n" .. ("-"):rep( 20 ) .. "\nin " .. table.concat( traceback, "\nin ") .. "\n" .. ("-"):rep( 20 ) .. "\nEnd of traceback" )
+	end
+
+	term.redirect(term.native())
+	-- Everything above here is development only
+	-- dofile( "system/Silica" )
+	-- dofile( "system/Silica.resourcepkg" )
+	function _G.error(message, level)   
+	   _error(message, level)      
+	end        
+
+	-- if fs.exists("system/Silica.resourcepkg") then
+	--     log("Using built package")
+	--     local _, err = pcall(function() dofile( "system/Silica.resourcepkg" ) end)
+	--     fs.delete("system/OldSilica.resourcepkg")
+	--     fs.move("system/Silica.resourcepkg","system/OldSilica.resourcepkg")
+	--     if err then error(err,2) end
+	-- else
+	--     log("Using old style package")
+	--     shell.run( "package /src Silica" )
+	--     log("Packaged")
+	--     dofile( "Silica" )
+
+	--     log("Building")
+	--     local folder = Folder( "/src" )
+	--     log(folder)
+	--     local package = folder:package( "/system/Silica.resourcepkg", true, true )
+	--     log("packaged!")
+	--     os.reboot()
+	-- end
+end
+
+local files = {}
+local function addFileName(fileName)
+	if fs.isDir(fileName) then
+		for i, file in ipairs(fs.list(fileName)) do
+		    -- add files ending in .luo
+		    local extension = file:match( "%.(%w-)$" )
+		    if (extension and extension:lower() == "luo") or fs.isDir(fileName) then
+		    	addFileName(fileName .. "/" .. file)
+		    end
+		end
+	else
+		table.insert(files, fileName)
+	end
+end
+
+local fileContents = {}
+local paths = {}
+
+addFileName("/System/classes")
+addFileName("/Applications")
+addFileName("/src")
+local tree = {}
+local classes = {}
+
+for i,v in ipairs(files) do
+	local h = fs.open(v, "r")
+	local lines = {}
+	local content = ""
+	local line = h.readLine()
+	repeat
+		table.insert(lines, line)
+		content = content .. line .. "\n"
+		line = h.readLine()
+	until not line
+	h.close()
+
+	local class, extends = content:match("class%s+(%u%w+)%s+extends%s+(%u%w+)")
+	if not class then
+		class = content:match("class%s+(%u%w+)")
+	end
+	if class then
+		fileContents[class] = lines
+		paths[class] = v
+		-- print(v)
+		-- print(class .. " -> " .. tostring(extends)) 
+		if not extends then
+			-- check if it already exists
+			local classTable = classes[class] or {}
+			tree[class] = classTable
+			if not classes[class] then
+				classes[class] = classTable
+			end
+		else
+			local classTable = classes[class] or {}
+			if classes[extends] then
+				classes[extends][class] = classTable
+			else
+				classes[extends] = {
+					[class] = classTable
+				}
+			end
+		end
+	end
+end
+
+local function check(checkName, nextTree, properties)
+	-- print("Checking " .. checkName)
+	properties = properties or {[false] = {}, [true] = {}}
+	-- check that our properties don't double up
+	local nextProperties = {[false] = {}, [true] = {}}
+	for i, line in ipairs(fileContents[checkName]) do
+		local isStatic = not not (line:match("^%s+(static)%s+property") or false)
+		local name = line:match("%s+property%s+%u%w+%s+%a+%s+%a+%s+(%w+)")
+		if not name then
+			name = line:match("%s+property%s+%u%w+%s+%a+%s+(%w+)")
+			if not name then
+				name = line:match("%s+property%s+%u%w+%s+(%w+)")
+			end
+		end
+		if name then
+			if properties[isStatic][name] then
+				-- print("Found duplicate " .. name)
+				-- print("Replacing with: ")
+				-- print(line)
+				local content = line:match("= (.+)$")
+				if content then
+					local newLine = "\t" .. (isStatic and "static " or "") .. "default " .. name .. " = " .. content
+					fileContents[checkName][i] = newLine
+				end
+			else
+				nextProperties[isStatic][name] = true
+			end
+		else
+			local isStatic = not not (line:match("^%s+(static)%s+default") or false)
+			local defaultName = line:match("^%s+static%s+default%s+(%w+)") or line:match("^%s+default%s+(%w+)")
+			if defaultName and not properties[isStatic][defaultName] then
+				print("Missing property for " .. checkName .. "." .. defaultName)
+			end
+		end
+	end
+	for k,v in pairs(properties) do
+		for k2,v2 in pairs(v) do
+			nextProperties[k][k2] = v2
+		end
+	end
+	for k,v in pairs(nextTree) do
+		check(k, v, nextProperties)
+	end
+end
+
+for k,v in pairs(tree) do
+	check(k, v)
+end
+
+-- for k,v in pairs(fileContents) do
+-- 	local h = fs.open(paths[k], "w")
+-- 	local content = ""
+-- 	for i,line in ipairs(v) do
+-- 		content = content .. line .. "\n"
+-- 	end
+-- 	h.write(content:sub(1, #content - 1))
+-- 	h.close()
+-- end
